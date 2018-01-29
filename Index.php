@@ -1,12 +1,17 @@
-<head>
- <title>Code4Good Project</title>
-</head>
-<body> 
+<?php
+include 'Header.php';
+?>
+    
+    
     <?php 
-    echo"php kód";
-    for($i=0 ; $i < 10 ; $i++){
-        echo ("<br>".$rusult = $i+$i);
+    if((!isset($_GET['name']) || ($_GET['name'] == ""))){
+        echo "index page";
+    } else {
+        $_SESSION['name'] = $_GET['name'];
     }
-    ?>
-    <h1>Tesztelgetés</h1>
+    
+        ?>
+<h1>Tesztelgetés</h1>
+
+
 </body>
