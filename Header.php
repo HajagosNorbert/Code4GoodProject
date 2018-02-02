@@ -1,36 +1,35 @@
 <?php
 session_start();
 ?>
+<!doctype html>
+<html>
 
 <head>
-    <title>Code4Good Project</title>
+    <link rel="stylesheet" href="Content/style.css">
+    <title>Webteszt</title>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+    <title>Kezdőlap</title>
 </head>
 
-
 <body>
-    <header>
-        <form method="get">
-            <input type="submit" name="registration-munkaado" value="Regisztrály munkaadóként">
-            <input type="submit" name="registration-diak" value="Regisztrály diákként">
-        </form>
-        <?php
-        if(!isset(($_SESSION['isLogedIn'])) || $_SESSION['isLogedIn'] === 0 ){
-          echo  '<form method="POST">
-        <input type="text" name="email" value="email">
-        <br>
-        <input type="password" name="password">
-        <input type=submit name="login" value="Bejelentkezés">
-                </form>';
-        }
-        ?>
+    
+   <Header>
+    <ul>
+        <a href="index.php"><img class="logokep" src="Content/logoteszt.png" title="Code4Good"></a>
+        <li><a href="kapcsolat">Kapcsolat</a></li>
+        <li><a href="Diak_Registration.php">Regisztráció (Diák)</a></li>
+        <li><a href="Diak_Registration.php">Regisztráció (Munka adó)</a></li>
+        <li><a href="leiras">Állás ajánlatok</a></li>
+        <li><a href="Index.php" class="active">Főoldal</a></li>
         
         <?php
-          if(isset($_GET['registration-munkaado'])){
-        echo '<script type="text/javascript"> window.location = "registration-munkaado.php"</script>';        
-          } else if(isset($_GET['registration-diak'])){
-        echo '<script type="text/javascript"> window.location = "registration-diak.php"</script>';       
-          } else {
-              
-          }
+         if(!isset(($_SESSION['isLogedIn'])) || $_SESSION['isLogedIn'] === 0 ){
+           echo  '<li><a href="login.php">Bejelentkezés</a></li>';
+         }
         ?>
-    </header>
+
+    </ul>
+</Header>
+    
