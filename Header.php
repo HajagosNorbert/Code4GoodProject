@@ -7,9 +7,8 @@ session_start();
 <head>
    
     <link rel="stylesheet" href="Content/style.css">
-    <link rel="stylesheet" href="Content/Date_Picker_Style.css">
-  <?php /* if (basename($_SERVER['PHP_SELF']) == 'Munka_Ajanlat_Posztolasa.php')
-   echo '<link rel="stylesheet" href="Content/Date_Picker_Style.css">' */?> 
+  <?php if (basename($_SERVER['PHP_SELF']) == 'Munka_Ajanlat_Posztolasa.php')
+   echo '<link rel="stylesheet" href="Content/Date_Picker_Style.css">' ?>
 
     <title>Webteszt</title>
     <meta charset="UTF-8" lang="hu">
