@@ -5,12 +5,17 @@ session_start();
 <html>
 
 <head>
+   
     <link rel="stylesheet" href="Content/style.css">
+    <link rel="stylesheet" href="Content/Date_Picker_Style.css">
+  <?php /* if (basename($_SERVER['PHP_SELF']) == 'Munka_Ajanlat_Posztolasa.php')
+   echo '<link rel="stylesheet" href="Content/Date_Picker_Style.css">' */?> 
+
     <title>Webteszt</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" lang="hu">
+    
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
-    <title>Kezdőlap</title>
 </head>
 
 <body>

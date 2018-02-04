@@ -8,12 +8,12 @@
 </div>
 <br>
 <div id="blog">
-<form action="Handlers/Diak_Registration_Handler.php" method="POST">
-    <p>Munka típusa: <select>
+    <form action="Handlers/Diak_Registration_Handler.php" method="POST">
+        <p>Munka típusa: <select>
   <option value="ml1">Fizikai</option>
   <option value="ml2">Szellemi</option>
      </select></p>
-    <p>Felajánlandó óraszám: <select>
+        <p>Felajánlandó óraszám: <select>
   <option value="h1">1</option>
   <option value="h2">2</option>
   <option value="h3">3</option>
@@ -23,23 +23,46 @@
   <option value="h7">7</option>
   <option value="h8">8</option>
      </select></p>
-    <p>A munka megnevezése:<input type="text" name="munka" placeholder="pl.: Favágás,fűnyírás akármi.. xd"></p>
-    <p>Elvárások a munka vállaló felé:
-        <p> <textarea name="elvaras" id="myTextArea" rows="6" cols="80">Írd be az elvárásaid a munka vállaló diák felé.</textarea></p>
-        <p>A munka leírása:
-            <p> <textarea name="elvaras" id="myTextArea" rows="6" cols="80">Milyen körülmények között, milyen munka mit kell csinálni stb..</textarea></p>
-            <p>A munkahely elvégzésére alkalmas pontos cím. <input type="text" name="cim" placeholder="Megye, Város, Utca, Házszám/ajtó"></p>
-            <p>Esetleges iskolai választék: ( Nem kötelező ) // fb-n leírom:
-             <select>
-	<option value="nv">Nem választok</option>	
-	<option value="gd">Gábor Dénes</option>
-	<option value="hs">Hansági</option>
-	<option value="mr">MÓRA</option>
-	<option value="dk">Deák</option>
-               </select>
+        <p>A munka megnevezése:<input type="text" name="munka" placeholder="pl.: Favágás,fűnyírás akármi.. xd"></p>
+        <p>Elvárások a munka vállaló felé:
+            <p> <textarea name="elvaras" id="myTextArea" rows="6" cols="80">Írd be az elvárásaid a munka vállaló diák felé.</textarea></p>
+            <p>A munka leírása:
+                <p> <textarea name="elvaras" id="myTextArea" rows="6" cols="80">Milyen körülmények között, milyen munka mit kell csinálni stb..</textarea></p>
+                <p>A munkahely elvégzésére alkalmas pontos cím. <input type="text" name="cim" placeholder="Megye, Város, Utca, Házszám/ajtó"></p>
+
+
+                <script type="text/javascript">
+                    $(function() {
+                        $(".calendar").datepicker({
+                            dateFormat: 'dd/mm/yy',
+                            firstDay: 1
+                        });
+
+                        $(document).on('click', '.date-picker .input', function(e) {
+                            var $me = $(this),
+                                $parent = $me.parents('.date-picker');
+                            $parent.toggleClass('open');
+                        });
+
+
+                        $(".calendar").on("change", function() {
+                            var $me = $(this),
+                                $selected = $me.val(),
+                                $parent = $me.parents('.date-picker');
+                            $parent.find('.result').children('span').html($selected);
+                        });
+                    });
+                </script>
                 
-    <p>Mettől - Meddig aktuális az állás hirdetés?:
-    <select>
+                <div class="date-picker">
+                    <div class="input">
+                        <div class="result">Munka Időpontja<span></span></div>
+                        <button><i class="fa fa-calendar"></i></button>
+                    </div>
+                    <div class="calendar"></div>
+                </div>
+
+                <!-- <select>
 	<option value="éééé">2018</option>
 	<option value="éééé">2019</option>
 	<option value="éééé">2020</option>
@@ -51,8 +74,8 @@
 	<option value="éééé">2026</option>
 	<option value="éééé">2027</option>
 	</select>
-   
-    <select>
+
+                        <select>
 	<option value="hh">01</option>
 	<option value="hh">02</option>
 	<option value="hh">03</option>
@@ -66,8 +89,8 @@
 	<option value="hh">11</option>
 	<option value="hh">12</option>
 	</select>
-   
-    <select>
+
+                        <select>
 	<option value="nn">01</option>
 	<option value="nn">02</option>
 	<option value="nn">03</option>
@@ -99,8 +122,8 @@
 	<option value="nn">29</option>
 	<option value="nn">30</option>
 	<option value="nn">31</option>
-	</select> - 
-    <select>
+	</select> -
+                        <select>
 	<option value="éééé">2018</option>
 	<option value="éééé">2019</option>
 	<option value="éééé">2020</option>
@@ -112,8 +135,8 @@
 	<option value="éééé">2026</option>
 	<option value="éééé">2027</option>
 	</select>
-   
-    <select>
+
+                        <select>
 	<option value="hh">01</option>
 	<option value="hh">02</option>
 	<option value="hh">03</option>
@@ -127,8 +150,8 @@
 	<option value="hh">11</option>
 	<option value="hh">12</option>
 	</select>
-   
-    <select>
+
+                        <select>
 	<option value="nn">01</option>
 	<option value="nn">02</option>
 	<option value="nn">03</option>
@@ -161,12 +184,14 @@
 	<option value="nn">30</option>
 	<option value="nn">31</option>
 	</select>
+	
+	-->
 
 
-                        
-                   
-    <input type="submit" class="gomb2" name="daiakRegistrationSubmit" value="Elküldés">
-</form>
+
+
+                <input type="submit" class="gomb2" name="daiakRegistrationSubmit" value="Elküldés">
+    </form>
 </div>
 <div class="copy">
     @copyright Kanyári Krisztofer. 2018-2019
