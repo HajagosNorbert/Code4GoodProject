@@ -1,4 +1,12 @@
-﻿<?php include 'Header.php';?>
+﻿<?php include 'Header.php';
+echo'<br><br><br><br><br><br><br><br>';
+mysqli_query($con , "SET NAMES 'utf8';");
+
+$sqlGetSchools = "SELECT * FROM iskolak;";
+$resultSchools = mysqli_query($con , $sqlGetSchools);
+
+?>
+
 <div id="kepes">
 </div>
 <div class="margo">
@@ -9,27 +17,34 @@
 <div id="elerhetoseg"> A Csillagal (*) jelölt részek kitöltése kötelező.
     <br>
     <form action="Handlers/Diak_Registration_Handler.php" method="POST">
-        <p>Vezetéknév: <input type="text" name="Felhasználó név" value="Vezetéknév *"></p>
-        <p>Keresztnév: <input type="text" name="Felhasználó név" value="Keresztnév *"></p>
-        <p>E-mail cím: <input type="text" name="E-Mail" value="E-mail *"></p>
-        <p>Jelszó: <input type="text" name="E-Mail" value="Jelszó *"></p>
-        <p>Jelszó még egyszer: <input type="text" name="E-Mail" value="Jelszó *"></p>
-        <p>Telefonszám <select>
+        <p>Vezetéknév: <input type="text" name="vezeteknev" placeholder="Vezetéknév *"></p>
+        <p>Keresztnév: <input type="text" name="keresztnev" placeholder="Keresztnév *"></p>
+        <p>E-mail cím: <input type="text" name="email" placeholder="E-mail *"></p>
+        <p>Jelszó: <input type="text" name="jelszo" placeholder="Jelszó *"></p>
+        <p>Jelszó még egyszer: <input type="text" name="jelszo_ujra" placeholder="Jelszó *"></p>
+        <p>Telefonszám <select name="szolgaltato">
   <option value="telo2">+3620</option>
   <option value="telo">+3630</option>
   <option value="telo3">+3670</option>
      </select>
-            <input type="text" name="E-Mail" value="Telefonszám *"></p>
-            <p>Diákigazolványszám (11 számjegyű): <input type="text" name="diákszám" maxlength="11" placeholder="diákigazolványszám"></p>
-        <p>Iskolák: <select>
-  <option value="gd">Gábor Dénes</option>
-  <option value="hs">Hansági</option>
-  <option value="mr">MÓRA</option>
-  <option value="dk">Deák</option>
-</select></p>
+            <input type="text" name="telefonszam" placeholder
+            ="Telefonszám *"></p>
+            <p>Diákigazolványszám (11 számjegyű): <input type="text" name="diakigazolvany_szam" maxlength="11" placeholder="diákigazolványszám"></p>
+        <p>Iskolák: 
+        <select name="iskola_id">
+        
+           <?php 
+             while($rowIskola = mysqli_fetch_assoc($resultSchools)){                
+                 echo '<option value="'.$rowIskola["id"].'" >'.$rowIskola["nev"].'</option>';
+             }           
+            ?>
+  
+  
+        </select></p>
+        
         <br><br><br>Magadról (Később megváltoztathatod): <br>
         <textarea name="bemutatkozas" id="myTextArea" rows="3" cols="77">Írd be ide az üzeneted.</textarea><br><br><br>
-        <input type="submit" class="gomb2" name="daiakRegistrationSubmit" value="Elküldés">
+        <input type="submit" class="gomb2" name="daiakRegistrationSubmit" value="submited">
     </form>
 </div>
 <div class="copy">

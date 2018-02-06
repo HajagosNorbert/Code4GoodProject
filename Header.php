@@ -1,5 +1,7 @@
 <?php
 session_start();
+include 'Handlers/Database_Connection.php';
+
 ?>
 <!doctype html>
 <html>
