@@ -29,7 +29,6 @@ if(!isset($_POST['daiakRegistrationSubmit'])){
     
     if($_POST['telefonszam'] !=''){
         $telefonszam = $_POST['szolgaltato'].$_POST['telefonszam'];
-        echo $telefonszam;
     } 
     else{
         $telefonszam = "NULL";
@@ -41,15 +40,44 @@ if(!isset($_POST['daiakRegistrationSubmit'])){
     else{
         $bemutatkozas = "NULL";
     }
-
+    
+    
+    $urlParameters = array();
+    $urlCompleteParameters = "";
+    
     
     mysqli_query($con , "SET NAMES 'utf8';");
+    $sqlGetSameEmails ='SELECT * FROM felhasznalok WHERE email ="'.$email.'"';
+    $dbEmails = mysqli_query($con , $sqlGetSameEmails);
+    $emailAlreadyExists = mysqli_num_rows($dbEmails) > 0;
+    
+    if($emailAlreadyExists){
+        array_push($urlParameters ,'emailAlreadyExists=true');
+    }
+    
+    $sqlGetDiakigazolvany_szamok ='SELECT * FROM felhasznalok WHERE diakigazolvany_szam ="'.$diakigazolvany_szam.'"';
+    $dbDiakigazolvany_szamok = mysqli_query($con , $sqlGetDiakigazolvany_szamok);
+    $diakigazolvany_szamAlreadyExists = mysqli_num_rows($dbDiakigazolvany_szamok) > 0;
+    
+    if($diakigazolvany_szamAlreadyExists){
+        array_push($urlParameters ,'diakigazolvany_szamAlreadyExists=true');
+    }
+    
+       if($diakigazolvany_szamAlreadyExists || $emailAlreadyExists){
+           $urlCompleteParameters .='?';
+           foreach($urlParameters as $hiba){
+               $urlCompleteParameters .= $hiba.'&';
+           }
+            $urlCompleteParameters = rtrim($urlCompleteParameters , '&');
+           Header('Location: ../Diak_Registration.php'.$urlCompleteParameters);
+       }
+    
     
     $sqlCreateDiak ="INSERT INTO felhasznalok (vezeteknev, keresztnev, email, jelszo, diakigazolvany_szam, iskola_id, felhasznalo_tipus, facebook_id, telefonszam, bemutatkozas, email_megerosito) VALUES ('$vezeteknev', '$keresztnev', '$email', '$jelszo', '$diakigazolvany_szam', '$iskola_id' , '$felhasznalo_tipus' , '$facebook_id' , '$telefonszam' , '$bemutatkozas', '$email_megerosito');";
     
     mysqli_query($con , $sqlCreateDiak);
-    
-    Header('Location: ../');
+    echo $urlCompleteParameters;
+    //Header('Location: ../');
 }
 ?>
 
