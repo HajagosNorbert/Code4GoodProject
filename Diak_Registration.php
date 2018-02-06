@@ -1,5 +1,4 @@
 ﻿<?php include 'Header.php';
-echo'<br><br><br><br><br><br><br><br>';
 mysqli_query($con , "SET NAMES 'utf8';");
 
 $sqlGetSchools = "SELECT * FROM iskolak;";
@@ -20,8 +19,8 @@ $resultSchools = mysqli_query($con , $sqlGetSchools);
         <p>Vezetéknév: <input type="text" name="vezeteknev" placeholder="Vezetéknév *"></p>
         <p>Keresztnév: <input type="text" name="keresztnev" placeholder="Keresztnév *"></p>
         <p>E-mail cím: <input type="text" name="email" placeholder="E-mail *"></p>
-        <p>Jelszó: <input type="text" name="jelszo" placeholder="Jelszó *"></p>
-        <p>Jelszó még egyszer: <input type="text" name="jelszo_ujra" placeholder="Jelszó *"></p>
+        <p>Jelszó: <input type="password" name="jelszo" placeholder="Jelszó *"></p>
+        <p>Jelszó még egyszer: <input type="password" name="jelszo_ujra" placeholder="Jelszó *"></p>
         <p>Telefonszám <select name="szolgaltato">
   <option value="telo2">+3620</option>
   <option value="telo">+3630</option>
@@ -43,7 +42,7 @@ $resultSchools = mysqli_query($con , $sqlGetSchools);
         </select></p>
         
         <br><br><br>Magadról (Később megváltoztathatod): <br>
-        <textarea name="bemutatkozas" id="myTextArea" rows="3" cols="77">Írd be ide az üzeneted.</textarea><br><br><br>
+        <textarea name="bemutatkozas" placeholder="Írd be ide az üzeneted." id="myTextArea" rows="3" cols="77"></textarea><br><br><br>
         <input type="submit" class="gomb2" name="daiakRegistrationSubmit" value="submited">
     </form>
 </div>
