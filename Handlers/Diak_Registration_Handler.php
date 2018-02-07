@@ -8,11 +8,11 @@ if(!isset($_POST['daiakRegistrationSubmit'])){
     
 } else{
   
-    $vezeteknev = $_POST['vezeteknev'];
-    $keresztnev = $_POST['keresztnev'];
-    $email = $_POST['email'];
-    $jelszo = $_POST['jelszo'];
-    $diakigazolvany_szam = $_POST['diakigazolvany_szam'];
+    $vezeteknev = mysqli_real_escape_string($con ,$_POST['vezeteknev']);
+    $keresztnev = mysqli_real_escape_string($con ,$_POST['keresztnev']);
+    $email = mysqli_real_escape_string($con ,$_POST['email']);
+    $jelszo = mysqli_real_escape_string($con ,$_POST['jelszo']);
+    $diakigazolvany_szam = mysqli_real_escape_string($con ,$_POST['diakigazolvany_szam']);
     $iskola_id = intval($_POST['iskola_id']);
     $felhasznalo_tipus = 1;
     $email_megerosito = 'később megoldani';
@@ -21,21 +21,21 @@ if(!isset($_POST['daiakRegistrationSubmit'])){
     
     if(FALSE){
         //sosem lesz true egyenlőre
-        $facebook_id = $_POST['facebook_id'];
+        $facebook_id = mysqli_real_escape_string($con ,$_POST['facebook_id']);
     }
     else {
         $facebook_id = "NULL";
     }
     
     if($_POST['telefonszam'] !=''){
-        $telefonszam = $_POST['szolgaltato'].$_POST['telefonszam'];
+        $telefonszam =mysqli_real_escape_string($con , $_POST['szolgaltato'].$_POST['telefonszam']);
     } 
     else{
         $telefonszam = "NULL";
     }
     
     if($_POST['bemutatkozas'] != ''){
-    $bemutatkozas = $_POST['bemutatkozas'];
+    $bemutatkozas = mysqli_real_escape_string($con ,$_POST['bemutatkozas']);
     }
     else{
         $bemutatkozas = "NULL";
@@ -44,6 +44,9 @@ if(!isset($_POST['daiakRegistrationSubmit'])){
     
     $urlParameters = array();
     $urlCompleteParameters = "";
+    
+    $stmt = mysqli_stmt_init($con);
+    
     
     
     mysqli_query($con , "SET NAMES 'utf8';");
@@ -73,11 +76,23 @@ if(!isset($_POST['daiakRegistrationSubmit'])){
        }
     
     
-    $sqlCreateDiak ="INSERT INTO felhasznalok (vezeteknev, keresztnev, email, jelszo, diakigazolvany_szam, iskola_id, felhasznalo_tipus, facebook_id, telefonszam, bemutatkozas, email_megerosito) VALUES ('$vezeteknev', '$keresztnev', '$email', '$jelszo', '$diakigazolvany_szam', '$iskola_id' , '$felhasznalo_tipus' , '$facebook_id' , '$telefonszam' , '$bemutatkozas', '$email_megerosito');";
+    $sqlCreateDiak ="INSERT INTO felhasznalok (vezeteknev, keresztnev, email, jelszo, diakigazolvany_szam, iskola_id, felhasznalo_tipus, facebook_id, telefonszam, bemutatkozas, email_megerosito) VALUES
+    (?,?,?,?,?,?,?,?,?,?,?);";
     
-    mysqli_query($con , $sqlCreateDiak);
-    echo $urlCompleteParameters;
-    //Header('Location: ../');
+    
+    
+    if(!mysqli_stmt_prepare($stmt, $sqlCreateDiak)){
+        echo '<h1>SQL STATEMENT PREPARE HIBA<h1>';
+    } 
+    else {
+        mysqli_stmt_bind_param($stmt ,"sssssiissss" , $vezeteknev, $keresztnev, $email, $jelszo, $diakigazolvany_szam, $iskola_id, $felhasznalo_tipus, $facebook_id, $telefonszam, $bemutatkozas, $email_megerosito);
+        
+        
+        mysqli_stmt_execute($stmt); 
+        Header('Location: ../Index.php');
+    }
+    
+   
 }
 ?>
 
