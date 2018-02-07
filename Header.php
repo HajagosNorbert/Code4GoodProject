@@ -20,11 +20,9 @@ include 'Handlers/Database_Connection.php';
    <Header>
     <ul>
         <a href="index.php"><img class="logokep" src="Content/logoteszt.png" title="Code4Good"></a>
-        <li><a href="kapcsolat">Kapcsolat</a></li>
         <li><a href="Diak_Registration.php">Regisztráció (Diák)</a></li>
-        <li><a href="Diak_Registration.php">Regisztráció (Munka adó)</a></li>
+        <li><a href="Munkaado_Registration.php">Regisztráció (Munka adó)</a></li>
         <li><a href="leiras">Állás ajánlatok</a></li>
-        <li><a href="Index.php" class="active">Főoldal</a></li>
         
         <?php
          if(!isset(($_SESSION['isLogedIn'])) || $_SESSION['isLogedIn'] === 0 ){
