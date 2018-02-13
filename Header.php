@@ -32,7 +32,7 @@ include 'Handlers/Database_Connection.php';
          if(isset($_SESSION['userType'])){            
             echo '<li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>';
             if($_SESSION['userType'] === '1'){
-                echo '<li><a href="Allas_Offering.php">Ajánlj Munkát</a></li>';
+                echo '<li><a href="Job_Offering.php">Ajánlj Munkát</a></li>';
             } 
          }
       
