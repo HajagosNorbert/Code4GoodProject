@@ -22,14 +22,20 @@ include 'Handlers/Database_Connection.php';
         <a href="index.php"><img class="logokep" src="Content/logoteszt.png" title="Code4Good"></a>
         
          <?php
+        //belépés és regisztrációs gombok nem bejelentkezetteknek
         if(!isset($_SESSION['userType'])){
             echo '<li><a href="Diak_Registration.php">Regisztráció (Diák)</a></li>';
             echo '<li><a href="Munkaado_Registration.php">Regisztráció (Munka adó)</a></li>';
             echo '<li><a href="login.php">Bejelentkezés</a></li>';
         }
-         if(isset($_SESSION['userType'])){
+        //bejelentkezett felhasználónak megjeleniti
+         if(isset($_SESSION['userType'])){            
             echo '<li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>';
+            if($_SESSION['userType'] === '1'){
+                echo '<li><a href="Allas_Offering.php">Ajánlj Munkát</a></li>';
+            } 
          }
+      
         ?>
 
     </ul>

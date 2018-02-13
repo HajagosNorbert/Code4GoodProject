@@ -12,7 +12,7 @@ else{
     
      mysqli_query($con , "SET NAMES 'utf8';");
     
-    $sqlCheckLoginParams = "SELECT * FROM felhasznalok WHERE email = '".$email."' AND jelszo = '".asd123."';";
+    $sqlCheckLoginParams = "SELECT * FROM felhasznalok WHERE email = '".$email."' AND jelszo = '".$password."';";
     $sqlResult = mysqli_query($con , $sqlCheckLoginParams);
     
 
@@ -27,7 +27,7 @@ else{
             $_SESSION['lastname'] = $result['vezeteknev'];
             $_SESSION['userType'] = $result['felhasznalo_tipus'];
             $_SESSION['id'] = $result['id'];
-            if($_SESSION['id'] === 1){
+            if($_SESSION['userType'] === '1'){
                 $_SESSION['oraszam'] = $result['oraszam'];
             }
         
