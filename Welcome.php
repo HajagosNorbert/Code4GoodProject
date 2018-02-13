@@ -1,4 +1,14 @@
 <?php
-<?include 'Header.php'?>
-<?include 'Footer.php'?>
+include 'Header.php';
+
+if(!isset($_SESSION['userType'])){
+    Header('Location: Index.php');
+    exit();
+}
+else{
+    
+}
+
+?>
+<?php include 'Footer.php'?>
 

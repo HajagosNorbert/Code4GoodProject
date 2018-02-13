@@ -123,7 +123,11 @@ if(!isset($_POST['diakRegistrationSubmit']) && !isset($_POST['munkaadoRegistrati
         }
         
         mysqli_stmt_execute($stmt); 
-        Header('Location: ../Index.php');
+        $_SESSION['keresztnev'] = $keresztnev;
+        $_SESSION['vezeteknev'] = $vezeteknev;
+        $_SESSION['felhasznaloTipus'] = $felhasznalo_tipus;
+        
+        Header('Location: ../Welcome.php');
     }
        }
 

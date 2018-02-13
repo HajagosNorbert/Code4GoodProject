@@ -7,7 +7,7 @@
     Állás hírdetése:
 </div>
 <br>
-<div id="blog">
+<div>
 <form action="Handlers/Diak_Registration_Handler.php" method="POST">
     <p>Munka típusa: <select>
   <option value="ml1">Fizikai</option>
