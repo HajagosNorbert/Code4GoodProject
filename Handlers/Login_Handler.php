@@ -27,7 +27,12 @@ else{
             $_SESSION['lastname'] = $result['vezeteknev'];
             $_SESSION['userType'] = $result['felhasznalo_tipus'];
             $_SESSION['id'] = $result['id'];
+            //ha munaadó
             if($_SESSION['userType'] === '1'){
+                
+                $sqlMunkaadoOffers = "SELECT * FROM ajanlatok WHERE munkaado_id = '".$_SESSION['id']."' ;";
+                $resultMunkaadoOffers = mysqli_query($con , $sqlMunkaadoOffers);
+                $_SESSION['numberOfJobsPosted'] = mysqli_num_rows($resultMunkaadoOffers);
                 $_SESSION['oraszam'] = $result['oraszam'];
             }
         

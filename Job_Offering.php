@@ -1,4 +1,9 @@
-﻿<?php include 'Header.php';?>
+﻿<?php include 'Header.php';
+if($_SESSION['userType'] != '1'){
+    Header('Location: Index.php');
+    exit();
+}
+?>
 <div id="kepes">
 </div>
 <div class="margo">
@@ -16,7 +21,7 @@
   <option value="ml2">Szellemi</option>
      </select></p>
      -->
-    <p>Felajánlandó óraszám: <select>
+    <p>Felajánlandó óraszám: <select name="oraszam">
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>

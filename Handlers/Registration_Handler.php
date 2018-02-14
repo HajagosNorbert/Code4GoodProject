@@ -111,7 +111,7 @@ if(!isset($_POST['diakRegistrationSubmit']) && !isset($_POST['munkaadoRegistrati
     
     
     if(!mysqli_stmt_prepare($stmt, $sqlCreateUser)){
-        echo '<h1>SQL STATEMENT PREPARE HIBA</h1>';
+        echo '<h1>SQL STATEMENT PREPARE ERROR</h1>';
     } 
     else {
          if($felhasznalo_tipus === 0) {
