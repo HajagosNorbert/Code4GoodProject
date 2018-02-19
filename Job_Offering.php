@@ -34,14 +34,15 @@ if($_SESSION['userType'] != '1'){
      
 <p>Ajánlat cime<input type="text" name="cim" placeholder="pl.: Favágás,fűnyírás akármi.. xd"></p>
 <p>Elvárások a munka vállaló felé:
-    <p> <textarea name="elvaras" id="myTextArea" rows="6" cols="80">Írd be az elvárásaid a munka vállaló diák felé.</textarea></p>
+   <!-- <p> <textarea name="elvaras" id="myTextArea" rows="6" cols="80">Írd be az elvárásaid a munka vállaló diák felé.</textarea></p> -->
     <p>A munka leírása:
-        <p> <textarea name="leiras" id="myTextArea" rows="6" cols="80">Milyen körülmények között, milyen munka mit kell csinálni stb..</textarea></p>
+        <p> <textarea name="leiras" id="myTextArea" rows="6" placeholder="Milyen körülmények között, milyen munka mit kell csinálni stb.."cols="80"></textarea></p>
 
         <!-- Google Maps ez helyett -->
         <p>A munkahely elvégzésére alkalmas pontos cím. <input type="text" name="helyszin" placeholder="Megye, Város, Utca, Házszám/ajtó"></p>
                 
     <p>Munka kezdeti időpontja:
+    <input type="datetime-local" name="munkaIdopont" placeholder="Munka kezdete">
     
     <!--
     <select>

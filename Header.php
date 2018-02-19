@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'Handlers/Database_Connection.php';
+mysqli_query($con , "SET NAMES 'utf8';");
 
 ?>
 <!doctype html>
@@ -32,9 +33,12 @@ include 'Handlers/Database_Connection.php';
          if(isset($_SESSION['userType'])){            
             echo '<li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>';
             if($_SESSION['userType'] === '1'){
-                //kiirja, hogy mennyi munkát posztoltunk a maximum 3-hoz képest
-                echo '<li><a href="Job_Offering.php">Ajánlj Munkát ('.$_SESSION["numberOfJobsPosted"].'/3)</a></li>';
+            echo '<li><a href="Munkaado_My_Jobs.php">Munkaajánlataim</a></li>';
             } 
+             //kiirja, hogy mennyi munkát posztoltunk. Ha ez 3, akkor nem lehet rákattiontani.
+                
+                
+
          }
       
         ?>
