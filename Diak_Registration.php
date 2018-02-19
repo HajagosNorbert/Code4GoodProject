@@ -42,7 +42,7 @@ $resultSchools = mysqli_query($con , $sqlGetSchools);
         
         <br><br><br>Magadról (Később megváltoztathatod): <br>
         <textarea name="bemutatkozas" placeholder="Írd be ide az üzeneted." id="myTextArea" rows="3" cols="77"></textarea><br><br><br>
-        <input type="submit" class="gomb2" name="diakRegistrationSubmit" value="submited">
+        <input type="submit" class="gomb2" name="diakRegistrationSubmit" value="Regisztálj">
     </form>
 </div>
 <div class="copy">

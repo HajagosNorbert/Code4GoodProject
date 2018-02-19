@@ -3,12 +3,18 @@ session_start();
 include 'Database_Connection.php';
 
 if(!isset($_POST['submit'])){
-    Header('Location: ../Welcome.php');
-    exit();
+    if($_SESSION["userType"] === '1'){
+        Header('Location: ../Munkaado_My_Jobs.php');
+        exit();
+    }
+    else{
+        Header('Location: ../Index.php');
+        exit();
+    }
 }
 
 if($_SESSION['numberOfJobsPosted'] >= 3){
-    Header('Location: ../Welcome.php');
+    Header('Location: ../Munkaado_My_Jobs.php');
     exit();
 }
 
@@ -33,6 +39,6 @@ else{
     mysqli_stmt_bind_param($stmt , $paramTypes, $_SESSION['id'], $oraszam, $cim, $leiras, $helyszin, $feltoltve, $munkaIdopont);
     mysqli_stmt_execute($stmt); 
     $_SESSION['numberOfJobsPosted']++;
-    Header('Location: ../Welcome.php');
+    Header('Location: ../Munkaado_My_Jobs.php');
     exit();
 }
