@@ -1,9 +1,11 @@
 
 <?php
 include 'Database_Connection.php';
+session_start();
 
 if(!isset($_POST['diakRegistrationSubmit']) && !isset($_POST['munkaadoRegistrationSubmit'])) {
-     Header('Location: ../index.php');     
+    //Header('Location: ../index.php');   
+    exit();
 }
  else {
 
@@ -121,11 +123,21 @@ if(!isset($_POST['diakRegistrationSubmit']) && !isset($_POST['munkaadoRegistrati
             mysqli_stmt_bind_param($stmt , $paramTypes, $vezeteknev, $keresztnev, $email, $jelszo, $felhasznalo_tipus, $facebook_id, $telefonszam, $bemutatkozas, $email_megerosito, $oraszam);
 
         }
+        $sqlGetId = "SELECT id FROM felhasznalok WHERE email = '".$email."' ;";
+        $sqlResult = mysqli_query($con , $sqlGetId);
+        $id = mysqli_fetch_assoc($sqlResult);
         
         mysqli_stmt_execute($stmt); 
-        $_SESSION['keresztnev'] = $keresztnev;
-        $_SESSION['vezeteknev'] = $vezeteknev;
-        $_SESSION['felhasznaloTipus'] = $felhasznalo_tipus;
+            $_SESSION['email'] = $email;
+            $_SESSION['firstname'] = $keresztnev;
+            $_SESSION['lastname'] = $vezeteknev;
+            $_SESSION['userType'] = $felhasznalo_tipus;
+            $_SESSION['id'] = $id['id'];
+            //ha munaadó
+            if($felhasznalo_tipus === '1'){
+                $_SESSION['numberOfJobsPosted'] = 0;
+                $_SESSION['oraszam'] = $oraszam;
+            }
         
         Header('Location: ../Welcome.php');
     }

@@ -45,7 +45,5 @@ $resultSchools = mysqli_query($con , $sqlGetSchools);
         <input type="submit" class="gomb2" name="diakRegistrationSubmit" value="Regisztálj">
     </form>
 </div>
-<div class="copy">
-    @copyright Kanyári Krisztofer. 2018-2019
-</div>
+
 <?php include 'Footer.php' ?>
