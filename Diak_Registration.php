@@ -6,21 +6,27 @@ $resultSchools = mysqli_query($con , $sqlGetSchools);
 
 ?>
 
-<div id="kepes">
-</div>
+
+<script src="Script.js"></script>
+<div id="kepes"></div>
+
 <div class="margo">
+</div>
+
+<div class="container">
 </div>
 <div class="first">
     Regisztrációs felület:
 </div>
 <div id="elerhetoseg"><p>A Csillagal (*) jelölt részek kitöltése kötelező.</p>
-    <form action="Handlers/Registration_Handler.php" method="POST">
+    <form action="Handlers/Registration_Handler.php" method="POST" class="reg-form" name="diak_reg" onsubmit="return Validate()">     
         <p>Vezetéknév: <input type="text" name="vezeteknev" placeholder="Vezetéknév *"></p>
         <p>Keresztnév: <input type="text" name="keresztnev" placeholder="Keresztnév *"></p>
         <p>E-mail cím: <input type="text" name="email" placeholder="E-mail *"></p>
         <p>Jelszó: <input type="password" name="jelszo" placeholder="Jelszó *"></p>
         <p>Jelszó még egyszer: <input type="password" name="jelszo_ujra" placeholder="Jelszó *"></p>
         <p>Telefonszám <select name="szolgaltato">
+ 
   <option value="+3620">+3620</option>
   <option value="+3630">+3630</option>
   <option value="+3670">+3670</option>
@@ -30,13 +36,12 @@ $resultSchools = mysqli_query($con , $sqlGetSchools);
             <p>Diákigazolványszám (11 számjegyű): <input type="text" name="diakigazolvany_szam" maxlength="11" placeholder="diákigazolványszám"></p>
         <p>Iskolák: 
         <select name="iskola_id">
-        
+
            <?php 
              while($rowIskola = mysqli_fetch_assoc($resultSchools)){                
                  echo '<option value="'.$rowIskola["id"].'" >'.$rowIskola["nev"].'</option>';
              }           
             ?>
-  
   
         </select></p>
         
@@ -45,7 +50,8 @@ $resultSchools = mysqli_query($con , $sqlGetSchools);
         <input type="submit" class="gomb2" name="diakRegistrationSubmit" value="submited">
     </form>
 </div>
-<div class="copy">
-    @copyright Kanyári Krisztofer. 2018-2019
+<div class="container">
+
 </div>
+
 <?php include 'Footer.php' ?>

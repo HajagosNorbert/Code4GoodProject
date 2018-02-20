@@ -1,22 +1,25 @@
 ﻿body {
 	background-image: url(Content/hatter.png);
 }
+
 * {
   margin: 0;
   padding: 0;
 }
+
 header{
 	margin: 0;
 	font-family: 'Raleway', sans-serif;
 	position: fixed;
 	width: 100%;
 }
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-	background-color: #353C3F;;
+	background-color: #353C3F;
 }
 
 li {
@@ -36,114 +39,139 @@ li a:hover {
 	background: #6C6F71;
 }
 
-.active{
+.active {
 	color:#FF8D3F
 }
-#kepes{
+
+#kepes {
 	padding: 100px;
 	background-position: center;
 	background-size: 120%;
 }
-.kepes{
-	font-family: 'Raleway', sans-serif;
-	color: white;
-	padding: 5px 10px;
-	background-color: black;
-	opacity: 0.7;
 
+.kepes {
+    font-family: 'Raleway', sans-serif;
+    color: white;
+    padding: 5px 10px;
+    background-color: black;
+    opacity: 0.7;
 }
-.gomb{
-	background-color: #7cc576;
-	color: white;
-	font-family: 'Raleway', sans-serif;
-	padding: 15px;
-	margin-top: 50px;
-	text-decoration: none;
+
+.gomb {
+    background-color: #7cc576;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    padding: 15px;
+    margin-top: 50px;
+    text-decoration: none;
 }
-.gomb a:hover{
-	background: #D5D6D2;
+
+.gomb a:hover {
+    background: #D5D6D2;
 }
-.gomb2{
-	background-color: #353C3F;
-	color: white;
-	font-family: 'Raleway', sans-serif;
-	padding: 15px;
-	text-decoration: none;
+
+.gomb2 {
+    background-color: #353C3F;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    padding: 15px;
+    text-decoration: none;
 }
-#leiras{
-	margin-left: 200px;
-	margin-right: 200px;
-	padding: 20px;
-	font-family: 'Raleway', sans-serif;
-	background-color: white;
-	box-shadow:  0 0 10px  rgba(0,0,0,0.6);
-	-moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-	-webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-	-o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-	text-align: center;
+
+#leiras {
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    text-align: center;
 }
-#blog{
-	margin-left: 200px;
-	margin-right: 200px;
-	padding: 20px;
-	font-family: 'Raleway', sans-serif;
-	background-color: white;
-	box-shadow:  0 0 10px  rgba(0,0,0,0.6);
-	-moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-	-webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-	-o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+
+#blog {
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
-#elerhetoseg{
-	background-color: #D5D6D2;
-	font-family: 'Raleway', sans-serif;
-	color: white;
-	margin-left: 200px;
-	margin-right: 200px;
-	padding: 20px;
+
+#elerhetoseg {
+    background-color: #756867;
+    font-family: 'Raleway', sans-serif;
+    color: #FF8D3F;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-bottom: 15px;
+    padding: 20px;
 }
-.copy{
-	margin-left: 200px;
-	margin-right: 200px;
-	padding: 20px;
-	font-family: 'Raleway', sans-serif;
-	float: right;
+
+.copy {
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+    float: right;
 }
-.first{
-	margin-left: 200px;
-	margin-right: 200px;
-	padding: 20px;
-	background-color: #353C3F;
-	padding: 20px;
-	font-family: 'Raleway', sans-serif;
-	color: white;
+
+.first {
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 20px;
+    background-color: #353C3F;
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+    color: white;
 }
-.margo{
-	margin-top:50px;
-	margin-bottom:50px;
+
+.margo {
+    margin-top: 10%;
+    margin-bottom: 10%;
 }
-#focim{
-	background-color:#E6E6E6;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	margin: 0;
-	text-align:center;
-	font-family: 'Roboto', sans-serif;
-	font-size: 30px;
+
+#focim {
+    background-color: #E6E6E6;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
 }
-.p{
-	font-size: 20px;
-	margin-top: 50px;
+
+.p {
+    font-size: 20px;
+    margin-top: 50px;
 }
-.blogkep{
-	float: right;
-	width: 200px;
+
+.blogkep {
+    float: right;
+    width: 200px;
 }
-.blogszov{
-	margin-top:20px;
+
+.blogszov {
+    margin-top: 20px;
 }
-.logokep{
-	padding: 5px;
-	width: 60px;
-	margin-left:200px;
-	margin-top: 10px;
+
+.logokep {
+    padding: 5px;
+    width: 60px;
+    margin-left: 200px;
+    margin-top: 10px;
+}
+
+.reg-form > p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.container {
+    background-color: aqua;
 }

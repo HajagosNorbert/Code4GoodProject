@@ -1,9 +1,10 @@
+<!doctype html>
+
 <?php
 session_start();
 include 'Handlers/Database_Connection.php';
 
 ?>
-<!doctype html>
 <html>
 
 <head>
@@ -12,6 +13,7 @@ include 'Handlers/Database_Connection.php';
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+    <script src=""></script>
     <title>Kezdőlap</title>
 </head>
 
@@ -35,9 +37,7 @@ include 'Handlers/Database_Connection.php';
                 echo '<li><a href="Job_Offering.php">Ajánlj Munkát</a></li>';
             } 
          }
-      
         ?>
 
     </ul>
 </Header>
-    

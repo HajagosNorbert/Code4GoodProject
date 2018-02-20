@@ -28,7 +28,4 @@
         <input type="submit" class="gomb2" name="munkaadoRegistrationSubmit" value="submited">
     </form>
 </div>
-<div class="copy">
-    @copyright  2018-2019
-</div>
 <?php include 'Footer.php' ?>
