@@ -32,8 +32,22 @@ else{
                 
                 $sqlMunkaadoOffers = "SELECT * FROM ajanlatok WHERE munkaado_id = '".$_SESSION['id']."' ;";
                 $resultMunkaadoOffers = mysqli_query($con , $sqlMunkaadoOffers);
+                
                 $_SESSION['numberOfJobsPosted'] = mysqli_num_rows($resultMunkaadoOffers);
                 $_SESSION['oraszam'] = $result['oraszam'];
+            }
+            else if($_SESSION['userType'] === '0'){
+                $_SESSION['jobsAplyingFor'] = array();
+                    
+                $sqlGetJobsAplyingFor = 'SELECT ajanlat_id FROM ajanlatokra_jelentkezesek WHERE jelentkezo_id = "'.$_SESSION['id'].'";';
+                $sqlJobsAplyingFor = mysqli_query($con, $sqlGetJobsAplyingFor);
+                if(mysqli_num_rows($sqlJobsAplyingFor) > 0){
+                    while($jobApyingFor = mysqli_fetch_assoc($sqlJobsAplyingFor)){
+                        array_push($_SESSION['jobsAplyingFor'] , $jobApyingFor['id']);
+                    }
+                }
+                
+                
             }
         
             Header('Location: ../Welcome.php');

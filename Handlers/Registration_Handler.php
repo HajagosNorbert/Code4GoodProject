@@ -4,7 +4,7 @@ include 'Database_Connection.php';
 session_start();
 
 if(!isset($_POST['diakRegistrationSubmit']) && !isset($_POST['munkaadoRegistrationSubmit'])) {
-    //Header('Location: ../index.php');   
+    Header('Location: ../index.php');   
     exit();
 }
  else {
@@ -62,7 +62,7 @@ if(!isset($_POST['diakRegistrationSubmit']) && !isset($_POST['munkaadoRegistrati
      }
     
     
-    $urlParameters = array();
+    $urlParameters = array();   
     $urlCompleteParameters = "";
     
     $stmt = mysqli_stmt_init($con);
@@ -137,6 +137,9 @@ if(!isset($_POST['diakRegistrationSubmit']) && !isset($_POST['munkaadoRegistrati
             if($felhasznalo_tipus === '1'){
                 $_SESSION['numberOfJobsPosted'] = 0;
                 $_SESSION['oraszam'] = $oraszam;
+            }
+            else if($felhasznalo_tipus === '0'){
+                $_SESSION['jobsAplyingFor'] = array();
             }
         
         Header('Location: ../Welcome.php');

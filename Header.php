@@ -32,10 +32,16 @@ mysqli_query($con , "SET NAMES 'utf8';");
         //bejelentkezett felhasználónak megjeleniti
          if(isset($_SESSION['userType'])){            
             echo '<li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>';
+             
             if($_SESSION['userType'] === '1'){
-            echo '<li><a href="Munkaado_My_Jobs.php">Munkaajánlataim</a></li>';
-            } 
-             //kiirja, hogy mennyi munkát posztoltunk. Ha ez 3, akkor nem lehet rákattiontani.
+            echo '<li><a href="Munkaado_My_Jobs.php">Ajánlataim</a></li>';
+            }
+             
+            else if($_SESSION['userType'] === '0'){
+                echo '<li><a href="Browse_Jobs.php">Munkák</a></li>';
+            }
+             
+
                 
                 
 
