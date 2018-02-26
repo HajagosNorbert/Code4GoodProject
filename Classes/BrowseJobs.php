@@ -1,28 +1,34 @@
 <?php 
-include 'Header.php';
-include_once 'Classes/Dbh.php';
-include 'Classes/BrowseJobs.php';
 
-
-echo'
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>';
-
-$sqlGetPostedJobs = 'SELECT * FROM ajanlatok WHERE id != (SELECT id FROM ajanlatokra_jelentkezesek WHERE elfogadva = "1");';
-$sqlJobs = mysqli_query($con , $sqlGetPostedJobs);
-
-$numberOfJobs = mysqli_num_rows($sqlJobs);
-
-
-
+class BrowseJobs extends Dbh{
+    
+    public function getALlPosts(){
+        $allPosts = array();
+        
+        $sqlAllPosts = $this->connect()->query('SELECT * FROM ajanlatok WHERE id != (SELECT id FROM ajanlatokra_jelentkezesek WHERE elfogadva = "1");');
+        
+        if($sqlAllPosts->rowCount()){
+            while($row = $sqlAllPost->fetch()) {
+                $allPosts += $row;
+            }
+            return $allPosts;
+        }
+        else{
+            return 0;
+        }
+    }
+    
+    public function getPostsOwner($post){
+        $sqlOwner = $this->connect()->query("SELECT * FROM felhasznalok WHERE id = '".$post["munkaado_id"]."' ;");    
+        while($owner = $sqlOwner->fetch()){
+            return $owner;
+        }
+        
+    }
+    
+    public function 
+   /* 
+   
 
 if($numberOfJobs === 0){
     echo'<h1>Nincs ajánlatod</h1>';
@@ -45,11 +51,5 @@ else{
     }
     
 }
-
-
-
-$object = new BrowseJobs;
-$object->foo();
-include 'Footer.php';
-?>
-
+*/
+}
