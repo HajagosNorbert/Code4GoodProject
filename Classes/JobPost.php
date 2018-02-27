@@ -1,20 +1,20 @@
 <?php
 
-class JobPost extendes Dbh{
-    $id;
-    $ownerId;
-    $offeredHours;
-    $title;
-    $description;
-    $location;
-    $uploadedAt;
-    $appointment;
-    $applicantsId = array();
-    $isAccepted = FALSE;
-    $acceptedStudentId;
+class JobPost extends Dbh{
+    public $id;
+    public $ownerId;
+    public $offeredHours;
+    public $title;
+    public $description;
+    public $location;
+    public $uploadedAt;
+    public $appointment;
+    public $applicantsId = array();
+    public $isAccepted = FALSE;
+    public $acceptedStudentId;
     
-    public __construct($_id){
-        $sqlPost = $this->connect()->query("SELECT * WHERE id = '".$_id."';");
+    public function __construct($_id){
+        $sqlPost = $this->connect()->query("SELECT * FROM ajanlatok WHERE id = '".$_id."';");
         
         if($post = $sqlPost->fetch()){
             $this->id = $post['id'];
@@ -28,7 +28,7 @@ class JobPost extendes Dbh{
             
             $sqlApplyings = $this->connect()->query("SELECT * FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = '".$this->id."' ;");
             while($applying = $sqlApplyings->fetch()){
-                $this->applicantsId += $applying['jelentkezo_id'];
+                $this->applicantsId = $applying['jelentkezo_id'];
                 if(!isAccepted)
                     $this->isAccepted = $applying['elfogadva'];
                 if($applying['elfogadva'] == 1){

@@ -1,7 +1,8 @@
 <?php 
 include 'Header.php';
 include_once 'Classes/Dbh.php';
-include 'Classes/BrowseJobs.php';
+include_once 'Classes/BrowseJobs.php';
+include_once 'Classes/JobPost.php';
 
 
 echo'
@@ -48,8 +49,17 @@ else{
 
 
 
-$object = new BrowseJobs;
-$object->foo();
+$jobBrowser = new BrowseJobs;
+$allPostIds = $jobBrowser->getAllPostIds();
+$allPosts = array();
+
+for ($i = 0; $i < count($allPostIds) ; $i++){
+    $jobPost = new JobPost($allPostIds[$i]);
+    $allPosts[] = $jobPost;
+}
+foreach($allPosts as $post){
+    echo $post->title;
+}
 include 'Footer.php';
 ?>
 
