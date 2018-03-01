@@ -1,7 +1,9 @@
 <?php
-session_start();
-include 'Handlers/Database_Connection.php';
-mysqli_query($con , "SET NAMES 'utf8';");
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+include_once 'Classes/Employer.php';
+include_once 'Classes/Student.php';
 
 ?>
 <!doctype html>
@@ -24,27 +26,24 @@ mysqli_query($con , "SET NAMES 'utf8';");
         
          <?php
         //belépés és regisztrációs gombok nem bejelentkezetteknek
-        if(!isset($_SESSION['userType'])){
+        if(isset($_SESSION['userId'])){
+            $user = Person::createPerson($_SESSION['userId']);
+        }
+        if(!isset($_SESSION['userId'])){
             echo '<li><a href="Diak_Registration.php">Regisztráció (Diák)</a></li>';
             echo '<li><a href="Munkaado_Registration.php">Regisztráció (Munka adó)</a></li>';
             echo '<li><a href="login.php">Bejelentkezés</a></li>';
         }
         //bejelentkezett felhasználónak megjeleniti
-         if(isset($_SESSION['userType'])){            
+         if(isset($user)){            
             echo '<li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>';
              
-            if($_SESSION['userType'] === '1'){
+            if($user->userType === '1'){
             echo '<li><a href="Munkaado_My_Jobs.php">Ajánlataim</a></li>';
             }
-             
-            else if($_SESSION['userType'] === '0'){
+            else if($user->userType === '0'){
                 echo '<li><a href="Browse_Jobs.php">Munkák</a></li>';
             }
-             
-
-                
-                
-
          }
       
         ?>

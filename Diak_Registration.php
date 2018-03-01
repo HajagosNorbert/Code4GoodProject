@@ -1,8 +1,9 @@
-﻿<?php include 'Header.php';
-mysqli_query($con , "SET NAMES 'utf8';");
+﻿<?php
+include_once 'Header.php';
+include_once 'Classes/Dbh.php';
 
-$sqlGetSchools = "SELECT * FROM iskolak;";
-$resultSchools = mysqli_query($con , $sqlGetSchools);
+$pdo = new Dbh;
+$schools = $pdo->connect()->query("SELECT * FROM iskolak;");
 
 ?>
 
@@ -32,8 +33,8 @@ $resultSchools = mysqli_query($con , $sqlGetSchools);
         <select name="iskola_id">
         
            <?php 
-             while($rowIskola = mysqli_fetch_assoc($resultSchools)){                
-                 echo '<option value="'.$rowIskola["id"].'" >'.$rowIskola["nev"].'</option>';
+             while($school = $schools->fetch()){                
+                 echo '<option value="'.$school["id"].'" >'.$school["nev"].'</option>';
              }           
             ?>
   

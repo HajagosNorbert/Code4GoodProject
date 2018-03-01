@@ -1,11 +1,11 @@
 <?php 
-
+include_once 'Dbh.php';
 class BrowseJobs extends Dbh{
     
-    public function getALlPostIds(){
+    public function getALlPostIds($condition){
         $allPostIds = array();
         
-        $sqlAllPostIds = $this->connect()->query('SELECT id FROM ajanlatok WHERE id != (SELECT id FROM ajanlatokra_jelentkezesek WHERE elfogadva = "1");');
+        $sqlAllPostIds = $this->connect()->query('SELECT id FROM ajanlatok '.$condition.';');
         
         if($sqlAllPostIds->rowCount()){
             while($row = $sqlAllPostIds->fetch()) {
@@ -16,13 +16,5 @@ class BrowseJobs extends Dbh{
         else{
             return 0;
         }
-    }
-    
-    public function getPostsOwner($post){
-        $sqlOwner = $this->connect()->query("SELECT * FROM felhasznalok WHERE id = '".$post["munkaado_id"]."' ;");    
-        while($owner = $sqlOwner->fetch()){
-            return $owner;
-        }
-        
     }
 }

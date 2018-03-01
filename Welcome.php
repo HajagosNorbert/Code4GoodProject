@@ -2,7 +2,7 @@
 include 'Header.php';
 
 
-if(!isset($_SESSION['userType'])){
+if(!isset($_SESSION['user'])){
     Header('Location: Index.php');
     exit();
 }
