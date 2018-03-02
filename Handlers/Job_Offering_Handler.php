@@ -2,8 +2,9 @@
 session_start();
 include 'Database_Connection.php';
 
+/*
 if(!isset($_POST['submit'])){
-    if($_SESSION["userType"] === '1'){
+    if($_SESSION["user"] === '1'){
         Header('Location: ../Munkaado_My_Jobs.php');
         exit();
     }
@@ -17,6 +18,7 @@ if($_SESSION['numberOfJobsPosted'] >= 3){
     Header('Location: ../Munkaado_My_Jobs.php');
     exit();
 }
+*/
 
 $stmt = mysqli_stmt_init($con);
 mysqli_query($con , "SET NAMES 'utf8';");

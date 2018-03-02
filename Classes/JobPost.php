@@ -45,4 +45,8 @@ class JobPost extends Dbh{
             return new Employer($this->ownerId);
     }
     
+    public function getAcceptedStudent(){
+        return Person::createPerson($this->acceptedStudentId);
+    }
+    
 }

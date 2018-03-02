@@ -39,7 +39,7 @@ include_once 'Classes/Student.php';
             echo '<li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>';
              
             if($user->userType === '1'){
-            echo '<li><a href="Munkaado_My_Jobs.php">Ajánlataim</a></li>';
+                echo '<li><a href="Munkaado_My_Jobs.php">Ajánlataim</a></li>';
             }
             else if($user->userType === '0'){
                 echo '<li><a href="Browse_Jobs.php">Munkák</a></li>';
