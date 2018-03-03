@@ -1,7 +1,6 @@
 <?php
 include_once 'Header.php';
 include_once 'Classes/JobPost.php';
-include_once 'Classes/Employer.php';
 
 
 $jobId = $_GET["id"];
@@ -18,18 +17,6 @@ if(!$job->id){
     exit();
 }
 
-
-/*
-//a jelenlegi felhasználó jelenkezése a munkára
-$sqlGetAlpying = 'SELECT * FROM ajanlatokra_jelentkezesek WHERE jelentkezo_id = "'.$_SESSION["id"].'" AND ajanlat_id ="'.$jobPost["id"].'" ;';
-$sqlAplying = mysqli_query($con , $sqlGetAlpying);
-$aplying = mysqli_fetch_assoc($sqlAplying);
-$alreadyAlpied = mysqli_fetch_assoc($sqlAplying) === 0;
-
-$sqlGetMunkaado = "SELECT * FROM felhasznalok WHERE id = '".$jobPost["munkaado_id"]."' ;";
-$sqlMunkaado = mysqli_query($con , $sqlGetMunkaado);
-$munkaado = mysqli_fetch_assoc($sqlMunkaado);
-*/
 ?>
 <br><br><br><br><br><br><br><br><br>
 <h1><?= $job->title ?></h1>
@@ -41,28 +28,32 @@ $munkaado = mysqli_fetch_assoc($sqlMunkaado);
 <p>Telefonszám: <?= $owner->phoneNumber ?></p>
 
 <?php
-/*
+
 //ha jelentkezhet az ajánlatra
-if($_SESSION["userType"] === '0' && !$isJobAccepted){
-    if(!in_array($jobPost['id'] , $_SESSION['jobsAplyingFor'])){
-         echo'  <form action="Handlers/Aplying_Handler.php" method="POST">
+if($user->userType === '0' && !$job->isAccepted){
+    
+    //Jelentkezni
+    if(!in_array($job->id , $user->applyingJobIds)){
+        ?>
+
+        <form action="Handlers/Aplying_Handler.php" method="POST">
         <input type="submit" name="submit" value="Jelentkezek!">
-        <input type="hidden" name="jobIdToAply" value="'.$jobPost['id'].'">
-        </form>';
+        <input type="hidden" name="jobIdToApply" value="<?= $job->id ?>">
+        </form>
+
+    <?php
     }
-    else if(in_array($jobPost['id'] , $_SESSION['jobsAplyingFor'])){
-        echo'  <form action="Handlers/Cancel_Aplying_Handler.php" method="POST">
+    //Megszakítani a jelentkezést
+    else if(in_array($job->id , $user->applyingJobIds)){
+        ?>
+        <form action="Handlers/Cancel_Aplying_Handler.php" method="POST">
         <input type="submit" name="submit" value="Jelenkezés megszakitása">
-        <input type="hidden" name="aplyingIdToCancel" value="'.$aplying['id'].'">
-        <input type="hidden" name="jobIdToCancel" value="'.$jobPost['id'].'">
-        </form>';
+        <input type="hidden" name="jobIdToCancel" value="<?= $job->id ?>">
+        </form>
+    <?php
     }
  
 }
-else if(in_array($jobPost['id'] , $_SESSION['jobsAplyingFor'])){
-echo'<p>Már jelentkeztél</p>';
-}
-*/
 
 include 'Footer.php';
 ?>

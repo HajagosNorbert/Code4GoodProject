@@ -1,20 +1,13 @@
 <?php
-include 'Database_Connection.php';
+include_once '../Classes/Student.php';
 session_start();
 
-if(!isset($_POST["aplyingIdToCancel"]) or !isset($_POST["submit"])){
+if(!isset($_POST["jobIdToCancel"]) or !isset($_POST["submit"])){
     Header('Locationa: ../Browse_Jobs.php');
     exit();
 }
+$user = Person::createPerson($_SESSION['userId']);
+$user->cancelApplying($_POST['jobIdToCancel']);
 
-$aplyingIdToCancel = $_POST["aplyingIdToCancel"];
-
-$sqlCancelAplying = 'DELETE FROM ajanlatokra_jelentkezesek WHERE id = "'.$aplyingIdToCancel.'";';
-mysqli_query($con, $sqlCancelAplying);
-
-$jobIdToCancelIndex = array_search($_POST["jobIdToCancel"] , $_SESSION["jobsAplyingFor"]);
-unset($_SESSION["jobsAplyingFor"][$jobIdToCancelIndex]);
 Header('Location: ../Job.php?id='.$_POST["jobIdToCancel"]);
 exit();
-
-?>

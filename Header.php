@@ -30,9 +30,13 @@ include_once 'Classes/Student.php';
             $user = Person::createPerson($_SESSION['userId']);
         }
         if(!isset($_SESSION['userId'])){
-            echo '<li><a href="Diak_Registration.php">Regisztráció (Diák)</a></li>';
-            echo '<li><a href="Munkaado_Registration.php">Regisztráció (Munka adó)</a></li>';
-            echo '<li><a href="login.php">Bejelentkezés</a></li>';
+            ?>
+        
+            <li><a href="Diak_Registration.php">Regisztráció (Diák)</a></li>
+            <li><a href="Munkaado_Registration.php">Regisztráció (Munka adó)</a></li>
+            <li><a href="login.php">Bejelentkezés</a></li>
+        
+        <?php
         }
         //bejelentkezett felhasználónak megjeleniti
          if(isset($user)){            

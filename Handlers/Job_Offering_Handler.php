@@ -1,7 +1,6 @@
 <?php
 session_start();
-include 'Database_Connection.php';
-
+include_once '../Classes/Employer.php';
 /*
 if(!isset($_POST['submit'])){
     if($_SESSION["user"] === '1'){
@@ -19,10 +18,6 @@ if($_SESSION['numberOfJobsPosted'] >= 3){
     exit();
 }
 */
-
-$stmt = mysqli_stmt_init($con);
-mysqli_query($con , "SET NAMES 'utf8';");
-
 $oraszam = (int) ($_POST['oraszam']);
 $cim = mysqli_real_escape_string($con, $_POST['cim']);
 $leiras = mysqli_real_escape_string($con, $_POST['leiras']);

@@ -87,14 +87,14 @@ else{
         <?php
     }
 }
-
-
-echo '<h1 ><a href="';
-if(count($user->jobPostIds) <3)
-    echo'Job_Offering.php';
-else
-    echo ''.basename($_SERVER['PHP_SELF']).'?problem=tooMuchPosts';
-echo '">Ajánlj Munkát ('.count($user->jobPostIds).'/3)</a></h1>';
+$activeJobs = count($user->jobPostIds);
+if($activeJobs <3){
+    $offerJobLink = '<h1 ><a href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a></h1>';
+}
+else{
+    $offerJobLink = '<h1>Maximum 3 ajánlatod lehet</h1>';
+}
+echo $offerJobLink;
 
 ?>
 
