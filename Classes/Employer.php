@@ -18,5 +18,7 @@ class Employer extends Person{
 
     }
     
-    public function postJob()
+    public function postJob(){
+        
+    }
 }

@@ -14,7 +14,29 @@ class JobPost extends Dbh{
     public $isAccepted = FALSE;
     public $acceptedStudentId;
     
-    public function __construct($_id){
+    public function createNewJobPost($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId){
+        
+        $this->$ownerId = $ownerId;        
+        $this->$offeredHours = $offeredHours;        
+        $this->$title = $title;        
+        $this->$description = $description;        
+        $this->$location = $location;        
+        $this->$uploadedAt = $uploadedAt;        
+        $this->$appointment = $appointment;        
+        $this->$ownerId = $ownerId;        
+
+        $newPost = $this->connect()->prepare(" INSERT INTO ajanlatok (munkaado_id, felajanlott_oraszam, cim, leiras, helyszin, feltoltve, munka_idopont) VALUES (?,?,?,?,?,?,?);");
+        
+        try{
+        $newPost = $newPost->execute([$this->$ownerId, $this->$offeredHours, $this->$title, $this->$description, $this->$location, $this->$uploadedAt, $this->$appointment]);
+        return TRUE;
+        }
+        catch(PDOException $e){
+            return FALSE;
+        }
+    }
+    
+    public function setAllFromDB($_id){
         $sqlPost = $this->connect()->prepare("SELECT * FROM ajanlatok WHERE id =? ;");
         $sqlPost->execute([$_id]);
         if($post = $sqlPost->fetch()){
@@ -40,6 +62,7 @@ class JobPost extends Dbh{
         }
         
     }
+    
     
     public function getOwner(){       
             return new Employer($this->ownerId);

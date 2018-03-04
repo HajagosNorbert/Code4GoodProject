@@ -30,7 +30,10 @@ if(empty($postIds)){
 else{
     $posts = array();
     foreach ($postIds as $postId){
-        $posts[] = new JobPost($postId);
+        $job = new JobPost;
+        $job->setAllFromDB($postId);
+        $posts[] = $job;
+        
     }
     
     foreach($posts as $post){

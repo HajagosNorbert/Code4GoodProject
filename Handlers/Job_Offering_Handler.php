@@ -1,10 +1,11 @@
 <?php
 session_start();
+include_once '../Classes/JobPost.php';
 include_once '../Classes/Employer.php';
-/*
+
 if(!isset($_POST['submit'])){
-    if($_SESSION["user"] === '1'){
-        Header('Location: ../Munkaado_My_Jobs.php');
+    if(isset($_SESSION["userId"])){
+        Header('Location: ../Welcome.php');
         exit();
     }
     else{
@@ -13,29 +14,23 @@ if(!isset($_POST['submit'])){
     }
 }
 
-if($_SESSION['numberOfJobsPosted'] >= 3){
+$user = Person::createPerson($_SESSION['userId']);
+
+if( count($user->jobPostIds) >= 3){
     Header('Location: ../Munkaado_My_Jobs.php');
     exit();
 }
-*/
-$oraszam = (int) ($_POST['oraszam']);
-$cim = mysqli_real_escape_string($con, $_POST['cim']);
-$leiras = mysqli_real_escape_string($con, $_POST['leiras']);
-$helyszin = mysqli_real_escape_string($con, $_POST['helyszin']);
-$feltoltve = $date = date('Y-m-d H:i'); 
-$munkaIdopont = mysqli_real_escape_string($con, $_POST['munkaIdopont']);
 
-$sqlPostJob = " INSERT INTO ajanlatok (munkaado_id, felajanlott_oraszam, cim, leiras, helyszin, feltoltve, munka_idopont) VALUES (?,?,?,?,?,?,?);";
-$paramTypes = "iisssss";
+$offeredHours = (int) ($_POST['oraszam']);
+$title = $_POST['cim'];
+$description = $_POST['leiras'];
+$location = $_POST['helyszin'];
+$uploadedAt = date('Y-m-d H:i'); 
+$appointment = $_POST['munkaIdopont'];
+$ownerId = $_SESSION['userId'];
 
-if(!mysqli_stmt_prepare($stmt, $sqlPostJob)){
-    echo '<br><br><br><br><br><br><h1>SQL STATEMENT PREPARE ERROR</h1>';
-}
-else{
-    
-    mysqli_stmt_bind_param($stmt , $paramTypes, $_SESSION['id'], $oraszam, $cim, $leiras, $helyszin, $feltoltve, $munkaIdopont);
-    mysqli_stmt_execute($stmt); 
-    $_SESSION['numberOfJobsPosted']++;
-    Header('Location: ../Munkaado_My_Jobs.php');
-    exit();
-}
+$job = new JobPost;
+$job->createNewJobPost($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId);
+
+Header('Location: ../Munkaado_My_Jobs.php');
+exit();
