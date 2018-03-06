@@ -5,9 +5,20 @@ if (session_status() == PHP_SESSION_NONE) {
 
 class Login extends Dbh{
     
-    public function autherize($email , $password){
+    private $email;
+    private $password;
+    
+    public function setEmail($email){
+        $this->email = $email;
+    }
+    
+    public function setPassword($password){
+        $this->password = $password;
+    }
+    
+    public function autherize(){
         $sqlMatch = $this->connect()->prepare("SELECT id FROM felhasznalok WHERE email = ? AND jelszo = ?;");
-        $sqlMatch->execute([$email , $password]);
+        $sqlMatch->execute([$this->email , $this->password]);
         $match = $sqlMatch->fetch();
         
         if(!$match['id']){
@@ -27,67 +38,62 @@ class Login extends Dbh{
 
 class Registration extends Dbh{
     
-    public function register($p){
-        
-        $errors = array();   
-        $hasError = FALSE;
-
-        if(!$this->isEmailValid($p['email'])){
-            $errors[] = "EmailNotValid";
-            $hasError = TRUE;
-        }
-        if(!$this->isFieldNotExist('felhasznalok', 'email', $p['email'])){
-            $errors[] = "EmailAllreadyExists";
-            $hasError = TRUE;
-        }
-        if(!$this->isFieldNotExist('felhasznalok', 'diakigazolvany_szam', $p['studentCard'])){
-            $errors[] = "StudentCardAllreadyExists";
-            $hasError = TRUE;
-        }
-        
-        if($hasError){
-            $errorUrlParams = $this->getErrorUrlParams($errors);
-            if($p['userType'] === '0'){
-                Header('Location: ../Diak_Registration.php'.$errorUrlParams);
-            }
-            else if($p['userType'] === '1'){
-                Header('Location: ../Munkaado_Registration.php'.$errorUrlParams);
-            }
-            exit();
-        }
+    public $lastName;    
+    public $firstName;    
+    public $email;    
+    public $password;    
+    public $emailConfirm;    
+    public $facebookId;    
+    public $phoneNumber;    
+    public $introduction;    
+    public $userType;
     
-        $fields = 'vezeteknev, keresztnev, email, email_megerosito, jelszo, felhasznalo_tipus, telefonszam, facebook_id, bemutatkozas, diakigazolvany_szam, oraszam';
-        if($p['userType'] === '0'){
-            $fields .= ', iskola_id';
-        }
-        
-        $values = '?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?';
-        if($p['userType'] === '0'){
-            $values .= ', ?';
-        }
-        
-        $bindData = array($p['lastName'], $p['firstName'], $p['email'], $p['emailConfirm'], $p['password'], $p['userType'], $p['phoneNumber'], $p['facebookId'], $p['introduction'], $p['studentCard'], $p['offerHours']);
-        if($p['userType'] === '0'){
-            array_push($bindData, $p['schoolId']);
-        }
-        
-        $creating = $this->connect()->prepare("INSERT INTO felhasznalok (".$fields.") VALUES (".$values.");");
+    public $studentCard;
+    public $schoolId;
+    public $offerHours;
+    public $errors = array();   
+    public $hasError = FALSE;
 
-        print('SchoolId: '.$p['schoolId'].'<br>');
-        $creating->execute($bindData);
-        
-        
-        $sqlUserId = $this->connect()->query('SELECT id FROM felhasznalok WHERE email = "'.$p['email'].'";');
-        
-        $uId = $sqlUserId->fetch();
-        
-        $_SESSION['userId'] = $uId['id'];
-        Header('Location: ../Welcome.php');
 
+    public function setLastName($lastName){
+        $this->lastName = $lastName;
     }
-    
-    private function isEmailValid($email){
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+    public function setFirstName($firstName){
+        $this->firstName = $firstName;
+    }
+    public function setEmail($email){
+        $this->email = $email;
+    }
+    public function setPassword($password){
+        $this->password = $password;
+    }
+    public function setEmailConfirm($emailConfirm){
+        $this->emailConfirm = $emailConfirm;
+    }
+    public function setFacebookId($facebookId){
+        $this->facebookId = $facebookId;
+    }
+    public function setPhoneNumber($phoneNumber){
+        $this->lastName = $phoneNumber;
+    }
+    public function setIntroduction($introduction){
+        $this->introduction = $introduction;
+    }
+    public function setUserType($userType){
+        $this->userType = $userType;
+    }
+    public function setStudentCard($studentCard){
+        $this->studentCard = $studentCard;
+    }
+    public function setSchoolId($schoolId){
+        $this->schoolId = $schoolId;
+    }
+    public function setOfferHours($offerHours){
+        $this->offerHours = $offerHours;
+    }
+        
+    public function isEmailValid(){
+        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
             return FALSE;
         }
         else{
@@ -95,7 +101,7 @@ class Registration extends Dbh{
         }
     }
     
-    private function isFieldNotExist($table, $field, $value){
+    public function isFieldNotExist($table, $field, $value){
         $match = $this->connect()->query('SELECT id FROM '.$table.' WHERE '.$field.' = "'.$value.'" ;');
         
         if($match->rowCount() > 0){
@@ -106,12 +112,40 @@ class Registration extends Dbh{
         }       
     }
     
-    private function getErrorUrlParams($errors){
+    public function getErrorUrlParams(){
         $urlParams = "?err=";
-        foreach ($errors as $error){
+        foreach ($this->errors as $error){
             $urlParams .=$error.'+';
         }
         $urlParams = rtrim($urlParams , '+');
         return $urlParams;
+    }
+    
+    public function upload(){
+        if($this->userType === '1'){
+            $fields = 'vezeteknev, keresztnev, email, email_megerosito, jelszo, felhasznalo_tipus, telefonszam, facebook_id, bemutatkozas, oraszam';
+            $values = '?, ?, ?, ?, ?, ?, ?, ?, ?, ?';
+            
+            $bindData = array($this->lastName, $this->firstName, $this->email, $this->emailConfirm, $this->password, $this->userType, $this->phoneNumber, $this->facebookId, $this->introduction, $this->offerHours);
+            
+        }
+        else if($this->userType === '0'){
+            $fields = 'vezeteknev, keresztnev, email, email_megerosito, jelszo, felhasznalo_tipus, telefonszam, facebook_id, bemutatkozas, diakigazolvany_szam, iskola_id';
+            $values = '?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?';
+            $bindData = array($this->lastName, $this->firstName, $this->email, $this->emailConfirm, $this->password, $this->userType, $this->phoneNumber, $this->facebookId, $this->introduction, $this->studentCard, $this->schoolId);
+            
+        }
+
+        
+        $creating = $this->connect()->prepare("INSERT INTO felhasznalok (".$fields.") VALUES (".$values.");");
+
+        $creating->execute($bindData);
+        
+        $login = new Login;
+        $login->setEmail($this->email);
+        $login->setPassword($this->password);
+        $login->autherize();
+        
+        Header('Location: ../Welcome.php');
     }
 }

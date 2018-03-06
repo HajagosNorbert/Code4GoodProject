@@ -24,7 +24,7 @@ $allPosts = array();
 
 foreach ($allPostIds as $postId){
     $jobPost = new JobPost;
-    $jobPost->setId($postId)
+    $jobPost->setId($postId);
     $jobPost->setAllFromDB();
     $allPosts[] = $jobPost;
 }

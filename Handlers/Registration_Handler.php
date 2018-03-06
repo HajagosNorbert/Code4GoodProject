@@ -1,5 +1,7 @@
 
 <?php
+
+include_once '../Classes/dBH.php';
 include_once '../Classes/Authentication.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -11,48 +13,81 @@ if(!isset($_POST['diakRegistrationSubmit']) && !isset($_POST['munkaadoRegistrati
 }
 
 if(isset($_POST['diakRegistrationSubmit'])){
-    $felhasznalo_tipus = '0';
+    $userType = '0';
     $registrationPage = "Diak_Registration.php";
 }
 else if(isset($_POST['munkaadoRegistrationSubmit'])){
-    $felhasznalo_tipus = '1';     
+    $userType = '1';     
     $registrationPage = "Munkaado_Registration.php";
 
 }
 
 $params = array();
-$params['lastName'] = $_POST['vezeteknev'];
-$params['firstName'] = $_POST['keresztnev'];
-$params['email'] = $_POST['email'];
-$params['password'] = $_POST['jelszo'];
-$params['emailConfirm'] = 'Később megoldani';
-$params['facebookId'] = 'Később megoldani';
+$lastName = $_POST['vezeteknev'];
+$firstName = $_POST['keresztnev'];
+$email = $_POST['email'];
+$password = $_POST['jelszo'];
+$emailConfirm = 'Később megoldani';
+$facebookId = 'Később megoldani';
 
 if($_POST['telefonszam'] !=''){
-    $params['phoneNumber'] = $_POST['szolgaltato'].$_POST['telefonszam']; 
+    $phoneNumber = $_POST['szolgaltato'].$_POST['telefonszam']; 
 }
 else{
-    $params['phoneNumber'] = 'NULL';
+    $phoneNumber = 'NULL';
 }
 if($_POST['bemutatkozas'] != ''){
-   $params['introduction'] = $_POST['bemutatkozas']; 
+   $introduction = $_POST['bemutatkozas']; 
 }
 else{
-    $params['introduction'] = 'NULL';
+    $introduction = 'NULL';
 }
-if($felhasznalo_tipus === '0') {
-    $params['userType'] = '0';
-    $params['studentCard'] = $_POST['diakigazolvany_szam']; 
-    $params['schoolId'] = intval($_POST['iskola_id']);
-    $params['offerHours'] = "NULL";
+if($userType === '0') {
+    $studentCard = $_POST['diakigazolvany_szam']; 
+    $schoolId = intval($_POST['iskola_id']);
+    $offerHours = "NULL";
  }
  else{
-    $params['userType'] = '1';
-    $params['studentCard'] = "NULL";
-    $params['schoolId'] =  "NULL"; 
-    $params['offerHours'] =  5;
+    $studentCard = "NULL";
+    $schoolId =  "NULL"; 
+    $offerHours =  5;
  }
     
 
 $regist = new Registration;
-$regist->register($params);
+
+$regist->setLastName($lastName);
+$regist->setFirstName($firstName);
+$regist->setEmail($email);
+$regist->setPassword($password);
+$regist->setEmailConfirm($emailConfirm);
+$regist->setFacebookId($facebookId);
+$regist->setPhoneNumber($phoneNumber);
+$regist->setIntroduction($introduction);
+$regist->setUserType($userType);
+$regist->setStudentCard($studentCard);
+$regist->setSchoolId($schoolId);
+$regist->setOfferHours($offerHours);
+
+if(!$regist->isEmailValid()){
+    $regist->errors[] = "EmailNotValid";
+    $regist->hasError = TRUE;
+}
+
+if(!$regist->isFieldNotExist('felhasznalok', 'email', $regist->email)){
+    $regist->errors[] = "EmailAllreadyExists";
+    $regist->hasError = TRUE;
+}
+
+        
+if($regist->hasError){
+    $errorUrlParams = $regist->getErrorUrlParams();
+    if($regist->userType === '0'){
+        Header('Location: ../Diak_Registration.php'.$errorUrlParams);
+    }
+    else if($regist->userType === '1'){
+        Header('Location: ../Munkaado_Registration.php'.$errorUrlParams);
+    }
+    exit();
+}
+$regist->upload();

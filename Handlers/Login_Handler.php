@@ -1,5 +1,5 @@
 <?php
-include_onceü '../Classes/Dbh.php';
+include_once '../Classes/Dbh.php';
 include_once '../Classes/Authentication.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -11,12 +11,14 @@ if(!isset($_POST['submit'])){
     exit();
 }
 
-$email = $_POST['ematil'];
+$email = $_POST['email'];
 $password = $_POST['password'];
 
 $login = new Login;
+$login->setEmail($email);
+$login->setPassword($password);
 
-if($login->autherize($email , $password)){ 
+if($login->autherize()){ 
     Header('Location: ../Welcome.php');
     exit();    
 }
