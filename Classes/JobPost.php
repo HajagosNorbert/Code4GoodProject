@@ -1,6 +1,4 @@
 <?php
-include_once 'Dbh.php';
-
 class JobPost extends Dbh{
     public $id;
     public $ownerId;
@@ -10,25 +8,29 @@ class JobPost extends Dbh{
     public $location;
     public $uploadedAt;
     public $appointment;
-    public $applicantsId = array();
+    public $applicantIds = array();
     public $isAccepted = FALSE;
     public $acceptedStudentId;
     
-    public function createNewJobPost($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId){
+    public function create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId){
         
-        $this->$ownerId = $ownerId;        
-        $this->$offeredHours = $offeredHours;        
-        $this->$title = $title;        
-        $this->$description = $description;        
-        $this->$location = $location;        
-        $this->$uploadedAt = $uploadedAt;        
-        $this->$appointment = $appointment;        
-        $this->$ownerId = $ownerId;        
+        $this->ownerId = $ownerId;        
+        $this->offeredHours = $offeredHours;        
+        $this->title = $title;        
+        $this->description = $description;        
+        $this->location = $location;        
+        $this->uploadedAt = $uploadedAt;        
+        $this->appointment = $appointment;        
+        $this->ownerId = $ownerId;    
+        
 
+    }
+    
+    public function upload(){
         $newPost = $this->connect()->prepare(" INSERT INTO ajanlatok (munkaado_id, felajanlott_oraszam, cim, leiras, helyszin, feltoltve, munka_idopont) VALUES (?,?,?,?,?,?,?);");
         
         try{
-        $newPost = $newPost->execute([$this->$ownerId, $this->$offeredHours, $this->$title, $this->$description, $this->$location, $this->$uploadedAt, $this->$appointment]);
+        $newPost->execute([$this->ownerId, $this->offeredHours, $this->title, $this->description, $this->location, $this->uploadedAt, $this->appointment]);
         return TRUE;
         }
         catch(PDOException $e){
@@ -36,9 +38,9 @@ class JobPost extends Dbh{
         }
     }
     
-    public function setAllFromDB($_id){
+    public function setAllFromDB(){
         $sqlPost = $this->connect()->prepare("SELECT * FROM ajanlatok WHERE id =? ;");
-        $sqlPost->execute([$_id]);
+        $sqlPost->execute([$this->id]);
         if($post = $sqlPost->fetch()){
             $this->id = $post['id'];
             $this->ownerId = $post['munkaado_id'];
@@ -51,7 +53,7 @@ class JobPost extends Dbh{
             
             $sqlApplyings = $this->connect()->query("SELECT * FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = '".$this->id."' ;");
             while($applying = $sqlApplyings->fetch()){
-                $this->applicantsId = $applying['jelentkezo_id'];
+                $this->applicantIds = $applying['jelentkezo_id'];
                 if(!$this->isAccepted)
                     $this->isAccepted = $applying['elfogadva'];
                 if($applying['elfogadva'] == 1){
@@ -63,6 +65,28 @@ class JobPost extends Dbh{
         
     }
     
+    public function deleteFromDB(){
+        $deletePost = $this->connect()->prepare('DELETE FROM ajanlatok WHERE id = "?" ;');
+        $deletePostApplyings = $this->connect()->prepare('DELETE FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = "?" ;');
+        
+        
+        $title = 'Visszavonva';
+        $owner = $this->getOwner();
+        $content = 'A '.$this->title.' munkát visszavonta '.$owner->lastName.' '.$owner->firstName.', amire te is jelentkeztél.';
+            
+        $notification = new Notification;
+        foreach ($this->applicantIds as $applicantId){
+            $notification->create($applicantId ,$title, $content);
+            $notification->upload();
+        }
+        
+        $deletePostApplyings->execute([$this->id]);
+        $deletePost->execute([$this->id]);
+    }
+    
+    public function setId($_id){
+        $this->id = $_id;
+    }
     
     public function getOwner(){       
             return new Employer($this->ownerId);

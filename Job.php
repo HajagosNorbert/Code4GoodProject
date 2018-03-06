@@ -9,7 +9,9 @@ if(!isset($jobId)){
     exit();
 }
 
-$job = new JobPost($jobId);
+$job = new JobPost;
+$job->setId($jobId);
+$job->setAllFromDB();
 $owner = $job->getOwner();
  
 if(!$job->id){

@@ -1,5 +1,4 @@
 <?php
-include_once 'Person.php';
 class Student extends Person{
     
     public $schoolId;

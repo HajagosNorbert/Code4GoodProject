@@ -31,7 +31,8 @@ else{
     $posts = array();
     foreach ($postIds as $postId){
         $job = new JobPost;
-        $job->setAllFromDB($postId);
+        $job->setId($postId);
+        $job->setAllFromDB();
         $posts[] = $job;
         
     }
@@ -42,11 +43,11 @@ else{
             $acceptedStudent = $post->getAcceptedStudent();
             $applicantStatus = 'Elfogadta: '.$acceptedStudent->lastName.' '.$acceptedStudent->fistName;
         }
-        else if(count($post->applicantsId) === 0){
+        else if(count($post->applicantIds) === 0){
             $applicantStatus = 'Nincs jelenkező';
         }   
         else{
-            $applicantStatus = 'Jelentkezők: '.count($post->applicantsId); 
+            $applicantStatus = 'Jelentkezők: '.count($post->applicantIds); 
         }
         
         ?>

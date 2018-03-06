@@ -1,5 +1,4 @@
 <?php
-include_once 'Dbh.php';
 
 abstract class Person extends Dbh{
     

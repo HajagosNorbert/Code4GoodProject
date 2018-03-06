@@ -1,5 +1,4 @@
 <?php
-include 'Dbh.php';
 class Rating extends Dbh{
     public $id;
     public $ratedPerson;

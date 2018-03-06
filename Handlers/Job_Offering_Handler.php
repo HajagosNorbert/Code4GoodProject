@@ -1,5 +1,9 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+include_once '../Classes/Dbh.php';
+include_once '../Classes/Person.php';
 include_once '../Classes/JobPost.php';
 include_once '../Classes/Employer.php';
 
@@ -29,8 +33,11 @@ $uploadedAt = date('Y-m-d H:i');
 $appointment = $_POST['munkaIdopont'];
 $ownerId = $_SESSION['userId'];
 
+
 $job = new JobPost;
-$job->createNewJobPost($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId);
+$job->create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId);
+print_r($job);
+$job->upload();
 
 Header('Location: ../Munkaado_My_Jobs.php');
 exit();

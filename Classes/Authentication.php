@@ -1,7 +1,4 @@
 <?php
-include_once 'Dbh.php';
-include_once 'Employer.php';
-include_once 'Student.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }

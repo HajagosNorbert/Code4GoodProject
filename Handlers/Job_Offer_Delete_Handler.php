@@ -1,6 +1,13 @@
 <?php
-include 'Database_Connection.php';
-session_start();
+include_once '../Classes/Dbh.php';
+include_once '../Classes/JobPost.php';
+include_once '../Classes/Person.php';
+include_once '../Classes/Employer.php';
+include_once '../Classes/Notification.php';
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if(!isset($_GET['submit'])){
     if($_SESSION["userType"] === '1'){
@@ -18,18 +25,9 @@ if(($_GET["hasAcceptedJelentkezo"]) === '1'){
     exit();
 }
 
-$sqlDeleteOffer = 'DELETE FROM ajanlatok WHERE id = "'.$_GET["offerId"].'" ;';
-$sqlDeleteOfferJelentkezesek = 'DELETE FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = "'.$_GET["offerId"].'" ;';
-$sqlEmptyDeletedOfferJelentkezesek = 'UPDATE ajanlatokra_jelentkezesek SET id = NULL, jelentkezo_id = NULL, ajanlat_id = NULL, elfogadva = NULL WHERE ajanlat_id = "'.$_GET["offerId"].'";';
+$job = new JobPost;
+$job->setId($_GET["offerId"]);
+$job->deleteFromDB();
 
-mysqli_query($con , $sqlEmptyDeletedOfferJelentkezesek);
-mysqli_query($con , $sqlDeleteOffer);
-mysqli_query($con , $sqlDeleteOfferJelentkezesek);
-
-$sqlMunkaadoOffers = "SELECT * FROM ajanlatok WHERE munkaado_id = '".$_SESSION['id']."' ;";
-$resultMunkaadoOffers = mysqli_query($con , $sqlMunkaadoOffers);
-$_SESSION['numberOfJobsPosted'] = mysqli_num_rows($resultMunkaadoOffers);
-
-Header('Location: ../Munkaado_My_Jobs.php');
+//Header('Location: ../Munkaado_My_Jobs.php');
 exit();
-?>

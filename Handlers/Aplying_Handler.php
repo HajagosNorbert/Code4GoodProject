@@ -1,6 +1,8 @@
 <?php
 include_once '../Classes/Student.php';
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if(!isset($_POST["jobIdToApply"]) or !isset($_POST["submit"])){
     Header('Locationa: ../Browse_Jobs.php');

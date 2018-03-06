@@ -2,6 +2,8 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+include_once 'Classes/Dbh.php';
+include_once 'Classes/Person.php';
 include_once 'Classes/Employer.php';
 include_once 'Classes/Student.php';
 

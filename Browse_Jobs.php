@@ -22,8 +22,10 @@ $jobBrowser = new BrowseJobs;
 $allPostIds = $jobBrowser->getAllPostIds('WHERE id != (SELECT id FROM ajanlatokra_jelentkezesek WHERE elfogadva = "1")');
 $allPosts = array();
 
-for ($i = 0; $i < count($allPostIds) ; $i++){
-    $jobPost = new JobPost($allPostIds[$i]);
+foreach ($allPostIds as $postId){
+    $jobPost = new JobPost;
+    $jobPost->setId($postId)
+    $jobPost->setAllFromDB();
     $allPosts[] = $jobPost;
 }
 
