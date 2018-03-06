@@ -24,10 +24,11 @@ if(($_GET["hasAcceptedJelentkezo"]) === '1'){
     Header('Location: ../Munkaado_My_Jobs.php');
     exit();
 }
+$jobId = $_GET['offerId'];
 
 $job = new JobPost;
-$job->setId($_GET["offerId"]);
+$job->setId($jobId);
 $job->deleteFromDB();
 
-//Header('Location: ../Munkaado_My_Jobs.php');
+Header('Location: ../Munkaado_My_Jobs.php');
 exit();

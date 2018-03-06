@@ -1,5 +1,6 @@
 <?php
-include '../Classes/Authentication.php';
+include_onceü '../Classes/Dbh.php';
+include_once '../Classes/Authentication.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -10,7 +11,7 @@ if(!isset($_POST['submit'])){
     exit();
 }
 
-$email = $_POST['email'];
+$email = $_POST['ematil'];
 $password = $_POST['password'];
 
 $login = new Login;

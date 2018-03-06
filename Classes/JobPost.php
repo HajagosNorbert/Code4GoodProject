@@ -66,20 +66,20 @@ class JobPost extends Dbh{
     }
     
     public function deleteFromDB(){
-        $deletePost = $this->connect()->prepare('DELETE FROM ajanlatok WHERE id = "?" ;');
-        $deletePostApplyings = $this->connect()->prepare('DELETE FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = "?" ;');
-        
         
         $title = 'Visszavonva';
         $owner = $this->getOwner();
         $content = 'A '.$this->title.' munkát visszavonta '.$owner->lastName.' '.$owner->firstName.', amire te is jelentkeztél.';
             
-        $notification = new Notification;
         foreach ($this->applicantIds as $applicantId){
+            $notification = new Notification;
             $notification->create($applicantId ,$title, $content);
             $notification->upload();
         }
         
+        $deletePost = $this->connect()->prepare('DELETE FROM ajanlatok WHERE id = ? ;');
+        
+        $deletePostApplyings = $this->connect()->prepare('DELETE FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = ? ;');
         $deletePostApplyings->execute([$this->id]);
         $deletePost->execute([$this->id]);
     }
