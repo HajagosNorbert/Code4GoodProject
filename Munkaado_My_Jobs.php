@@ -34,14 +34,13 @@ else{
         $job->setId($postId);
         $job->setAllFromDB();
         $posts[] = $job;
-        
     }
     
     foreach($posts as $post){
         
         if($post->isAccepted){
             $acceptedStudent = $post->getAcceptedStudent();
-            $applicantStatus = 'Elfogadta: '.$acceptedStudent->lastName.' '.$acceptedStudent->fistName;
+            $applicantStatus = 'Elfogadta: '.$acceptedStudent->lastName.' '.$acceptedStudent->firstName;
         }
         else if(count($post->applicantIds) === 0){
             $applicantStatus = 'Nincs jelenkező';
@@ -52,35 +51,25 @@ else{
         
         ?>
 <div class="job-post">
-    <div>
+        <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;"><div style="background-color: #dfdfdf;">
         <h1>
             <?= $post->title ?>
         </h1>
-    </div>
-
-    <div class="hours-offered">
         <h1>
             Munkaidő:
             <?= $post->offeredHours ?> óra
         </h1>
-    </div>
-    <div class="upload-date">
         <p>
-            Feltéve:
-            <?= $post->uploadedAt ?>
+            Feltéve: <?= $post->uploadedAt ?>
         </p>
-    </div>
-    <div>
-        <p>Mikorra:
-            <?= $post->appointment ?>
+        <p>
+            Mikorra: <?= $post->appointment ?>
         </p>
-
-    </div>
-    <div>
         <p>
             <?= $applicantStatus ?>
         </p>
-    </div>
+            </div></a>
+    
     <form method="GET" action="Handlers/Job_Offer_Delete_Handler.php">
         <input type="submit" name="submit" value="Visszavonása">
         <input type="hidden" name=offerId value="<?= $post->id ?>">

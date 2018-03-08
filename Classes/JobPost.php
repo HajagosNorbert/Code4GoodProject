@@ -12,6 +12,22 @@ class JobPost extends Dbh{
     public $isAccepted = FALSE;
     public $acceptedStudentId;
     
+    public function setId($_id){
+        $this->id = $_id;
+    }
+    
+    public function setAcceptedStudentId($studentId){
+        $this->acceptedStudentId = $studentId;
+    }
+    
+    public function getOwner(){       
+            return new Employer($this->ownerId);
+    }
+    
+    public function getAcceptedStudent(){
+        return Person::createPerson($this->acceptedStudentId);
+    }
+    
     public function create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId){
         
         $this->ownerId = $ownerId;        
@@ -53,11 +69,11 @@ class JobPost extends Dbh{
             
             $sqlApplyings = $this->connect()->query("SELECT * FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = '".$this->id."' ;");
             while($applying = $sqlApplyings->fetch()){
-                $this->applicantIds = $applying['jelentkezo_id'];
-                if(!$this->isAccepted)
-                    $this->isAccepted = $applying['elfogadva'];
-                if($applying['elfogadva'] == 1){
-                    $acceptedStudentId = $applying['jelentkezo_id'];
+                $this->applicantIds[] = $applying['jelentkezo_id'];
+                if(!$this->isAccepted && $applying['elfogadva'] == 1){
+                    $this->isAccepted = TRUE;
+                
+                    $this->acceptedStudentId = $applying['jelentkezo_id'];
                 }
             }
             
@@ -84,16 +100,14 @@ class JobPost extends Dbh{
         $deletePost->execute([$this->id]);
     }
     
-    public function setId($_id){
-        $this->id = $_id;
+    public function uploadAcceptedApplying(){
+        $applying = $this->connect()->query('UPDATE ajanlatokra_jelentkezesek SET elfogadva = "1" WHERE jelentkezo_id = "'.$this->acceptedStudentId.'" AND ajanlat_id = "'.$this->id.'" ;');     
+        echo 'UPDATE ajanlatokra_jelentkezesek SET elfogadva = "1" WHERE jelentkezo_id = "'.$this->acceptedStudentId.'" AND ajanlat_id = "'.$this->id.'" ;';
+        
+        unset ($this->applicantIds[array_search($this->acceptedStudentId, $this->applicantIds)]);
+        array_splice($this->applicantIds, 0, 0, $this->acceptedStudentId);
+        
     }
     
-    public function getOwner(){       
-            return new Employer($this->ownerId);
-    }
-    
-    public function getAcceptedStudent(){
-        return Person::createPerson($this->acceptedStudentId);
-    }
     
 }

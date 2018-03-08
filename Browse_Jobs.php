@@ -19,9 +19,13 @@ echo'
 <br>';
 
 $jobBrowser = new BrowseJobs;
-$allPostIds = $jobBrowser->getAllPostIds('WHERE id != (SELECT id FROM ajanlatokra_jelentkezesek WHERE elfogadva = "1")');
+$allPostIds = $jobBrowser->getAllPostIds('WHERE id NOT IN (SELECT ajanlat_id FROM ajanlatokra_jelentkezesek WHERE (elfogadva = "1" AND jelentkezo_id != "'.$_SESSION['userId'].'"))');
 $allPosts = array();
-
+if ($allPostIds === 0){
+    echo '<h2>Nincs ajánlat</h2>';
+}
+else{
+    
 foreach ($allPostIds as $postId){
     $jobPost = new JobPost;
     $jobPost->setId($postId);
@@ -43,6 +47,7 @@ foreach($allPosts as $post){
     <?php
 }
 
+}
 
 include 'Footer.php';
 ?>

@@ -21,6 +21,7 @@ if(!$job->id){
 
 ?>
 <br><br><br><br><br><br><br><br><br>
+
 <h1><?= $job->title ?></h1>
 <h1>Munkaidő: <?= $job->offeredHours ?> óra</h1>
 <p><?= $job->description ?></p>
@@ -32,29 +33,81 @@ if(!$job->id){
 <?php
 
 //ha jelentkezhet az ajánlatra
-if($user->userType === '0' && !$job->isAccepted){
+if(isset($_SESSION['userId'])){
+    if($user->userType === '0' && (!$job->isAccepted || $job->acceptedStudentId === $_SESSION['userId'])){
+        //Jelentkezni
+        if(!in_array($job->id , $user->applyingJobIds)){
+            ?>
+
+            <form action="Handlers/Aplying_Handler.php" method="POST">
+                <input type="submit" name="submit" value="Jelentkezek!">
+                <input type="hidden" name="jobIdToApply" value="<?= $job->id ?>">
+            </form>
+
+        <?php
+        }
+        //Megszakítani a jelentkezést
+        else if(in_array($job->id , $user->applyingJobIds)){
+            ?>
+            <form action="Handlers/Cancel_Aplying_Handler.php" method="POST">
+                <input type="submit" name="submit" value="Jelenkezés megszakitása">
+                <input type="hidden" name="jobIdToCancel" value="<?= $job->id ?>">
+            </form>
+            <?php
+        }
+    } 
     
-    //Jelentkezni
-    if(!in_array($job->id , $user->applyingJobIds)){
+    if($user->userType === '1'){
         ?>
+            <br><br><br><br>
+            <h3>Jelentkezők:</h3>
 
-        <form action="Handlers/Aplying_Handler.php" method="POST">
-        <input type="submit" name="submit" value="Jelentkezek!">
-        <input type="hidden" name="jobIdToApply" value="<?= $job->id ?>">
-        </form>
+        <?php
+        if(count($job->applicantIds) === 0){
+            ?>
+            <h4>Nincs</h4>
+            <?php
+        }
+        else{
+            if($job->isAccepted){
+                $applicant = $job->getAcceptedStudent();
+                ?>
+                    <h5><?= $applicant->lastName?> <?= $applicant->firstName?></h5>
+                <?php
+                unset($applicant);
+            }
 
-    <?php
+            
+            foreach($job->applicantIds as $applicantId){
+                $applicant = Person::createPerson($applicantId);
+                $ratings = $applicant->getRatingValues();
+                $numberOfRatings = count($ratings);
+                if($numberOfRatings === 0){
+                    $ratingText = 'Nincs értékelve';
+                }
+                else{
+                    $ratingAverage = array_sum($ratings) / $numberOfRatings;
+                    $ratingText = $ratingAverage.'/5 , Dolgozott '.$numberOfRatings.' alakalommal';
+                }
+
+                ?>  <br>
+                    <p><?= $applicant->lastName?> <?= $applicant->firstName?></p>
+                    <p>Értékelés: <?= $ratingText ?></p>
+                    <?php
+                    if(!$job->isAccepted){
+                        ?>
+                        <form method="POST" action="Handlers/Accept_Applicant_Handler.php">
+                            <input type="submit" name="submit" value="Alkalmaz">
+                            <input type="hidden" name="jobId" value="<?= $job->id ?>">
+                            <input type="hidden" name="applicantId" value="<?= $applicant->id ?>">   
+                        </form>
+                <?php
+                    }
+                unset($applicant);
+            }
+            
+        }
     }
-    //Megszakítani a jelentkezést
-    else if(in_array($job->id , $user->applyingJobIds)){
-        ?>
-        <form action="Handlers/Cancel_Aplying_Handler.php" method="POST">
-        <input type="submit" name="submit" value="Jelenkezés megszakitása">
-        <input type="hidden" name="jobIdToCancel" value="<?= $job->id ?>">
-        </form>
-    <?php
-    }
- 
 }
 
 include 'Footer.php';

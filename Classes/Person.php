@@ -33,13 +33,15 @@ abstract class Person extends Dbh{
         return $person;
     }
           
-    public function getRatingAverage(){
+    public function getRatingValues(){
         $ratingValues = array();
         $sqlRatings = $this->connect()->query("SELECT ertekeles FROM ertekelesek WHERE ertekelt_id = '".$this->id."';");  
         
         while($rating = $sqlRatings->fetch()){
             $ratingValues[] = intval($rating['ertekeles']);
         }
+        return $ratingValues;
+        
         if(count($ratingValues) === 0){
             $average = 0;
         }
