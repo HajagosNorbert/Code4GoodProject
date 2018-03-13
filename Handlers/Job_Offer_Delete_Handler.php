@@ -20,10 +20,10 @@ if(!isset($_GET['submit'])){
     }
 }
 
-if(($_GET["hasAcceptedJelentkezo"]) === '1'){
-    Header('Location: ../Munkaado_My_Jobs.php');
-    exit();
-}
+//if(($_GET["hasAcceptedJelentkezo"]) === '1'){
+//    Header('Location: ../Munkaado_My_Jobs.php');
+//    exit();
+//}
 $jobId = $_GET['offerId'];
 
 $job = new JobPost;

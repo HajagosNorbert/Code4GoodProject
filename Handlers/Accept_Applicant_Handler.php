@@ -23,8 +23,8 @@ else{
         $job->setId($_POST['jobId']);
         $job->setAcceptedStudentId($_POST['applicantId']);
         $job->uploadAcceptedApplying();
-        Header('Location : ../Job.php?id='.$_POST['jobId']);
-        
+        Header('Location: ../Job.php?');
+//        id='.$_POST['jobId']
     } 
     catch (Exception $e){
         Header('Location: ../Welcome.php');

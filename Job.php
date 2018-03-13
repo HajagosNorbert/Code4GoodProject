@@ -72,7 +72,7 @@ if(isset($_SESSION['userId'])){
             if($job->isAccepted){
                 $applicant = $job->getAcceptedStudent();
                 ?>
-                    <h5><?= $applicant->lastName?> <?= $applicant->firstName?></h5>
+                    <h2>Megbízva: <?= $applicant->lastName?> <?= $applicant->firstName?></h2>
                 <?php
                 unset($applicant);
             }
