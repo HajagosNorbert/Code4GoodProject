@@ -18,8 +18,15 @@ echo'
 <br>
 <br>';
 
+
+$userNotApplied = "";
+if(isset($_SESSION['userId'])){
+    $userNotApplied = 'AND jelentkezo_id != "'.$_SESSION['userId'].'"';
+}
+$condition = 'WHERE id NOT IN (SELECT ajanlat_id FROM ajanlatokra_jelentkezesek WHERE (elfogadva = "1" '.$userNotApplied.' ))';
+
 $jobBrowser = new BrowseJobs;
-$allPostIds = $jobBrowser->getAllPostIds('WHERE id NOT IN (SELECT ajanlat_id FROM ajanlatokra_jelentkezesek WHERE (elfogadva = "1" AND jelentkezo_id != "'.$_SESSION['userId'].'"))');
+$allPostIds = $jobBrowser->getAllPostIds($condition);
 $allPosts = array();
 if ($allPostIds === 0){
     echo '<h2>Nincs ajánlat</h2>';
@@ -35,6 +42,7 @@ foreach ($allPostIds as $postId){
 
 foreach($allPosts as $post){
     $owner = $post->getOwner();
+    $owner->setAllFromDB();
     ?>
       <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;"><div style="background-color: #dfdfdf;">
             <h1><?= $post->title ?></h1>
@@ -46,7 +54,6 @@ foreach($allPosts as $post){
         <br><br>
     <?php
 }
-
 }
 
 include 'Footer.php';

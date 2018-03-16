@@ -5,19 +5,28 @@ class Employer extends Person{
     public $offerHours;
     public $jobPostIds = array();
     
-    public function __construct($_id){
-        $person = parent::__construct($_id);
+    public function setOfferHours($offerHours){
+        $this->offerHours = $offerHours;
+    }
+    
+    public function setJobPostIdsFromDB(){
         
-        $this->offerHour = $person['oraszam'];
-        
-        $sqlJobPostIds = $this->connect()->query("SELECT id FROM ajanlatok WHERE munkaado_id = '".$_id."';");  
+        $sqlJobPostIds = $this->connect()->prepare("SELECT id FROM ajanlatok WHERE munkaado_id = ?;");  
+        $sqlJobPostIds->execute([$this->id]);
         while($jobPostId = $sqlJobPostIds->fetch()){
             $this->jobPostIds[] = $jobPostId['id'];
         }
-
+        
+    }
+    public function __construct(){
+        $this->setUserType("1");
     }
     
-    public function postJob(){
+    public function setAllFromDB(){
+        $person = parent::setAllFromDB();
         
+        $this->setOfferHours($person['oraszam']);
+        $this->setJobPostIdsFromDB();
+
     }
 }

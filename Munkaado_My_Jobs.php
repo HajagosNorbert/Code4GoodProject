@@ -40,6 +40,7 @@ else{
         
         if($post->isAccepted){
             $acceptedStudent = $post->getAcceptedStudent();
+            $acceptedStudent->setAllFromDB();
             $applicantStatus = 'Elfogadta: '.$acceptedStudent->lastName.' '.$acceptedStudent->firstName;
         }
         else if(count($post->applicantIds) === 0){
@@ -80,6 +81,7 @@ else{
         <?php
     }
 }
+$user->setJobPostIdsFromDB();
 $activeJobs = count($user->jobPostIds);
 if($activeJobs <3){
     $offerJobLink = '<h1 ><a href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a></h1>';

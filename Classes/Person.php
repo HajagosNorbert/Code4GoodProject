@@ -12,24 +12,61 @@ abstract class Person extends Dbh{
     public $introduction;
     public $ratingIds = array();
     
+    public function setId($id){
+        $this->id = $id;
+    }
     
-    public function __construct($_id){
-        $sqlPerson = $this->connect()->query("SELECT * FROM felhasznalok WHERE id = '".$_id."';");       
-        $sqlRatingIds = $this->connect()->query("SELECT * FROM ertekelesek WHERE ertekelt_id = '".$_id."';");
+    public function setFirstName($firstName){
+        $this->firstName = $firstName;
+    }
+    
+    public function setLastName($lastName){
+        $this->lastName = $lastName;
+    }
+    
+    public function setEmail($email){
+        $this->email = $email;
+    }
+    
+    public function setUserType($userType){
+        $this->userType = $userType;
+    }
+    
+    public function setPhoneNumber($phoneNumber){
+        $this->phoneNumber = $phoneNumber;
+    }
+    
+    public function setFacebookId($facebookId){
+        $this->facebookId = $facebookId;
+    }
+    
+    public function setIntroduction($introduction){
+        $this->introduction = $introduction;
+    }
+    
+    public function setRatingIdsFromDB(){
+        $sqlRatingIds = $this->connect()->prepare("SELECT * FROM ertekelesek WHERE ertekelt_id = ? ;");
+        $sqlRatingIds->execute([$this->id]);
         
+        while($ratingIds = $sqlRatingIds->fetch()){
+            $this->ratingIds[] = $ratingIds['id'];
+        }
+    }
+    
+    public function setAllFromDB(){
+        $sqlPerson = $this->connect()->prepare("SELECT * FROM felhasznalok WHERE id = ? ;");  
+        $sqlPerson->execute([$this->id]);
         $person = $sqlPerson->fetch();
             
-        $this->id = $person['id'];
-        $this->firstName = $person['keresztnev'];
-        $this->lastName = $person['vezeteknev'];
-        $this->email = $person['email'];
-        $this->userType = $person['felhasznalo_tipus'];
-        $this->phoneNumber = $person['telefonszam'];
-        $this->facebookId = $person['facebook_id'];
-        $this->introduction = $person['bemutatkozas'];
-        while($_ratingIds = $sqlRatingIds->fetch()){
-            $this->ratingIds[] = $_ratingIds['id'];
-        }
+        $this->setId($person['id']);
+        $this->setFirstName($person['keresztnev']);
+        $this->setLastName($person['vezeteknev']);
+        $this->setEmail($person['email']);
+        $this->setUserType($person['felhasznalo_tipus']);
+        $this->setPhoneNumber($person['telefonszam']);
+        $this->setFacebookId($person['facebook_id']);
+        $this->setIntroduction($person['bemutatkozas']);
+        $this->setRatingIdsFromDB();
         return $person;
     }
           
@@ -51,17 +88,21 @@ abstract class Person extends Dbh{
         return $average;
     }    
     
-    public static function createPerson($_id){
+    public static function createPerson($id){
         $pdo = new Dbh;
-         $sqlUserType = $pdo->connect()->prepare("SELECT felhasznalo_tipus FROM felhasznalok WHERE id = ? ;");
-        $sqlUserType->execute([$_id]);
+        $sqlUserType = $pdo->connect()->prepare("SELECT felhasznalo_tipus FROM felhasznalok WHERE id = ? ;");
+        $sqlUserType->execute([$id]);
         
         $userType = $sqlUserType->fetch();
         if($userType['felhasznalo_tipus'] === '0'){
-            return new Student($_id);
+            $student = new Student;
+            $student->setId($id);
+            return $student;
         }
         else if($userType['felhasznalo_tipus'] === '1'){
-            return new Employer($_id);
+            $employer = new Employer;
+            $employer->setId($id);
+            return $employer;
         }
     }
 

@@ -7,10 +7,11 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if(!isset($_POST["jobIdToApply"]) or !isset($_POST["submit"])){
-    Header('Locationa: ../Browse_Jobs.php');
+    Header('Location: ../Browse_Jobs.php');
     exit();
 }
-$user = Person::createPerson($_SESSION['userId']);
+$user = new Student;
+$user->setId($_SESSION['userId']);
 $user->apply($_POST['jobIdToApply']);
 
 Header('Location: ../Job.php?id='.$_POST["jobIdToApply"]);

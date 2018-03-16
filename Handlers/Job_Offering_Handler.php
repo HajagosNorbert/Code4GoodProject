@@ -18,7 +18,8 @@ if(!isset($_POST['submit'])){
     }
 }
 
-$user = Person::createPerson($_SESSION['userId']);
+$user = new Employer;
+$user->setId($_SESSION['userId']);
 
 if( count($user->jobPostIds) >= 3){
     Header('Location: ../Munkaado_My_Jobs.php');

@@ -10,7 +10,8 @@ if(!isset($_POST["jobIdToCancel"]) or !isset($_POST["submit"])){
     Header('Locationa: ../Browse_Jobs.php');
     exit();
 }
-$user = Person::createPerson($_SESSION['userId']);
+$user = new Student;
+$user->setId($_SESSION['userId']);
 $user->cancelApplying($_POST['jobIdToCancel']);
 
 Header('Location: ../Job.php?id='.$_POST["jobIdToCancel"]);

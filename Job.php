@@ -13,11 +13,7 @@ $job = new JobPost;
 $job->setId($jobId);
 $job->setAllFromDB();
 $owner = $job->getOwner();
- 
-if(!$job->id){
-    Header('Location: Browse_Jobs.php');
-    exit();
-}
+$owner->setAllFromDB();
 
 ?>
 <br><br><br><br><br><br><br><br><br>
@@ -31,11 +27,12 @@ if(!$job->id){
 <p>Telefonszám: <?= $owner->phoneNumber ?></p>
 
 <?php
-
 //ha jelentkezhet az ajánlatra
+
 if(isset($_SESSION['userId'])){
     if($user->userType === '0' && (!$job->isAccepted || $job->acceptedStudentId === $_SESSION['userId'])){
         //Jelentkezni
+        $user->setApplyingJobIdsFromDB();
         if(!in_array($job->id , $user->applyingJobIds)){
             ?>
 
@@ -57,7 +54,8 @@ if(isset($_SESSION['userId'])){
         }
     } 
     
-    if($user->userType === '1'){
+    if($user->userType === '1' && $owner->id === $user->id){
+        
         ?>
             <br><br><br><br>
             <h3>Jelentkezők:</h3>
@@ -69,10 +67,15 @@ if(isset($_SESSION['userId'])){
             <?php
         }
         else{
+            //megbízott Diák
             if($job->isAccepted){
                 $applicant = $job->getAcceptedStudent();
+                $applicant->setAllFromDB();
                 ?>
                     <h2>Megbízva: <?= $applicant->lastName?> <?= $applicant->firstName?></h2>
+                    <form>
+                        <input type="submit" name="submit" value="visszavonás">
+                    </form>
                 <?php
                 unset($applicant);
             }
@@ -80,6 +83,7 @@ if(isset($_SESSION['userId'])){
             
             foreach($job->applicantIds as $applicantId){
                 $applicant = Person::createPerson($applicantId);
+                $applicant->setAllFromDB();
                 $ratings = $applicant->getRatingValues();
                 $numberOfRatings = count($ratings);
                 if($numberOfRatings === 0){

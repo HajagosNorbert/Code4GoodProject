@@ -13,7 +13,9 @@ if(!(isset($_SESSION['userId']) && isset($_POST))){
 }
 else{
     try{
-        $user = Person::createPerson($_SESSION['userId']);  
+        $user = new Employer;
+        $user->setId($_SESSION['userId']);  
+        $user->setJobPostIdsFromDB();
         if(!in_array($_POST['jobId'], $user->jobPostIds)){
             Header('Location: ../Welcome.php');
             exit();
@@ -24,7 +26,7 @@ else{
         $job->setAcceptedStudentId($_POST['applicantId']);
         $job->uploadAcceptedApplying();
         Header('Location: ../Job.php?');
-//        id='.$_POST['jobId']
+        exit();
     } 
     catch (Exception $e){
         Header('Location: ../Welcome.php');

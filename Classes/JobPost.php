@@ -20,12 +20,16 @@ class JobPost extends Dbh{
         $this->acceptedStudentId = $studentId;
     }
     
-    public function getOwner(){       
-            return new Employer($this->ownerId);
+    public function getOwner(){  
+        $owner = new Employer();
+        $owner->setId($this->ownerId);
+        return $owner;
     }
     
     public function getAcceptedStudent(){
-        return Person::createPerson($this->acceptedStudentId);
+        $student = new Student;
+        $student->setId($this->acceptedStudentId);
+        return $student;
     }
     
     public function create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId){
@@ -102,7 +106,6 @@ class JobPost extends Dbh{
     
     public function uploadAcceptedApplying(){
         $applying = $this->connect()->query('UPDATE ajanlatokra_jelentkezesek SET elfogadva = "1" WHERE jelentkezo_id = "'.$this->acceptedStudentId.'" AND ajanlat_id = "'.$this->id.'" ;');     
-        echo 'UPDATE ajanlatokra_jelentkezesek SET elfogadva = "1" WHERE jelentkezo_id = "'.$this->acceptedStudentId.'" AND ajanlat_id = "'.$this->id.'" ;';
         
         unset ($this->applicantIds[array_search($this->acceptedStudentId, $this->applicantIds)]);
         array_splice($this->applicantIds, 0, 0, $this->acceptedStudentId);
