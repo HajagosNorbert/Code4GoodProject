@@ -9,7 +9,7 @@ class JobPost extends Dbh{
     public $uploadedAt;
     public $appointment;
     public $applicantIds = array();
-    public $isAccepted = FALSE;
+    public $isAccepted;
     public $acceptedStudentId;
     
     public function setId($_id){
@@ -18,6 +18,11 @@ class JobPost extends Dbh{
     
     public function setAcceptedStudentId($studentId){
         $this->acceptedStudentId = $studentId;
+        $this->isAccepted = TRUE;
+    }
+    
+    public function setIsAccepted($isAccepted){
+        $this->isAcepted = $isAcpeted;
     }
     
     public function getOwner(){  
@@ -105,11 +110,24 @@ class JobPost extends Dbh{
     }
     
     public function uploadAcceptedApplying(){
-        $applying = $this->connect()->query('UPDATE ajanlatokra_jelentkezesek SET elfogadva = "1" WHERE jelentkezo_id = "'.$this->acceptedStudentId.'" AND ajanlat_id = "'.$this->id.'" ;');     
-        
+        if(isAccepted === TRUE){
+            $elfogadva = '1';
+            
+            $applying = $this->connect()->prepare('UPDATE ajanlatokra_jelentkezesek SET elfogadva = ? WHERE jelentkezo_id = ? AND ajanlat_id = ? ;');    
+            
+            $applying->execute([$elfogadva, $this->acceptedStudentId, $this->id]);
+        }
+        else{
+            $elfogadva = '0';
+            
+            $applying = $this->connect()->prepare('UPDATE ajanlatokra_jelentkezesek SET elfogadva = ? WHERE ajanlat_id = ? ;');    
+            
+            $applying->execute([$elfogadva, $this->id]);
+        }
+        /*
         unset ($this->applicantIds[array_search($this->acceptedStudentId, $this->applicantIds)]);
         array_splice($this->applicantIds, 0, 0, $this->acceptedStudentId);
-        
+        */
     }
     
     

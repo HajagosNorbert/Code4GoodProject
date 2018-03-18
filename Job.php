@@ -73,8 +73,9 @@ if(isset($_SESSION['userId'])){
                 $applicant->setAllFromDB();
                 ?>
                     <h2>Megbízva: <?= $applicant->lastName?> <?= $applicant->firstName?></h2>
-                    <form>
+                    <form action="Handlers/Cancel_Accepted_Applicant_Handler.php" method="POST">
                         <input type="submit" name="submit" value="visszavonás">
+                        <input type="hidden" name="JobPostId" value="<?= $job->id?>"> 
                     </form>
                 <?php
                 unset($applicant);
