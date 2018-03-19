@@ -11,6 +11,7 @@ abstract class Person extends Dbh{
     public $facebookId;
     public $introduction;
     public $ratingIds = array();
+    public $notificationIds = array();
     
     public function setId($id){
         $this->id = $id;
@@ -50,6 +51,16 @@ abstract class Person extends Dbh{
         
         while($ratingIds = $sqlRatingIds->fetch()){
             $this->ratingIds[] = $ratingIds['id'];
+        }
+    }
+    
+    public function setNotificationIds(){
+        $sqlNotificationIds = $this->connect()->prepare("SELECT id FROM ertesitesek WHERE ertesitett_id = ? ;");
+        $sqlNotificationIds->execute([$this->id]);
+        if($sqlNotificationIds->rowCount() > 0){
+            while($notificationId = $sqlNotificationIds->fetch()){
+                $this->notificationIds[] = $notificationId['id'];
+            }
         }
     }
     
