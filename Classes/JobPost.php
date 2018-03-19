@@ -97,8 +97,11 @@ class JobPost extends Dbh{
         $content = 'A '.$this->title.' munkát visszavonta '.$owner->lastName.' '.$owner->firstName.', amire te is jelentkeztél.';
             
         foreach ($this->applicantIds as $applicantId){
+            
             $notification = new Notification;
-            $notification->create($applicantId ,$title, $content);
+            $notification->setNotifiedUserId($applicantId);
+            $notification->setTitle($title);
+            $notification->setContent($content);
             $notification->upload();
         }
         

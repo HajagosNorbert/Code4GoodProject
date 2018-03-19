@@ -43,23 +43,24 @@ include_once 'Classes/Student.php';
         //bejelentkezett felhasználónak megjeleniti
          if(isset($user)){     
             ?>
-            <li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>
+                <li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>
             <?php
             if($user->userType === '1'){
                 ?>
-                <li><a href="Munkaado_My_Jobs.php">Ajánlataim</a></li>
+                    <li><a href="Munkaado_My_Jobs.php">Ajánlataim</a></li>
                 <?php
             }
             else if($user->userType === '0'){
                 ?>
-                <li><a href="Browse_Jobs.php">Munkák</a></li>
+                    <li><a href="Browse_Jobs.php">Munkák</a></li>
                 <?php
             }
             
             $user->setNotificationIds();
             $numberOfNotificationes = count($user->notificationIds);
+            
             ?>
-            <li><a href="Notificationes.php">Értesítések: <?= $numberOfNotificationes?></a></li>
+                <li><a href="Notificationes.php">Értesítések: <?= $numberOfNotificationes?></a></li>
             <?php
             
         }
