@@ -77,7 +77,6 @@ abstract class Person extends Dbh{
         $this->setPhoneNumber($person['telefonszam']);
         $this->setFacebookId($person['facebook_id']);
         $this->setIntroduction($person['bemutatkozas']);
-        $this->setRatingIdsFromDB();
         return $person;
     }
           

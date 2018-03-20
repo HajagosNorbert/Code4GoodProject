@@ -1,7 +1,5 @@
 <?php 
 include_once 'Header.php';
-include_once 'Classes/Employer.php';
-include_once 'Classes/Student.php';
 include_once 'Classes/BrowseJobs.php';
 include_once 'Classes/JobPost.php';
 

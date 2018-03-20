@@ -33,9 +33,11 @@ else{
         $job = new JobPost;
         $job->setId($postId);
         $job->setAllFromDB();
+        $job->setApplicantIdsFromDB();
         $posts[] = $job;
     }
     
+    $user->setJobPostIdsFromDB();
     foreach($posts as $post){
         
         if($post->isAccepted){
@@ -81,7 +83,6 @@ else{
         <?php
     }
 }
-$user->setJobPostIdsFromDB();
 $activeJobs = count($user->jobPostIds);
 if($activeJobs <3){
     $offerJobLink = '<h1 ><a href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a></h1>';

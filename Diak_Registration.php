@@ -1,6 +1,5 @@
 ﻿<?php
 include_once 'Header.php';
-include_once 'Classes/Dbh.php';
 
 $pdo = new Dbh;
 $schools = $pdo->connect()->query("SELECT * FROM iskolak;");

@@ -26,7 +26,6 @@ class Employer extends Person{
         $person = parent::setAllFromDB();
         
         $this->setOfferHours($person['oraszam']);
-        $this->setJobPostIdsFromDB();
 
     }
 }

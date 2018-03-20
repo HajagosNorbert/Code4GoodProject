@@ -21,9 +21,9 @@ class Notification extends Dbh{
     }
     
     public function upload(){
-        $inserting = $this->connect()->prepare('INSERT INTO ertesitesek (ertesitett_id, cim, tartalom,) VALUES (?, ?, ?)');
+        $inserting = $this->connect()->prepare('INSERT INTO ertesitesek (ertesitett_id, cim, tartalom) VALUES (?, ?, ?);');
         
-        $inserting->execute([$this->notifiedUser, $this->title, $this->content]);
+        $inserting->execute([$this->notifiedUserId, $this->title, $this->content]);
     }
     
     public function setAllFromDB(){

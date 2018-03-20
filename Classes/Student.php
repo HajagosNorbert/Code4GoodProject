@@ -31,9 +31,7 @@ class Student extends Person{
         $person = parent::setAllFromDB();
         
         $this->setStudentCard($person['diakigazolvany_szam']);
-        $this->setSchoolId($person['iskola_id']);
-        $this->setApplyingJobIdsFromDB();
-        
+        $this->setSchoolId($person['iskola_id']);     
     }
     public function __construct(){
         $this->setUserType("0");

@@ -12,6 +12,7 @@ if(!isset($jobId)){
 $job = new JobPost;
 $job->setId($jobId);
 $job->setAllFromDB();
+$job->setApplicantIdsFromDB();
 $owner = $job->getOwner();
 $owner->setAllFromDB();
 
@@ -95,17 +96,18 @@ if(isset($_SESSION['userId'])){
                     $ratingText = $ratingAverage.'/5 , Dolgozott '.$numberOfRatings.' alakalommal';
                 }
 
-                ?>  <br>
+                ?> 
+                    <br>
                     <p><?= $applicant->lastName?> <?= $applicant->firstName?></p>
                     <p>Értékelés: <?= $ratingText ?></p>
-                    <?php
+                <?php
                     if(!$job->isAccepted){
-                        ?>
-                        <form method="POST" action="Handlers/Accept_Applicant_Handler.php">
-                            <input type="submit" name="submit" value="Alkalmaz">
-                            <input type="hidden" name="jobId" value="<?= $job->id ?>">
-                            <input type="hidden" name="applicantId" value="<?= $applicant->id ?>">   
-                        </form>
+                ?>
+                    <form method="POST" action="Handlers/Accept_Applicant_Handler.php">
+                        <input type="submit" name="submit" value="Alkalmaz">
+                        <input type="hidden" name="jobId" value="<?= $job->id ?>">
+                        <input type="hidden" name="applicantId" value="<?= $applicant->id ?>">   
+                    </form>
                 <?php
                     }
                 unset($applicant);
