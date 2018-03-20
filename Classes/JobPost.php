@@ -12,8 +12,55 @@ class JobPost extends Dbh{
     public $isAccepted;
     public $acceptedStudentId;
     
-    public function setId($_id){
-        $this->id = $_id;
+    public function __construct(){
+        $this->isAccepted = FALSE;
+    }
+    
+    public function setId($id){
+        $this->id = $id;
+    }
+    
+    public function setOwnerId($ownerId){
+        $this->ownerId = $ownerId;
+    }
+    
+    public function setOfferedHours($offeredHours){
+        $this->offeredHours = $offeredHours;
+    }
+    
+    public function setTitle($title){
+        $this->title = $title;
+    }
+    
+    public function setDescription($description){
+        $this->description = $description;
+    }
+    
+    public function setLocation($location){
+        $this->location = $location;
+    }
+    
+    public function setUploadedAt($uploadedAt){
+        $this->uploadedAt = $uploadedAt;
+    }
+    
+    public function setAppointment($appointment){
+        $this->appointment = $appointment;
+    }  
+    
+    public function setIsAccepted($isAccepted){
+        $this->isAccepted = $isAccepted;
+    }
+    
+    public function setApplicantIdsFromDB(){
+        $sqlApplyings = $this->connect()->query("SELECT * FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = '".$this->id."' ;");
+        while($applying = $sqlApplyings->fetch()){
+            $this->applicantIds[] = $applying['jelentkezo_id'];
+            if(!$this->isAccepted && $applying['elfogadva'] == 1){
+                $this->setIsAccepted(TRUE);
+                $this->setAcceptedStudentId($applying['jelentkezo_id']);
+            }
+        }    
     }
     
     public function setAcceptedStudentId($studentId){
@@ -21,10 +68,18 @@ class JobPost extends Dbh{
         $this->isAccepted = TRUE;
     }
     
-    public function setIsAccepted($isAccepted){
-        $this->isAcepted = $isAcpeted;
+    public function create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId){
+        
+        $this->setOwnerId($ownerId);        
+        $this->setOfferedHours($offeredHours);        
+        $this->setTitle($title);        
+        $this->setDescription($description);        
+        $this->setLocation($location);        
+        $this->setUploadedAt($uploadedAt);        
+        $this->setAppointment($appointment);        
+        $this->setOwnerId($ownerId);     
     }
-    
+//    GETTERS
     public function getOwner(){  
         $owner = new Employer();
         $owner->setId($this->ownerId);
@@ -35,20 +90,6 @@ class JobPost extends Dbh{
         $student = new Student;
         $student->setId($this->acceptedStudentId);
         return $student;
-    }
-    
-    public function create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId){
-        
-        $this->ownerId = $ownerId;        
-        $this->offeredHours = $offeredHours;        
-        $this->title = $title;        
-        $this->description = $description;        
-        $this->location = $location;        
-        $this->uploadedAt = $uploadedAt;        
-        $this->appointment = $appointment;        
-        $this->ownerId = $ownerId;    
-        
-
     }
     
     public function upload(){
@@ -67,27 +108,14 @@ class JobPost extends Dbh{
         $sqlPost = $this->connect()->prepare("SELECT * FROM ajanlatok WHERE id =? ;");
         $sqlPost->execute([$this->id]);
         if($post = $sqlPost->fetch()){
-            $this->id = $post['id'];
-            $this->ownerId = $post['munkaado_id'];
-            $this->offeredHours = $post['felajanlott_oraszam'];
-            $this->title = $post['cim'];
-            $this->description = $post['leiras'];
-            $this->location = $post['helyszin'];
-            $this->uploadedAt = $post['feltoltve'];
-            $this->appointment = $post['munka_idopont'];    
-            
-            $sqlApplyings = $this->connect()->query("SELECT * FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = '".$this->id."' ;");
-            while($applying = $sqlApplyings->fetch()){
-                $this->applicantIds[] = $applying['jelentkezo_id'];
-                if(!$this->isAccepted && $applying['elfogadva'] == 1){
-                    $this->isAccepted = TRUE;
-                
-                    $this->acceptedStudentId = $applying['jelentkezo_id'];
-                }
-            }
-            
+            $this->setOwnerId($post['munkaado_id']);
+            $this->setOfferedHours($post['felajanlott_oraszam']);
+            $this->setTitle($post['cim']);
+            $this->setDescription($post['leiras']);
+            $this->setLocation($post['helyszin']);
+            $this->setUploadedAt($post['feltoltve']);
+            $this->setAppointment($post['munka_idopont']);    
         }
-        
     }
     
     public function deleteFromDB(){
@@ -113,7 +141,7 @@ class JobPost extends Dbh{
     }
     
     public function uploadAcceptedApplying(){
-        if(isAccepted === TRUE){
+        if($this->isAccepted === TRUE){
             $elfogadva = '1';
             
             $applying = $this->connect()->prepare('UPDATE ajanlatokra_jelentkezesek SET elfogadva = ? WHERE jelentkezo_id = ? AND ajanlat_id = ? ;');    
@@ -127,11 +155,5 @@ class JobPost extends Dbh{
             
             $applying->execute([$elfogadva, $this->id]);
         }
-        /*
-        unset ($this->applicantIds[array_search($this->acceptedStudentId, $this->applicantIds)]);
-        array_splice($this->applicantIds, 0, 0, $this->acceptedStudentId);
-        */
     }
-    
-    
 }
