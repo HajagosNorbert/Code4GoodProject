@@ -6,7 +6,6 @@
 </div>
 <div class="first">
     Regisztrációs felület:
-</div>
 <div id="elerhetoseg">
     <p>A Csillagal (*) jelölt részek kitöltése kötelező.</p>
     <form action="Handlers/Registration_Handler.php" method="POST">
@@ -24,11 +23,12 @@
             <input type="text" name="telefonszam" placeholder="Telefonszám *">
         </p>
        <br><br><br>Magadról (Később megváltoztathatod): <br>
-        <textarea name="bemutatkozas" placeholder="Írd be ide az üzeneted." id="myTextArea" rows="3" cols="77"></textarea><br><br><br>
+        <textarea name="bemutatkozas" placeholder="Írd be ide az üzeneted." id="myTextArea" rows="3" cols="40"></textarea><br><br><br>
         <input type="submit" class="gomb2" name="munkaadoRegistrationSubmit" value="submited">
     </form>
 </div>
 <div class="copy">
     @copyright  2018-2019
+</div>
 </div>
 <?php include 'Footer.php' ?>

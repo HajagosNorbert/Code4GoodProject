@@ -53,6 +53,7 @@ else{
         }
         
         ?>
+<div class="first">
 <div class="job-post">
         <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;"><div style="background-color: #dfdfdf;">
         <h1>
@@ -79,16 +80,18 @@ else{
         <input type="hidden" name=hasAcceptedJelentkezo value="<?= $post->isAccepted ?>">
     </form>
 </div>
+    </div>
 <br>
+    
         <?php
     }
 }
 $activeJobs = count($user->jobPostIds);
 if($activeJobs <3){
-    $offerJobLink = '<h1 ><a href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a></h1>';
+    $offerJobLink = '<div class="offering"><a href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a></div>';
 }
 else{
-    $offerJobLink = '<h1>Maximum 3 ajánlatod lehet</h1>';
+    $offerJobLink = '<div class="offering">Maximum 3 ajánlatod lehet</div>';
 }
 echo $offerJobLink;
 

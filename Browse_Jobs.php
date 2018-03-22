@@ -42,6 +42,7 @@ foreach($allPosts as $post){
     $owner = $post->getOwner();
     $owner->setAllFromDB();
     ?>
+    <div class="first">
       <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;"><div style="background-color: #dfdfdf;">
             <h1><?= $post->title ?></h1>
             <h1>Munkaidő: <?= $post->offeredHours ?> óra</h1>
@@ -49,6 +50,7 @@ foreach($allPosts as $post){
             <p>Itt: <?= $post->location ?></p>
             <p>Feltette: <?= $owner->lastName ?> <?= $owner->firstName ?></p>
         </div></a>
+    </div>
         <br><br>
     <?php
 }

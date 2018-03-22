@@ -14,8 +14,9 @@ if(count($user->notificationIds) === 0){
         $notification = new Notification;
         $notification->setId($notificationId);
         $notification->setAllFromDB();
+        
     ?>
-
+<div class="first">
     <h2><?= $notification->title ?></h2>
     <p><?= $notification->content ?></p>
     <form action="Handlers/Kill_Notification_Handler.php" metho="GET">
@@ -23,7 +24,7 @@ if(count($user->notificationIds) === 0){
         <input type="hidden" name="notificationId" value="<?= $notification->id?>">
     </form>
     <br><br><br>
-
+</div>
     <?php
     }
     

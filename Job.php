@@ -18,15 +18,16 @@ $owner->setAllFromDB();
 
 ?>
 <br><br><br><br><br><br><br><br><br>
-
-<h1><?= $job->title ?></h1>
+<div class="first" class="beljebb">
+<div class="beljebb">
+    <h1><?= $job->title ?></h1>
 <h1>Munkaidő: <?= $job->offeredHours ?> óra</h1>
 <p><?= $job->description ?></p>
 <p>Mikorra: <?= $job->appointment ?></p>  
 <p>Itt: <?= $job->location ?></p>
 <p>Feltette: <?= $owner->lastName ?> <?= $owner->firstName ?></p>
 <p>Telefonszám: <?= $owner->phoneNumber ?></p>
-
+</div>
 <?php
 //ha jelentkezhet az ajánlatra
 
@@ -41,9 +42,10 @@ if(isset($_SESSION['userId'])){
                 <input type="submit" name="submit" value="Jelentkezek!">
                 <input type="hidden" name="jobIdToApply" value="<?= $job->id ?>">
             </form>
-
+</div>
         <?php
         }
+        
         //Megszakítani a jelentkezést
         else if(in_array($job->id , $user->applyingJobIds)){
             ?>
@@ -57,14 +59,9 @@ if(isset($_SESSION['userId'])){
     
     if($user->userType === '1' && $owner->id === $user->id){
         
-        ?>
-            <br><br><br><br>
-            <h3>Jelentkezők:</h3>
-
-        <?php
         if(count($job->applicantIds) === 0){
             ?>
-            <h4>Nincs</h4>
+            <div class="beljebb">Nincs</div>
             <?php
         }
         else{
@@ -82,6 +79,11 @@ if(isset($_SESSION['userId'])){
                 unset($applicant);
             }
 
+        ?>
+            <br><br><br><br>
+            <div class="beljebb">Jelentkezők:</div>
+
+        <?php
             
             foreach($job->applicantIds as $applicantId){
                 $applicant = Person::createPerson($applicantId);

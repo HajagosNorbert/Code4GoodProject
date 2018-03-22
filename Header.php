@@ -20,7 +20,7 @@ include_once 'Classes/Student.php';
     <title>Kezdőlap</title>
 </head>
 
-<body>
+<body class="MadoMyJobs">
     
    <Header>
     <ul>

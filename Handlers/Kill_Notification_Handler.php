@@ -32,3 +32,4 @@ $notification = new Notification;
 $notification->setId($notificationId);
 $notification->deleteFromDB();
 
+Header('Location: ../Notificationes.php');
