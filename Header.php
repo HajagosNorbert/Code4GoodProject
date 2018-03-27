@@ -41,9 +41,11 @@ include_once 'Classes/Student.php';
         <?php
         }
         //bejelentkezett felhasználónak megjeleniti
-         if(isset($user)){     
+         if(isset($user)){ 
+             $user->setAllFromDB();
             ?>
                 <li><a href="Handlers/Logout_Handler.php">Kijelentkezés</a></li>
+        <li><a href="Profile.php?id=<?= $user->id ?>"><?= $user->lastName ?> <?= $user->firstName ?> </a></li>
             <?php
             if($user->userType === '1'){
                 ?>

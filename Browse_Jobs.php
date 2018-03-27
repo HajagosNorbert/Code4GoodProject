@@ -48,7 +48,7 @@ foreach($allPosts as $post){
             <h1>Munkaidő: <?= $post->offeredHours ?> óra</h1>
             <p>Mikorra: <?= $post->appointment ?></p>  
             <p>Itt: <?= $post->location ?></p>
-            <p>Feltette: <?= $owner->lastName ?> <?= $owner->firstName ?></p>
+          <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
         </div></a>
     </div>
         <br><br>

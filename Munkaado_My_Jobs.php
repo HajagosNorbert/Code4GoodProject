@@ -88,7 +88,7 @@ else{
 }
 $activeJobs = count($user->jobPostIds);
 if($activeJobs <3){
-    $offerJobLink = '<div class="offering"><a href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a></div>';
+    $offerJobLink = '<div class="offering"><h1><a href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a></h1></div><br>';
 }
 else{
     $offerJobLink = '<div class="offering">Maximum 3 ajánlatod lehet</div>';
