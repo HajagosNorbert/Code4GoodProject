@@ -24,7 +24,7 @@
         </p>
        <br><br><br>Magadról (Később megváltoztathatod): <br>
         <textarea name="bemutatkozas" placeholder="Írd be ide az üzeneted." id="myTextArea" rows="3" cols="40"></textarea><br><br><br>
-        <input type="submit" class="gomb2" name="munkaadoRegistrationSubmit" value="submited">
+        <input type="submit" class="gomb2" name="munkaadoRegistrationSubmit" value="Regisztrálj">
     </form>
 </div>
 <div class="copy">

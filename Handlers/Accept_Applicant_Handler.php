@@ -16,7 +16,6 @@ else{
 //    try{
         $user = new Employer;
         $user->setId($_SESSION['userId']);  
-        $user->setAllFromDB();
         $user->setJobPostIdsFromDB();
         if(!in_array($_POST['jobId'], $user->jobPostIds)){
             Header('Location: ../Welcome.php');
@@ -33,10 +32,10 @@ else{
         $notification->setNotifiedUserId($job->acceptedStudentId);
         $notificationTitle = "Meg lettél bízva!";
         $notification->setTitle($notificationTitle);
-        $notificationContent = "Te lettél megbízva a(z) ".$job->title." munkára ".$user->lastName." ".$user->firstName." által. ";
+        $notificationContent = "Te lettél megbízva a(z) ".$job->title." munkára";
         $notification->setContent($notificationContent);
         $notification->upload();
-        Header('Location: ../Job.php?');
+        Header('Location: ../Job.php?id='.$job->id);
         exit();
 //    } 
 //    catch (Exception $e){

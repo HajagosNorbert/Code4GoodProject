@@ -13,6 +13,7 @@ $schools = $pdo->connect()->query("SELECT * FROM iskolak;");
 <div class="first">
     Regisztrációs felület:
 </div>
+<div class="first">
 <div id="elerhetoseg"><p>A Csillagal (*) jelölt részek kitöltése kötelező.</p>
     <form action="Handlers/Registration_Handler.php" method="POST">
         <p>Vezetéknév: <input type="text" name="vezeteknev" placeholder="Vezetéknév *"></p>
@@ -41,9 +42,10 @@ $schools = $pdo->connect()->query("SELECT * FROM iskolak;");
         </select></p>
         
         <br><br><br>Magadról (Később megváltoztathatod): <br>
-        <textarea name="bemutatkozas" placeholder="Írd be ide az üzeneted." id="myTextArea" rows="3" cols="77"></textarea><br><br><br>
+        <textarea name="bemutatkozas" placeholder="Írd be ide az üzeneted." id="myTextArea" rows="3" cols="40"></textarea><br><br><br>
         <input type="submit" class="gomb2" name="diakRegistrationSubmit" value="Regisztálj">
     </form>
+</div>
 </div>
 
 <?php include 'Footer.php' ?>

@@ -36,6 +36,14 @@ class Login extends Dbh{
     }
 }
 
+
+
+
+
+
+
+
+
 class Registration extends Dbh{
     
     public $lastName;    

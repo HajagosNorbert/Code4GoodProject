@@ -5,6 +5,7 @@ include_once '../Classes/Person.php';
 include_once '../Classes/Employer.php';
 include_once '../Classes/Notification.php';
 
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -28,6 +29,22 @@ $jobId = $_GET['offerId'];
 
 $job = new JobPost;
 $job->setId($jobId);
+$job->setAllFromDB();
+$job->setApplicantIdsFromDB();
+
+foreach ($job->applicantIds as $applicantId){
+    $notification = new Notification;
+    $notification->setNotifiedUserId($applicantId);
+    
+    $notificationTitle = "Munka megszűnve"; 
+    $notification->setTitle($notificationTitle);
+    
+    $notificationContent = "A(z) ".$job->title." munkát ,amire jelentkeztél megszűntentték.";
+    $notification->setContent($notificationContent);
+    
+    $notification->upload();
+    unset($notification);
+}
 $job->deleteFromDB();
 
 Header('Location: ../Munkaado_My_Jobs.php');

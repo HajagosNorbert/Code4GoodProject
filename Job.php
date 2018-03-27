@@ -16,6 +16,11 @@ $job->setApplicantIdsFromDB();
 $owner = $job->getOwner();
 $owner->setAllFromDB();
 
+if(!isset($owner->phoneNumber)){
+    $phoneNumber = "Nincs beállítva";
+} else {
+    $phoneNumber = $owner->phoneNumber;
+}
 ?>
 <br><br><br><br><br><br><br><br><br>
 <div class="first" class="beljebb">
@@ -25,8 +30,8 @@ $owner->setAllFromDB();
 <p><?= $job->description ?></p>
 <p>Mikorra: <?= $job->appointment ?></p>  
 <p>Itt: <?= $job->location ?></p>
-<p>Feltette: <?= $owner->lastName ?> <?= $owner->firstName ?></p>
-<p>Telefonszám: <?= $owner->phoneNumber ?></p>
+<p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
+<p>Telefonszám: <?= $phoneNumber ?></p>
 </div>
 <?php
 //ha jelentkezhet az ajánlatra
@@ -70,9 +75,9 @@ if(isset($_SESSION['userId'])){
                 $applicant = $job->getAcceptedStudent();
                 $applicant->setAllFromDB();
                 ?>
-                    <h2>Megbízva: <?= $applicant->lastName?> <?= $applicant->firstName?></h2>
+                <h2>Megbízva: <a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a></h2>
                     <form action="Handlers/Cancel_Accepted_Applicant_Handler.php" method="POST">
-                        <input type="submit" name="submit" value="visszavonás">
+                        <input type="submit" name="submit" value="Megbízás visszavonása">
                         <input type="hidden" name="JobPostId" value="<?= $job->id?>"> 
                     </form>
                 <?php
@@ -86,7 +91,8 @@ if(isset($_SESSION['userId'])){
         <?php
             
             foreach($job->applicantIds as $applicantId){
-                $applicant = Person::createPerson($applicantId);
+                $applicant = new Student;
+                $applicant->setId($applicantId);
                 $applicant->setAllFromDB();
                 $ratings = $applicant->getRatingValues();
                 $numberOfRatings = count($ratings);
@@ -100,7 +106,7 @@ if(isset($_SESSION['userId'])){
 
                 ?> 
                     <br>
-                    <p><?= $applicant->lastName?> <?= $applicant->firstName?></p>
+                    <p><a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a></p>
                     <p>Értékelés: <?= $ratingText ?></p>
                 <?php
                     if(!$job->isAccepted){

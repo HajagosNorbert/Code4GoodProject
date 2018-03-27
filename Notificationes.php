@@ -23,7 +23,7 @@ if(count($user->notificationIds) === 0){
         <input type="submit" name="submit" value="Értettem">
         <input type="hidden" name="notificationId" value="<?= $notification->id?>">
     </form>
-    <br><br><br>
+    <br>
 </div>
     <?php
     }

@@ -10,6 +10,7 @@ abstract class Person extends Dbh{
     public $phoneNumber;
     public $facebookId;
     public $introduction;
+    public $ratingValues = array();
     public $ratingIds = array();
     public $notificationIds = array();
     
@@ -74,9 +75,16 @@ abstract class Person extends Dbh{
         $this->setLastName($person['vezeteknev']);
         $this->setEmail($person['email']);
         $this->setUserType($person['felhasznalo_tipus']);
-        $this->setPhoneNumber($person['telefonszam']);
+        if($person['telefonszam'] != "NULL"){
+            $this->setPhoneNumber($person['telefonszam']);
+        }
+        if($person['facebook_id'] != "NULL"){
         $this->setFacebookId($person['facebook_id']);
+        }
+        if($person['bemutatkozas'] != "NULL"){
         $this->setIntroduction($person['bemutatkozas']);
+        }
+        
         return $person;
     }
           
