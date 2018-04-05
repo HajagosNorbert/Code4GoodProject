@@ -22,17 +22,23 @@ if(!isset($owner->phoneNumber)){
     $phoneNumber = $owner->phoneNumber;
 }
 ?>
-<br><br><br><br><br><br><br><br><br>
-<div class="first" class="beljebb">
-<div class="beljebb">
-    <h1><?= $job->title ?></h1>
-<h1>Munkaidő: <?= $job->offeredHours ?> óra</h1>
-<p><?= $job->description ?></p>
-<p>Mikorra: <?= $job->appointment ?></p>  
-<p>Itt: <?= $job->location ?></p>
-<p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
-<p>Telefonszám: <?= $phoneNumber ?></p>
-</div>
+
+<div class="inner 7u 12u$(small) box" >
+    <ul class="alt">
+        <li>
+            <div class="align-center">
+                <h3><?= $job->title ?></h3>
+                <h1>Munkaidő: <?= $job->offeredHours ?> óra</h1>
+            </div>
+        </li>
+        <li>
+            <div class="inner 12u 10u$(small)">
+        <p><?= $job->description ?></p>
+        <p>Mikorra: <?= $job->appointment ?></p>  
+        <p>Itt: <?= $job->location ?></p>
+        <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
+        <p>Telefonszám: <?= $phoneNumber ?></p>
+
 <?php
 //ha jelentkezhet az ajánlatra
 
@@ -44,10 +50,9 @@ if(isset($_SESSION['userId'])){
             ?>
 
             <form action="Handlers/Aplying_Handler.php" method="POST">
-                <input type="submit" name="submit" value="Jelentkezek!">
+                <input type="submit" class="fit special" name="submit" value="Jelentkezek!">
                 <input type="hidden" name="jobIdToApply" value="<?= $job->id ?>">
             </form>
-</div>
         <?php
         }
         
@@ -55,7 +60,7 @@ if(isset($_SESSION['userId'])){
         else if(in_array($job->id , $user->applyingJobIds)){
             ?>
             <form action="Handlers/Cancel_Aplying_Handler.php" method="POST">
-                <input type="submit" name="submit" value="Jelenkezés megszakitása">
+                <input type="submit" class="fit" name="submit" value="Jelenkezés megszakitása">
                 <input type="hidden" name="jobIdToCancel" value="<?= $job->id ?>">
             </form>
             <?php
@@ -66,7 +71,7 @@ if(isset($_SESSION['userId'])){
         
         if(count($job->applicantIds) === 0){
             ?>
-            <div class="beljebb">Nincs</div>
+            <h3>Nincs</h3>
             <?php
         }
         else{
@@ -75,18 +80,25 @@ if(isset($_SESSION['userId'])){
                 $applicant = $job->getAcceptedStudent();
                 $applicant->setAllFromDB();
                 ?>
-                <h2>Megbízva: <a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a></h2>
+                <div class="row">
+                    <h2>Megbízva: <a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a></h2>
                     <form action="Handlers/Cancel_Accepted_Applicant_Handler.php" method="POST">
-                        <input type="submit" name="submit" value="Megbízás visszavonása">
+                        <input type="submit" class="special fit" name="submit" value="Megbízás visszavonása">
                         <input type="hidden" name="JobPostId" value="<?= $job->id?>"> 
                     </form>
+                </div>
+        </div>
+        </li>
+    </ul>
+</div>
                 <?php
                 unset($applicant);
             }
 
         ?>
-            <br><br><br><br>
-            <div class="beljebb">Jelentkezők:</div>
+            <div class="inner 5u 8u$(small) align-center">
+            <h3>Jelentkezők:</h3>
+                <ul class="alt">
 
         <?php
             
@@ -105,22 +117,28 @@ if(isset($_SESSION['userId'])){
                 }
 
                 ?> 
-                    <br>
-                    <p><a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a></p>
-                    <p>Értékelés: <?= $ratingText ?></p>
-                <?php
-                    if(!$job->isAccepted){
-                ?>
-                    <form method="POST" action="Handlers/Accept_Applicant_Handler.php">
-                        <input type="submit" name="submit" value="Alkalmaz">
-                        <input type="hidden" name="jobId" value="<?= $job->id ?>">
-                        <input type="hidden" name="applicantId" value="<?= $applicant->id ?>">   
-                    </form>
+                    <li>
+                        <a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a>
+                        <p>Értékelés: <?= $ratingText ?></p>
+
+                        <?php
+                            if(!$job->isAccepted){
+                        ?>
+
+                        <form method="POST" action="Handlers/Accept_Applicant_Handler.php">
+                            <input type="submit" name="submit" value="Alkalmaz">
+                            <input type="hidden" name="jobId" value="<?= $job->id ?>">
+                            <input type="hidden" name="applicantId" value="<?= $applicant->id ?>">   
+                        </form>
+                    </li>
                 <?php
                     }
                 unset($applicant);
             }
-            
+            ?>
+                </ul>
+            </div>
+            <?php
         }
     }
 }

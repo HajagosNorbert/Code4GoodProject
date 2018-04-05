@@ -4,18 +4,6 @@ include_once 'Classes/BrowseJobs.php';
 include_once 'Classes/JobPost.php';
 
 
-echo'
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>';
-
 
 $userNotApplied = "";
 if(isset($_SESSION['userId'])){
@@ -37,23 +25,32 @@ foreach ($allPostIds as $postId){
     $jobPost->setAllFromDB();
     $allPosts[] = $jobPost;
 }
-
+?>
+<ul class="alt inner 5u 10u$(small)">
+<?php
 foreach($allPosts as $post){
     $owner = $post->getOwner();
     $owner->setAllFromDB();
     ?>
-    <div class="first">
-      <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;"><div style="background-color: #dfdfdf;">
-            <h1><?= $post->title ?></h1>
+
+    <div class="box">
+        <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;">
+        <li>
+          <h3><?= $post->title ?></h3>
+        </li>
+        <li>
             <h1>Munkaidő: <?= $post->offeredHours ?> óra</h1>
             <p>Mikorra: <?= $post->appointment ?></p>  
             <p>Itt: <?= $post->location ?></p>
-          <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
-        </div></a>
+            <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
+        </li>
+        </a>
     </div>
-        <br><br>
-    <?php
+        <?php
 }
+    ?>
+</ul>
+    <?php
 }
 
 include 'Footer.php';

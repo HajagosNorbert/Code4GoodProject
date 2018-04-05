@@ -1,5 +1,6 @@
 <?php
 include_once 'Header.php';
+include_once 'Classes/Rating.php';
 
 if(!isset($_SESSION['userId'])){
     Header('Location: Index.php');
@@ -17,9 +18,30 @@ $visitedUser = Person::createPerson($profileId);
 $visitedUser->setAllFromDB();
 $visitedUser->setRatingIdsFromDB();
 
+$ratings = array();
+foreach ($visitedUser->ratingIds as $ratingId){
+    $rating = new Rating;
+    $rating->setId($ratingId);
+    $rating->setAllFromDB();
+    $ratings[] = $rating;
+}
+$ratingSum = 0;
+foreach ($ratings as $rating){
+    $ratingSum += intval($rating->value);
+}
+if(count($ratings ) !== 0){
+    $ratingAverage = $ratingSum / count($ratings);
+    $profileRatingAverage = $ratingAverage.' / 5';
+}
+else{
+    $profileRatingAverage = 'Még nem értékelték';
+}
+
 if($visitedUser->userType === '1'){
+    $numberOfRatingsText = 'Kiadott munkák száma: ';
     $profileType = "munkaadó";
 } else if($visitedUser->userType === '0'){
+    $numberOfRatingsText = 'Elvégzett munkák száma';
     $profileType = "diák";
 }
 
@@ -37,12 +59,19 @@ if(isset($visitedUser->introduction)){
 ?>
 
 <!-- A profile[talujdonság] és a visitedUser->[tulajdonság] ugyan az, de ha valami nincs beállítva a visitedUser -ben, akkor azt másik változóban megváltoztatom valami kitöltő szövegre-->
-<br><br><br><br><br><br>
-<h1><?= $visitedUser->lastName ?> <?= $visitedUser->firstName ?></h1>
-<h2><?= $profileType ?></h2>
-<p>Ide jön az értékelés pl: "4.6 / 5"</p>
-<p>Ide jön hányszor értékelték pl: "Dolgozott 6 alkalommal"</p>
-<p>Telefonszám: <?= $profilePhone ?></p>
-<p> <?= $profileIntroduction ?></p>
+<div class="inner 6u 12u$(small)">
+        <ul class="alt">
+        <li class="align-center">
+            <h2><strong><?= $visitedUser->lastName ?> <?= $visitedUser->firstName ?></strong>, <?= $profileType ?></h2>
+            
+        </li>
+        <li>
+            <p>Értékelés: <?= $profileRatingAverage ?></p>
+            <p><?= $numberOfRatingsText ?> <?= count($ratings) ?></p>
+            <p>Telefonszám: <?= $profilePhone ?></p>
+            <blockquote> <?= $profileIntroduction ?></blockquote>
+        </li>
+    </ul>
+</div>
 <?php
 include_once 'Footer.php';

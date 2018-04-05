@@ -8,17 +8,6 @@ if($user->userType !== '1'){
 }
 ?>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
 <?php
 $postBrowser = new BrowseJobs;
 $postIds = $postBrowser->getAllPostIds('WHERE munkaado_id ="'.$user->id.'"');
@@ -38,6 +27,9 @@ else{
     }
     
     $user->setJobPostIdsFromDB();
+    ?>
+<ul class="alt 5u 10u$(small) inner">
+    <?php
     foreach($posts as $post){
         
         if($post->isAccepted){
@@ -53,12 +45,11 @@ else{
         }
         
         ?>
-<div class="first">
-<div class="job-post">
-        <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;"><div style="background-color: #dfdfdf;">
-        <h1>
+<li class="box">
+        <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;"><div>
+        <h2>
             <?= $post->title ?>
-        </h1>
+        </h2>
         <h1>
             Munkaidő:
             <?= $post->offeredHours ?> óra
@@ -79,23 +70,26 @@ else{
         <input type="hidden" name=offerId value="<?= $post->id ?>">
         <input type="hidden" name=hasAcceptedJelentkezo value="<?= $post->isAccepted ?>">
     </form>
-</div>
-    </div>
+    </li>
+
 <br>
     
         <?php
     }
+?>
+<?php
 }
 $activeJobs = count($user->jobPostIds);
 if($activeJobs <3){
-    $offerJobLink = '<div class="offering"><h1><a href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a></h1></div><br>';
+    $offerJobLink = '<a class="button special" href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a><br>';
 }
 else{
-    $offerJobLink = '<div class="offering">Maximum 3 ajánlatod lehet</div>';
+    $offerJobLink = '<h3>Maximum 3 ajánlatod lehet</h3>';
 }
 echo $offerJobLink;
 
 ?>
+</ul>
 
 <?php 
 include 'Footer.php';

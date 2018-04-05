@@ -30,9 +30,9 @@ else{
         
         $notification = new Notification;
         $notification->setNotifiedUserId($job->acceptedStudentId);
-        $notificationTitle = "Meg lettél bízva!";
+        $notificationTitle = "Megbízást kaptál!";
         $notification->setTitle($notificationTitle);
-        $notificationContent = "Te lettél megbízva a(z) ".$job->title." munkára";
+        $notificationContent = "Te kaptad a megbízást a(z) ".$job->title." munkára";
         $notification->setContent($notificationContent);
         $notification->upload();
         Header('Location: ../Job.php?id='.$job->id);
