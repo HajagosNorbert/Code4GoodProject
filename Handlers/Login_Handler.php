@@ -1,5 +1,6 @@
 <?php
 include_once '../Classes/Dbh.php';
+include_once '../Classes/Validator.php';
 include_once '../Classes/Authentication.php';
 
 if (session_status() == PHP_SESSION_NONE) {

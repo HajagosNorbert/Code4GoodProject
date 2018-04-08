@@ -1,7 +1,8 @@
 
 <?php
 
-include_once '../Classes/dBH.php';
+include_once '../Classes/Dbh.php';
+include_once '../Classes/Validator.php';
 include_once '../Classes/Authentication.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -83,10 +84,10 @@ if(!$regist->isFieldNotExist('felhasznalok', 'email', $regist->email)){
 if($regist->hasError){
     $errorUrlParams = $regist->getErrorUrlParams();
     if($regist->userType === '0'){
-        Header('Location: ../Diak_Registration.php'.$errorUrlParams);
+        Header('Location: ../Diak_Registration.php?'.$errorUrlParams);
     }
     else if($regist->userType === '1'){
-        Header('Location: ../Munkaado_Registration.php'.$errorUrlParams);
+        Header('Location: ../Munkaado_Registration.php?'.$errorUrlParams);
     }
     exit();
 }
