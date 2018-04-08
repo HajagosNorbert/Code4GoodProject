@@ -15,8 +15,20 @@ if(!isset($_GET['id'])){
 $profileId=$_GET['id'];
 
 $visitedUser = Person::createPerson($profileId);
+if($visitedUser === NULL){
+    echo "Nem létezik ilyen felhasználó!";
+    exit();
+}
 $visitedUser->setAllFromDB();
 $visitedUser->setRatingIdsFromDB();
+
+
+
+$isProfileOfUser = FALSE;
+
+if($visitedUser->id === $user->id){
+    $isProfileOfUser = TRUE;
+}
 
 $ratings = array();
 foreach ($visitedUser->ratingIds as $ratingId){
@@ -38,11 +50,11 @@ else{
 }
 
 if($visitedUser->userType === '1'){
-    $numberOfRatingsText = 'Kiadott munkák száma: ';
-    $profileType = "munkaadó";
+    $numberOfRatingsText = 'Elvégzett kiadott feladatok: ';
+    $profileType = "Munkaadó";
 } else if($visitedUser->userType === '0'){
-    $numberOfRatingsText = 'Elvégzett munkák száma';
-    $profileType = "diák";
+    $numberOfRatingsText = 'Elvégzett munkák száma:';
+    $profileType = "Diák";
 }
 
 if(isset($visitedUser->phoneNumber)){
@@ -59,19 +71,67 @@ if(isset($visitedUser->introduction)){
 ?>
 
 <!-- A profile[talujdonság] és a visitedUser->[tulajdonság] ugyan az, de ha valami nincs beállítva a visitedUser -ben, akkor azt másik változóban megváltoztatom valami kitöltő szövegre-->
-<div class="inner 6u 12u$(small)">
-        <ul class="alt">
-        <li class="align-center">
-            <h2><strong><?= $visitedUser->lastName ?> <?= $visitedUser->firstName ?></strong>, <?= $profileType ?></h2>
-            
-        </li>
-        <li>
-            <p>Értékelés: <?= $profileRatingAverage ?></p>
-            <p><?= $numberOfRatingsText ?> <?= count($ratings) ?></p>
-            <p>Telefonszám: <?= $profilePhone ?></p>
-            <blockquote> <?= $profileIntroduction ?></blockquote>
-        </li>
-    </ul>
+<div class="inner 10u 12u$(small)">
+    <h2 class="align-center">
+        <strong><?= $visitedUser->lastName ?> <?= $visitedUser->firstName ?></strong> - <?= $profileType ?>
+    </h2>
+    
+    <hr class="major">
+    
+    <div class="row">
+        <?php if ($isProfileOfUser){
+        ?>
+        <div class="6u 10u$(small)">
+            <div class="8u$ 12u$(small)">
+                <h3><b>Email címed: </b><?= $visitedUser->email ?></h3>
+            </div>
+            <?php
+            }   
+            ?>
+            <div class="8u$ 12u$(small)">
+                <h4><b>Értékelés: </b><?= $profileRatingAverage ?></h4>
+            </div>
+            <div class="8u$ 12u$(small)">
+                <h4><b><?= $numberOfRatingsText ?></b> <?= count($ratings) ?></h4>
+            </div>
+            <div class="8u$ 12u$(small)">
+                <h4><b>Telefonszám: </b><?= $profilePhone ?></h4>
+            </div>
+        <?php if ($isProfileOfUser){
+        ?>
+        </div>
+        <?php
+        }   
+
+        if ($isProfileOfUser){
+            ?>
+            <div class="6u 10u$(small)">
+                <form method="POST" action="Handlers/Modify_Profile_Handler.php">
+                    <div class="row uniform">
+                        <div class="8u$ 10u$(small)">
+                             <input type="text" name="email" placeholder="Új email cím">
+                        </div>
+
+                        <div class="8u$ 10u$(small)">
+                            <input type="text" name="phoneNumber" placeholder="Új telefonszám">
+                        </div>
+                        <div class="10u$ 12u$(small)">
+                            <textarea name="introduction" placeholder="Új bemutatkozás" rows="4"></textarea>
+                        </div>
+                        <div class="10u$ 10u$(small)">
+                            <input type="submit" class="fit" name="submit" value="Megváltoztatás">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <?php
+            }   
+            ?>
+            <div class="fit">
+               <blockquote> <?= $profileIntroduction ?></blockquote>
+            </div>
+    </div>
+
 </div>
 <?php
 include_once 'Footer.php';
