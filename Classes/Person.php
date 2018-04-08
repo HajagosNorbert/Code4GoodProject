@@ -106,6 +106,23 @@ abstract class Person extends Dbh{
         return $average;
     }    
     
+    public function updateEmailInDB($email){
+        $update = $this->connect()->prepare("UPDATE felhasznalok SET email = ? WHERE id = ?;");
+        $update->execute([$email , $this->id]);
+        $update->debugDumpParams();
+        $this->setEmail($email);
+    }
+    
+    public function updateIntroductionInDB($introduction){
+        $update = $this->connect()->prepare("UPDATE felhasznalok SET bemutatkozas = ? WHERE id = ?;");
+        $update->execute([$introduction , $this->id]);
+    }
+    
+    public function updatePhoneNumberInDB($phoneNumber){
+        $update = $this->connect()->prepare("UPDATE felhasznalok SET telefonszam = ? WHERE id = ?;");
+        $update->execute([$phoneNumber , $this->id]);
+    }
+    
     public static function createPerson($id){
         $pdo = new Dbh;
         $sqlUserType = $pdo->connect()->prepare("SELECT felhasznalo_tipus FROM felhasznalok WHERE id = ? ;");
@@ -123,6 +140,7 @@ abstract class Person extends Dbh{
             return $employer;
         }
     }
+    
 
 }
 
