@@ -37,14 +37,10 @@ class Login extends Dbh{
 }
 
 
+#################################################
 
 
-
-
-
-
-
-class Registration extends Dbh{
+class Registration extends Validator{
     
     public $lastName;    
     public $firstName;    
@@ -59,8 +55,6 @@ class Registration extends Dbh{
     public $studentCard;
     public $schoolId;
     public $offerHours;
-    public $errors = array();   
-    public $hasError = FALSE;
 
 
     public function setLastName($lastName){
@@ -98,35 +92,6 @@ class Registration extends Dbh{
     }
     public function setOfferHours($offerHours){
         $this->offerHours = $offerHours;
-    }
-        
-    public function isEmailValid(){
-        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
-            return FALSE;
-        }
-        else{
-            return TRUE;
-        }
-    }
-    
-    public function isFieldNotExist($table, $field, $value){
-        $match = $this->connect()->query('SELECT id FROM '.$table.' WHERE '.$field.' = "'.$value.'" ;');
-        
-        if($match->rowCount() > 0){
-            return FALSE;
-        }
-        else{
-            return TRUE;
-        }       
-    }
-    
-    public function getErrorUrlParams(){
-        $urlParams = "?err=";
-        foreach ($this->errors as $error){
-            $urlParams .=$error.'+';
-        }
-        $urlParams = rtrim($urlParams , '+');
-        return $urlParams;
     }
     
     public function upload(){
