@@ -106,14 +106,13 @@ if(isset($_SESSION['userId'])){
                 $applicant = new Student;
                 $applicant->setId($applicantId);
                 $applicant->setAllFromDB();
-                $ratings = $applicant->getRatingValues();
-                $numberOfRatings = count($ratings);
-                if($numberOfRatings === 0){
+                $ratingAverage = $applicant->getRatingAverageFromDB();
+                if($ratingAverage === 0){
                     $ratingText = 'Nincs értékelve';
                 }
                 else{
-                    $ratingAverage = array_sum($ratings) / $numberOfRatings;
-                    $ratingText = $ratingAverage.'/5 , Dolgozott '.$numberOfRatings.' alakalommal';
+                    
+                    $ratingText = $ratingAverage.'/5 , Dolgozott '.$applicant->numberOfRatings.' alakalommal';
                 }
 
                 ?> 

@@ -12,7 +12,7 @@ abstract class Person extends Dbh{
     public $phoneNumber;
     public $facebookId;
     public $introduction;
-    public $ratingValues = array();
+    public $nomberOfRatings;
     public $ratingIds = array();
     public $notificationIds = array();
     
@@ -117,14 +117,11 @@ abstract class Person extends Dbh{
         return $person;
     }
           
-    public function getRatingValues(){
-        $ratingValues = array();
+    public function getRatingAverageFromDB(){
         $sqlRatings = $this->connect()->query("SELECT ertekeles FROM ertekelesek WHERE ertekelt_id = '".$this->id."';");  
-        
         while($rating = $sqlRatings->fetch()){
             $ratingValues[] = intval($rating['ertekeles']);
         }
-        return $ratingValues;
         
         if(count($ratingValues) === 0){
             $average = 0;
@@ -132,6 +129,8 @@ abstract class Person extends Dbh{
         else{
             $average = array_sum($ratingValues) / count($ratingValues);
         }
+//        CSINÁLJ SETTERT NEKI 
+        $this->numberOfRatings = count($ratingValues);
         return $average;
     }    
     

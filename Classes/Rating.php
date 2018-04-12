@@ -38,7 +38,7 @@ class Rating extends Dbh{
         $this->comment = $rate['megjegyzes'];
     }
     
-    public function uploda(){
+    public function upload(){
         $sqlRating = $this->connect()->prepare("INSERT INTO ertekelesek (ertekelt_id, ertekelo_id, ertekeles, megjegyzes) VALUES (?, ?, ?, ?);");
         $params = array($this->ratedUserId, $this->raterUserId, $this->value, $this->comment);
         $sqlRating->execute($params);
