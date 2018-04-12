@@ -6,6 +6,8 @@ abstract class Person extends Dbh{
     public $firstName;
     public $lastName;
     public $email;
+    public $hasProfileImage;
+    public $profileImageName;
     public $userType;
     public $phoneNumber;
     public $facebookId;
@@ -28,6 +30,32 @@ abstract class Person extends Dbh{
     
     public function setEmail($email){
         $this->email = $email;
+    }
+    
+    public function sethasProfileImage($hasProfileImage){
+        if($hasProfileImage == '1'){
+            $this->hasProfileImage = TRUE;
+        }
+        else{
+            $this->hasProfileImage = FALSE;
+        }
+    }
+    
+    public function setProfileImageName(){
+        if($this->hasProfileImage){
+            $profileImageName = "./Uploads/Images/profile*";
+            $profileImageInfo = glob($profileImageName);
+            $profileImageExt = explode('.', $profileImageInfo[0]);
+            $profileImageActualExt = $profileImageExt[2];
+            
+            $profileImageName = "profile".$this->id.".".$profileImageActualExt;
+            
+            $this->profileImageName = $profileImageName;
+
+        }
+        else{
+            $this->profileImageName = "default_profile_image.png";            
+        }
     }
     
     public function setUserType($userType){
@@ -74,6 +102,7 @@ abstract class Person extends Dbh{
         $this->setFirstName($person['keresztnev']);
         $this->setLastName($person['vezeteknev']);
         $this->setEmail($person['email']);
+        $this->setHasProfileImage($person['profil_kep_allapot']);
         $this->setUserType($person['felhasznalo_tipus']);
         if($person['telefonszam'] != "NULL"){
             $this->setPhoneNumber($person['telefonszam']);
@@ -106,21 +135,30 @@ abstract class Person extends Dbh{
         return $average;
     }    
     
-    public function updateEmailInDB($email){
+    public function updateEmailInDB($newEmail){
         $update = $this->connect()->prepare("UPDATE felhasznalok SET email = ? WHERE id = ?;");
-        $update->execute([$email , $this->id]);
-        $update->debugDumpParams();
-        $this->setEmail($email);
+        $update->execute([$newEmail , $this->id]);
+        $this->setEmail($newEmail);
     }
     
-    public function updateIntroductionInDB($introduction){
+    public function updateIntroductionInDB($newIntroduction){
         $update = $this->connect()->prepare("UPDATE felhasznalok SET bemutatkozas = ? WHERE id = ?;");
-        $update->execute([$introduction , $this->id]);
+        $update->execute([$newIntroduction , $this->id]);
+        $this->setIntroduction($newIntroduction);
     }
     
-    public function updatePhoneNumberInDB($phoneNumber){
+    public function updatePhoneNumberInDB($newPhoneNumber){
         $update = $this->connect()->prepare("UPDATE felhasznalok SET telefonszam = ? WHERE id = ?;");
-        $update->execute([$phoneNumber , $this->id]);
+        $update->execute([$newPhoneNumber , $this->id]);
+        $this->setPhoneNumber($newPhoneNumber);
+    }
+    
+    public function updateHasProfileImageInDB($hasProfileImage){
+        $update = $this->connect()->prepare("UPDATE felhasznalok SET profil_kep_allapot = ? WHERE id = ?;");
+        $update->execute([$hasProfileImage, $this->id]);
+        $this->setPhoneNumber($hasProfileImage);
+        
+        $this->setHasProfileImage(TRUE);
     }
     
     public static function createPerson($id){

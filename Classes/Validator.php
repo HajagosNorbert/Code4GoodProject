@@ -31,11 +31,14 @@ class Validator extends Dbh{
     }
     
     public function getErrorUrlParams(){
-        $urlParams = "err=";
-        foreach ($this->errors as $error){
-            $urlParams .=$error.'+';
+        if(!empty($this->errors)){
+            $urlParams = "err=";
+            foreach ($this->errors as $error){
+                $urlParams .=$error.'+';
+            }
+            $urlParams = rtrim($urlParams , '+');
+            return $urlParams;
         }
-        $urlParams = rtrim($urlParams , '+');
-        return $urlParams;
+            
     }
 }

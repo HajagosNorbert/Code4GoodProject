@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 27, 2018 at 06:47 PM
+-- Generation Time: Apr 12, 2018 at 06:59 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `ajanlatok` (
   `munka_idopont` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `munkaado_id` (`munkaado_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `ajanlatok`
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `ajanlatokra_jelentkezesek` (
   PRIMARY KEY (`id`),
   KEY `ajanlat_id` (`ajanlat_id`),
   KEY `jelentkezo_id` (`jelentkezo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `ajanlatokra_jelentkezesek`
@@ -74,8 +74,9 @@ CREATE TABLE IF NOT EXISTS `ajanlatokra_jelentkezesek` (
 
 INSERT INTO `ajanlatokra_jelentkezesek` (`id`, `jelentkezo_id`, `ajanlat_id`, `elfogadva`) VALUES
 (21, 2, 15, 0),
-(23, 9, 16, 0),
-(26, 12, 18, 1);
+(26, 12, 18, 1),
+(30, 9, 15, 0),
+(32, 9, 16, 0);
 
 -- --------------------------------------------------------
 
@@ -119,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `ertesitesek` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   KEY `ertesitett_id` (`ertesitett_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `ertesitesek`
@@ -128,7 +129,13 @@ CREATE TABLE IF NOT EXISTS `ertesitesek` (
 INSERT INTO `ertesitesek` (`ertesitett_id`, `cim`, `tartalom`, `feltoltve`, `id`) VALUES
 (12, 'Meg lettél bízva!', 'Te lettél megbízva a(z) Favágás munkára +3620312 adf által. ', '2018-03-27 19:07:30', 11),
 (2, 'Meg lettél bízva!', 'Te lettél megbízva a(z) Lakás takarítás munkára Big Boss által. ', '2018-03-27 20:28:31', 25),
-(2, 'Megbízás megszűntetve', 'A(z) Lakás takarítás munkára visszavonták a megbízásod.', '2018-03-27 20:28:35', 26);
+(2, 'Megbízás megszűntetve', 'A(z) Lakás takarítás munkára visszavonták a megbízásod.', '2018-03-27 20:28:35', 26),
+(2, 'Meg lettél bízva!', 'Te lettél megbízva a(z) Lakás takarítás munkára', '2018-04-05 07:18:52', 28),
+(2, 'Megbízás megszűntetve', 'A(z) Lakás takarítás munkára visszavonták a megbízásod.', '2018-04-05 07:34:59', 29),
+(2, 'Megbízást kaptál!', 'Te kaptad a megbízást a(z) Lakás takarítás munkára', '2018-04-05 16:26:48', 32),
+(2, 'Megbízás megszűntetve', 'A(z) Lakás takarítás munkára visszavonták a megbízásod.', '2018-04-05 18:24:21', 33),
+(2, 'Megbízást kaptál!', 'Te kaptad a megbízást a(z) Lakás takarítás munkára', '2018-04-05 18:59:29', 34),
+(2, 'Megbízás megszűntetve', 'A(z) Lakás takarítás munkára visszavonták a megbízásod.', '2018-04-05 18:59:36', 35);
 
 -- --------------------------------------------------------
 
@@ -144,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `felhasznalok` (
   `email` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `jelszo` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `email_megerosito` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `profil_kep_allapot` int(11) NOT NULL DEFAULT '0',
   `felhasznalo_tipus` tinyint(4) NOT NULL,
   `telefonszam` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
   `facebook_id` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
@@ -159,16 +167,15 @@ CREATE TABLE IF NOT EXISTS `felhasznalok` (
 -- Dumping data for table `felhasznalok`
 --
 
-INSERT INTO `felhasznalok` (`id`, `keresztnev`, `vezeteknev`, `email`, `jelszo`, `email_megerosito`, `felhasznalo_tipus`, `telefonszam`, `facebook_id`, `bemutatkozas`, `iskola_id`, `diakigazolvany_szam`, `oraszam`) VALUES
-(2, 'Daniel', 'Don', 'asd@gmail.com', 'asd123', 'ffffffffa', 0, NULL, NULL, NULL, 1, '11234567891', NULL),
-(3, 'Jacob', 'Hoodie', 'sssdffee@gmail.com', 'asd123', 'fggggggfa', 0, NULL, NULL, NULL, 2, '11234555591', NULL),
-(4, 'Anna', 'Fedora', 'uuuiio@gmail.com', 'asd123', 'jjjjjfffa', 0, NULL, NULL, NULL, 1, '44444567891', NULL),
-(5, 'Józsi', 'Magos', 'nincs@freemail.com', 'ammmmm', 'adfdaf', 1, NULL, NULL, 'Nálam fogtok dolgozni kölkök.', NULL, NULL, 10),
-(8, 'Boss', 'Big', 'munka', 'asd', 'később megoldani', 1, '+36301234567', 'NULL', 'NULL', NULL, NULL, 5),
-(9, 'Katalin', 'Fehér', 'diak', 'asd', 'később megoldani', 0, 'NULL', 'NULL', 'Egy szorgos lány vagyok, aki szereti a gyerekeket és mindig alapos munkát végzek.', 1, '7365862159', NULL),
-(10, 'deleteme', '+3620deleteme', 'deleteme@gmail.com', 'deleteme', 'Később megoldani', 0, NULL, 'Később megoldani', 'NULL', 1, '1', NULL),
-(11, 'adf', '+3620312', 'm@gmail.com', 'asd', 'Később megoldani', 1, NULL, 'Később megoldani', 'NULL', NULL, NULL, 5),
-(12, 'sdg', '+3620235', 'd@gmail.com', 'asd', 'Később megoldani', 0, NULL, 'Később megoldani', 'NULL', 3, '123', NULL);
+INSERT INTO `felhasznalok` (`id`, `keresztnev`, `vezeteknev`, `email`, `jelszo`, `email_megerosito`, `profil_kep_allapot`, `felhasznalo_tipus`, `telefonszam`, `facebook_id`, `bemutatkozas`, `iskola_id`, `diakigazolvany_szam`, `oraszam`) VALUES
+(2, 'Daniel', 'Don', 'asd@gmail.com', 'asd123', 'ffffffffa', 0, 0, NULL, NULL, NULL, 1, '11234567891', NULL),
+(3, 'Jacob', 'Hoodie', 'sssdffee@gmail.com', 'asd123', 'fggggggfa', 0, 0, NULL, NULL, NULL, 2, '11234555591', NULL),
+(4, 'Anna', 'Fedora', 'uuuiio@gmail.com', 'asd123', 'jjjjjfffa', 0, 0, NULL, NULL, NULL, 1, '44444567891', NULL),
+(5, 'Józsi', 'Magos', 'nincs@freemail.com', 'ammmmm', 'adfdaf', 0, 1, NULL, NULL, 'Nálam fogtok dolgozni kölkök.', NULL, NULL, 10),
+(8, 'Boss', 'Big', 'munka', 'asd', 'később megoldani', 0, 1, '+36301234567', 'NULL', 'NULL', NULL, NULL, 5),
+(9, 'Katalin', 'Fehér', 'diak@gmail.com', 'asd', 'később megoldani', 1, 0, '+36201234567', 'NULL', 'Egyszerű bemutatkozás', 1, '7365862159', NULL),
+(11, 'adf', '+3620312', 'm@gmail.com', 'asd', 'Később megoldani', 0, 1, NULL, 'Később megoldani', 'NULL', NULL, NULL, 5),
+(12, 'sdg', '+3620235', 'd@gmail.com', 'asd', 'Később megoldani', 0, 0, NULL, 'Később megoldani', 'NULL', 3, '123', NULL);
 
 -- --------------------------------------------------------
 

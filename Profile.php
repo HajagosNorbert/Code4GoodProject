@@ -30,10 +30,13 @@ if($visitedUser->id === $user->id){
     $isProfileOfUser = TRUE;
 }
 
+$visitedUser->setProfileImageName();
+$profileImageSrc = "Uploads/Images/".$visitedUser->profileImageName;
+    
 $ratings = array();
 foreach ($visitedUser->ratingIds as $ratingId){
     $rating = new Rating;
-    $rating->setId($ratingId);
+    $rating->setId($ratingId);  
     $rating->setAllFromDB();
     $ratings[] = $rating;
 }
@@ -80,14 +83,19 @@ if(isset($visitedUser->introduction)){
     
     <div class="row">
         <?php if ($isProfileOfUser){
+        
         ?>
         <div class="6u 10u$(small)">
+            
             <div class="8u$ 12u$(small)">
                 <h3><b>Email címed: </b><?= $visitedUser->email ?></h3>
             </div>
             <?php
             }   
             ?>
+            <div class="8u$ 12u$(small)">
+                <img src="<?= $profileImageSrc ?>">
+            </div>
             <div class="8u$ 12u$(small)">
                 <h4><b>Értékelés: </b><?= $profileRatingAverage ?></h4>
             </div>
@@ -106,19 +114,40 @@ if(isset($visitedUser->introduction)){
         if ($isProfileOfUser){
             ?>
             <div class="6u 10u$(small)">
-                <form method="POST" action="Handlers/Modify_Profile_Handler.php">
+                <form method="POST" action="Handlers/Modify_Profile_Handler.php" enctype="multipart/form-data">
                     <div class="row uniform">
                         <div class="8u$ 10u$(small)">
                              <input type="text" name="email" placeholder="Új email cím">
                         </div>
 
-                        <div class="8u$ 10u$(small)">
+                        <div class="4u 6u(small) 5u(medium)">
+                            <div class="select-wrapper">
+                                <select name="provider">
+                                    <option value="+3620">+3620</option>
+                                    <option value="+3630">+3630</option>
+                                    <option value="+3670">+3670</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="6u$ 10u$(small)">
                             <input type="text" name="phoneNumber" placeholder="Új telefonszám">
                         </div>
+                        
                         <div class="10u$ 12u$(small)">
                             <textarea name="introduction" placeholder="Új bemutatkozás" rows="4"></textarea>
                         </div>
-                        <div class="10u$ 10u$(small)">
+                        
+                        <div class="10u$ 12u$(small)">
+                            <label>
+                                <spam class="icon fa-upload">
+                                    Tölts fel új profilképet!
+                                </spam>
+                                <input type="file" accept="image/*" name="profileImage">
+                            </label>
+                        </div>                        
+                        
+                        <div class="10u$ 10u$(small)">     
                             <input type="submit" class="fit" name="submit" value="Megváltoztatás">
                         </div>
                     </div>

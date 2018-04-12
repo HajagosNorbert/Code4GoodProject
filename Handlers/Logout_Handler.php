@@ -1,5 +1,6 @@
 <?php  
 include_once '../Classes/Dbh.php';
+include_once '../Classes/Validator.php';
 include_once '../Classes/Authentication.php';
 
 $login = new Login;

@@ -26,6 +26,9 @@ foreach ($allPostIds as $postId){
     $allPosts[] = $jobPost;
 }
 ?>
+<div class="inner 6u 8u$(small) align-center">
+    <h3>Munkák</h3>
+</div>
 <ul class="alt inner 5u 10u$(small)">
 <?php
 foreach($allPosts as $post){

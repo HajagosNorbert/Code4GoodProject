@@ -31,7 +31,8 @@ class Login extends Dbh{
     } 
     
     public function logOut(){
-        unset($_SESSION['userId']);
+        session_unset();
+        session_destroy();
         Header('Location: ../Index.php');
     }
 }

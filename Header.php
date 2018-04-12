@@ -53,30 +53,32 @@ if(isset($_SESSION['userId'])){
                             
                             <?php
                                 }
-                                if(isset($user)){
+                                else if(isset($user)){
                             ?>
-                            <!-- Bejelentkezett felhasználóknak -->
-                                <a href="Notificationes.php">Értesítések: <?= $numberOfNotificationes?></a>
-                                <a href="Profile.php?id=<?= $user->id ?>"><?= $user->lastName ?> <?= $user->firstName ?></a>
+                                <!-- Bejelentkezett felhasználóknak -->
+                                    <a href="Notificationes.php">Értesítések: <?= $numberOfNotificationes?></a>
+                                    <a href="Profile.php?id=<?= $user->id ?>"><?= $user->lastName ?> <?= $user->firstName ?></a>
 
-                                <?php
+
+                                    <?php
                                         if($user->userType === '1'){
-                                ?>
+                                    ?>
 
-                                <a href="Munkaado_My_Jobs.php">Ajánlataim</a>
-
-                                <?php
+                                    <a href="Munkaado_My_Jobs.php">Ajánlataim</a>
+                        
+                                    <?php
                                         }
                                         else if($user->userType === '0'){
-                                ?>
-                                <a href="Browse_Jobs.php">Munkák</a>
-                                <?php
+                                    ?>
+                                    <a href="Browse_Jobs.php">Munkák</a>
+                                    <a href="Welcome.php">Munkák, amikre jelentkeztél</a>
+                                    <?php
                                         }
-                                ?>
-                                <a href="Handlers/Logout_Handler.php">Kijelentkezés</a>
-                                <?php
-                                    }
-                                ?>
+                                    ?>
+                                    <a href="Handlers/Logout_Handler.php">Kijelentkezés</a>
+                            <?php
+                                }
+                            ?>
                         </nav>
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
