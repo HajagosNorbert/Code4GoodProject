@@ -31,7 +31,8 @@ if($visitedUser->id === $user->id){
 }
 
 $visitedUser->setProfileImageName();
-$profileImageSrc = "Uploads/Images/".$visitedUser->profileImageName;
+$profileImageSrc = "Uploads/Images/".$visitedUser->profileImageName."?".mt_rand();
+$imageSize = "3u$ 8u$(small) 4u$(medium)";
     
 $ratings = array();
 foreach ($visitedUser->ratingIds as $ratingId){
@@ -82,19 +83,22 @@ if(isset($visitedUser->introduction)){
     <hr class="major">
     
     <div class="row">
+
         <?php if ($isProfileOfUser){
-        
+        $imageSize = "4u$ 8u$(small) 6u$(medium)";
         ?>
         <div class="6u 10u$(small)">
             
-            <div class="8u$ 12u$(small)">
+            <div class="8u$ 12u$(small) 10u$(medium)">
                 <h3><b>Email címed: </b><?= $visitedUser->email ?></h3>
             </div>
             <?php
             }   
             ?>
-            <div class="8u$ 12u$(small)">
-                <img src="<?= $profileImageSrc ?>">
+            <div class="<?= $imageSize ?>">
+                <span class="image fit">
+                    <img src="<?= $profileImageSrc ?>">
+                </span>
             </div>
             <div class="8u$ 12u$(small)">
                 <h4><b>Értékelés: </b><?= $profileRatingAverage ?></h4>
@@ -140,7 +144,7 @@ if(isset($visitedUser->introduction)){
                         
                         <div class="10u$ 12u$(small)">
                             <label>
-                                <spam class="icon fa-upload">
+                                <p class="icon fa-upload">
                                     Tölts fel új profilképet!
                                 </spam>
                                 <input type="file" accept="image/*" name="profileImage">
