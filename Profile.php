@@ -32,7 +32,7 @@ if($visitedUser->id === $user->id){
 
 $visitedUser->setProfileImageName();
 $profileImageSrc = "Uploads/Images/".$visitedUser->profileImageName."?".mt_rand();
-$imageSize = "3u$ 8u$(small) 4u$(medium)";
+$imageSize = "3u$ 4u$(medium) 6u$(small)";
     
 $ratings = array();
 foreach ($visitedUser->ratingIds as $ratingId){
@@ -85,11 +85,11 @@ if(isset($visitedUser->introduction)){
     <div class="row">
 
         <?php if ($isProfileOfUser){
-        $imageSize = "4u$ 8u$(small) 6u$(medium)";
+        $imageSize = "4u$ 6u$(medium) 6u$(small)";
         ?>
         <div class="6u 10u$(small)">
             
-            <div class="8u$ 12u$(small) 10u$(medium)">
+            <div class="8u$ 10u$(medium) 12u$(small)">
                 <h3><b>Email címed: </b><?= $visitedUser->email ?></h3>
             </div>
             <?php
@@ -124,7 +124,7 @@ if(isset($visitedUser->introduction)){
                              <input type="text" name="email" placeholder="Új email cím">
                         </div>
 
-                        <div class="4u 6u(small) 5u(medium)">
+                        <div class="4u 5u(medium) 6u(small)">
                             <div class="select-wrapper">
                                 <select name="provider">
                                     <option value="+3620">+3620</option>

@@ -15,6 +15,9 @@ $job->setAllFromDB();
 $job->setApplicantIdsFromDB();
 $owner = $job->getOwner();
 $owner->setAllFromDB();
+$owner->setProfileImageName();
+
+$profileImageSrc = "Uploads/Images/".$owner->profileImageName."?".mt_rand();
 
 if(!isset($owner->phoneNumber)){
     $phoneNumber = "Nincs beállítva";
@@ -23,21 +26,44 @@ if(!isset($owner->phoneNumber)){
 }
 ?>
 
-<div class="inner 7u 12u$(small) box" >
+<div class="inner 7u 10u(medium) 12u$(small) box" >
     <ul class="alt">
         <li>
             <div class="align-center">
                 <h3><?= $job->title ?></h3>
-                <h1>Munkaidő: <?= $job->offeredHours ?> óra</h1>
             </div>
         </li>
         <li>
-            <div class="inner 12u 10u$(small)">
-        <p><?= $job->description ?></p>
-        <p>Mikorra: <?= $job->appointment ?></p>  
-        <p>Itt: <?= $job->location ?></p>
-        <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
-        <p>Telefonszám: <?= $phoneNumber ?></p>
+            <div class="inner 12u 10u(medium)  10u$(small)">
+                <div class="row">
+                    <div class="12u$  12u(medium) 10u$(small)">
+                        <?= $job->description ?>
+                    </div>
+                    <div class="6u 5u(medium) 10u$(small)">
+                        <div class="12u 10u(medium) 10u$(small)">
+                            Munkaidő: <b><?= $job->offeredHours ?></b> óra
+                        </div>
+                        <div class="12u 12(medium) 10u$(small)">
+                            Mikorra: <?= $job->appointment ?>
+                        </div>
+                        <div class="12u 12u(medium) 10u(small)">
+                            Itt: <?= $job->location ?>
+                        </div>
+                        <div class="12u$ 12u$(medium) 10u$(small)">   
+                            Telefonszám: <?= $phoneNumber ?>
+                        </div>
+                    </div>
+                    <div class="6u$ 7u(medium) 10u$(small)">
+                        <div class="12u$  14u(medium) 10u$(small)">
+                            Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a>
+                        </div>
+                        <div class="4u$ 4u$(medium) 8u$(small)">   
+                            <span class="image fit">
+                                <img src="<?= $profileImageSrc ?>" >    
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
 <?php
 //ha jelentkezhet az ajánlatra
