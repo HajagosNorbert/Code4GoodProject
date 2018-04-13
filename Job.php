@@ -122,7 +122,7 @@ if(isset($_SESSION['userId'])){
             }
 
         ?>
-            <div class="inner 5u 8u$(small) align-center">
+            <div class="inner 8u 8u$(small) align-center">
             <h3>Jelentkezők:</h3>
                 <ul class="alt">
 
@@ -132,35 +132,50 @@ if(isset($_SESSION['userId'])){
                 $applicant = new Student;
                 $applicant->setId($applicantId);
                 $applicant->setAllFromDB();
+                $applicant->setProfileImageName();
+                $profileImageSrc = "Uploads/Images/".$applicant->profileImageName."?".mt_rand();
+
+                
                 $ratingAverage = $applicant->getRatingAverageFromDB();
                 if($ratingAverage === 0){
-                    $ratingText = 'Nincs értékelve';
+                    $ratingText = 'Még nem végzett el munkát';
                 }
                 else{
                     
-                    $ratingText = $ratingAverage.'/5 , Dolgozott '.$applicant->numberOfRatings.' alakalommal';
+                    $ratingText = 'Értékelés: '.$ratingAverage.'/5 , Dolgozott '.$applicant->numberOfRatings.' alakalommal';
                 }
 
                 ?> 
                     <li>
-                        <a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a>
-                        <p>Értékelés: <?= $ratingText ?></p>
-
+                        <div class="row">
+                            <div class="2u 4u(medium) 8u$(small)">
+                                <span class="image fit">
+                                    <img src="<?= $profileImageSrc ?>">
+                                </span>
+                            </div>
+                            <div class="8u 4u(medium) 8u$(small)">
+                                <div class="12u 8u(medium) 8u$(small)">
+                                    <a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a>
+                                </div>
+                                <div class="12u 8u(medium) 8u$(small)">
+                                    <?= $ratingText ?>
+                                </div>
+                            </div>
+                        </div>
                         <?php
                             if(!$job->isAccepted){
                         ?>
-
                         <form method="POST" action="Handlers/Accept_Applicant_Handler.php">
                             <input type="submit" name="submit" value="Alkalmaz">
                             <input type="hidden" name="jobId" value="<?= $job->id ?>">
                             <input type="hidden" name="applicantId" value="<?= $applicant->id ?>">   
                         </form>
-                    </li>
                 <?php
                     }
                 unset($applicant);
             }
             ?>
+                    </li>
                 </ul>
             </div>
             <?php
