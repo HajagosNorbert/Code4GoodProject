@@ -28,6 +28,13 @@ else{
     
     $user->setJobPostIdsFromDB();
     ?>
+
+<h2 class="align-center">
+    Ajánlataim
+</h2>
+
+<hr class="major">
+
 <ul class="alt 5u 10u$(small) inner">
     <?php
     foreach($posts as $post){
