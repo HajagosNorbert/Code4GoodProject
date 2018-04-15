@@ -10,6 +10,18 @@ class Validator extends Dbh{
         $this->hasError = TRUE;
     }
     
+    public function getErrorUrlParams(){
+        if(!empty($this->errors)){
+            $urlParams = "err=";
+            foreach ($this->errors as $error){
+                $urlParams .=$error.'+';
+            }
+            $urlParams = rtrim($urlParams , '+');
+            return $urlParams;
+        }
+            
+    }
+    
     public function isEmailValid($email){
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             return FALSE;
@@ -28,17 +40,5 @@ class Validator extends Dbh{
         else{
             return TRUE;
         }       
-    }
-    
-    public function getErrorUrlParams(){
-        if(!empty($this->errors)){
-            $urlParams = "err=";
-            foreach ($this->errors as $error){
-                $urlParams .=$error.'+';
-            }
-            $urlParams = rtrim($urlParams , '+');
-            return $urlParams;
-        }
-            
     }
 }

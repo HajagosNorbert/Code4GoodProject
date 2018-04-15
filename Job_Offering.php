@@ -11,14 +11,14 @@ if(!isset($user)){
 <form action="Handlers/Job_Offering_Handler.php" method="POST">
     <div class="row uniform">
             <div class="5u$ 8u$(small)">
-                <input type="text" name="cim" placeholder="pl.: Favágás,fűnyírás akármi.. xd">
+                <input type="text" name="cim" placeholder="Cím">
             </div>
             <div class="5u$ 8u$(small)">
                 Munkakezdés időpontja:
                 <input type="datetime-local" name="munkaIdopont" placeholder="Munka kezdete">
             </div>
             <div class="5u$">
-                <input type="text" name="helyszin" placeholder="Megye, Város, Utca, Házszám/ajtó">
+                <input type="text" name="helyszin" placeholder="Település, Utca, Házszám/ajtó">
             </div>
             <div class="2u$ 6u$(small)">
                 Felajánlott órák száma:

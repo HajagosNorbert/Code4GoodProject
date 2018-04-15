@@ -6,6 +6,7 @@ include_once '../Classes/Dbh.php';
 include_once '../Classes/Person.php';
 include_once '../Classes/JobPost.php';
 include_once '../Classes/Employer.php';
+include_once '../Classes/Validator.php';
 
 if(!isset($_POST['submit'])){
     if(isset($_SESSION["userId"])){
@@ -30,15 +31,30 @@ $offeredHours = (int) ($_POST['oraszam']);
 $title = $_POST['cim'];
 $description = $_POST['leiras'];
 $location = $_POST['helyszin'];
-$uploadedAt = date('Y-m-d H:i'); 
-$appointment = $_POST['munkaIdopont'];
+$uploadedAt = date("Y-m-d H:i:s");
+$appointment = date($_POST['munkaIdopont']);
 $ownerId = $_SESSION['userId'];
 
+$validator = new Validator;
 
-$job = new JobPost;
-$job->create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId);
-print_r($job);
-$job->upload();
+$uploadedAtInSec = strtotime($uploadedAt);
+$appointmentInSec = strtotime($appointment);
+$diffInDates = $appointmentInSec - $uploadedAtInSec;
 
-Header('Location: ../Munkaado_My_Jobs.php');
-exit();
+if($diffInDates <= 2 * 3600){
+    $validator->addError("appointmentTooEarly");
+}
+
+if($validator->hasError){
+    Header('Location: ../Job_Offering.php?'.$validator->getErrorUrlParams());
+    exit();
+}
+else{
+    $job = new JobPost;
+    $job->create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId);
+    $job->upload();
+
+    Header('Location: ../Munkaado_My_Jobs.php');
+    exit();
+    
+}
