@@ -70,12 +70,13 @@ $regist->setStudentCard($studentCard);
 $regist->setSchoolId($schoolId);
 $regist->setOfferHours($offerHours);
 
-if(!$regist->isEmailValid()){
+
+if(!$regist->isEmailValid($regist->email)){
     $regist->errors[] = "EmailNotValid";
     $regist->hasError = TRUE;
 }
 
-if(!$regist->isFieldNotExist('felhasznalok', 'email', $regist->email)){
+if(!$regist->isFieldNotExists('felhasznalok', 'email', $regist->email)){
     $regist->errors[] = "EmailAllreadyExists";
     $regist->hasError = TRUE;
 }

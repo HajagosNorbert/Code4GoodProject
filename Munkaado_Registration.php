@@ -7,7 +7,7 @@
 <div class="inner">
     <h3>Diák:</h3>
     
-        <form action="Handlers/Registration_Handler.php" method="POST">
+        <form id="Munkaado_Reg" action="Handlers/Registration_Handler.php" method="POST">
             <div class="row uniform">
                 <div class="4u 8u$(small)">
                     <input type="text" name="vezeteknev" placeholder="Vezetéknév">

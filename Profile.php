@@ -47,11 +47,40 @@ foreach ($ratings as $rating){
 }
 if(count($ratings ) !== 0){
     $ratingAverage = $ratingSum / count($ratings);
-    $profileRatingAverage = number_format($ratingAverage, 2, ',', ' ').' / 5';
+    $profileRatingAverage = number_format($ratingAverage, 2, ',', ' ');
 }
 else{
     $profileRatingAverage = 'Még nem értékelték';
 }
+//RATING CSILLAGOK
+    $profileStars ="";
+    $stars = 0;
+    $ratingAverageWhole = floor($ratingAverage);
+    while($stars < $ratingAverageWhole){
+
+        $profileStars .= '<span class="icon fa-star"></span>';    
+        $stars++;
+    }
+    
+    $remainingStars = 5 - $stars;
+
+    if($remainingStars > 0){
+        if($ratingAverage - $ratingAverageWhole < 0.32){
+            $profileStars .= '<span class="icon fa-star-o"></span>';           
+            
+        }
+        else if ($ratingAverage - $ratingAverageWhole < 0.65){
+            $profileStars .= '<span class="icon fa-star-half-o"></span>';           
+        }
+        else{
+            $profileStars .= '<span class="icon fa-star"></span>';           
+            
+        }
+        $remainingStars--;
+        while($remainingStars > 0){
+            $profileStars .= '<span class="icon fa-star-o"></span>';               $remainingStars--;                                      
+        }
+    }
 
 if($visitedUser->userType === '1'){
     $numberOfRatingsText = 'Elvégzett kiadott feladatok: ';
@@ -84,8 +113,9 @@ if(isset($visitedUser->introduction)){
     
     <div class="row">
 
-        <?php if ($isProfileOfUser){
-        $imageSize = "4u$ 6u$(medium) 6u$(small)";
+        <?php 
+        if ($isProfileOfUser){
+            $imageSize = "4u$ 6u$(medium) 6u$(small)";     
         ?>
         <div class="6u 10u$(small)">
             
@@ -100,8 +130,9 @@ if(isset($visitedUser->introduction)){
                     <img src="<?= $profileImageSrc ?>">
                 </span>
             </div>
-            <div class="8u$ 12u$(small)">
-                <h4><b>Értékelés: </b><?= $profileRatingAverage ?></h4>
+            <div class="align-center 5u$ 12u$(small)">
+                <h2><?= $profileRatingAverage ?></h2>
+                <h4><?= $profileStars ?></h4>
             </div>
             <div class="8u$ 12u$(small)">
                 <h4><b><?= $numberOfRatingsText ?></b> <?= count($ratings) ?></h4>
@@ -163,8 +194,10 @@ if(isset($visitedUser->introduction)){
             <div class="12u 12u$(small)">
                <blockquote> <?= $profileIntroduction ?></blockquote>
             </div>
-        <h2>Vélemények:</h2>
-        <hr class="major">
+    </div>
+    <h2 class="align-center">Vélemények:</h2>
+    <hr class="major">
+    <div class="row">
         <div class="10u$ 12u$">
             
             <?php
@@ -178,34 +211,38 @@ if(isset($visitedUser->introduction)){
 //                $rater->
                 ?>
                 <div class="row">
-                    <div class="1u 8u$(small)">
-                        <span class="image fit">
-                            <img src="<?= $reterProfileImageSrc ?>">
-                        </span>
+                    <div class="2u 12u(small)">
+                        <div class="6u$ 4u(small)">
+                            <span class="image fit">
+                                <img src="<?= $reterProfileImageSrc ?>">
+                            </span>
+                        </div>
+                        <div class="12u 5u(small)">
+                            <a href="Profile.php?id=<?= $rater->id ?>">
+                                <?= $rater->lastName." ".$rater->firstName ?>
+                            </a>
+                        </div>
                     </div>
-                    <div class="6u 12u$(small)">
-                        <a href="Profile.php?id=<?= $rater->id ?>">
-                            <?= $rater->lastName." ".$rater->firstName ?>
-                        </a>
-                    </div>
-                    
-                    <div class="6u 12u$(small)">
-                        Értékelte: 
+                    <div class="10u 12u$(small)">
+                        <div class="6u 12u$(small)">
+                            Értékelte: 
 
-                    <?php
-                    $i = 0;
-                    while($i < $rating->value){
-                        echo '<span class="icon fa-star"></span>';
-                        $i++;
-                    }
-                    while($i < 5){
-                        echo '<span class="icon fa-star-o"></span>';
-                        $i++;
-                    }
-                    ?>
-                    </div>
-                    <div class="10u$ 12u$(small)">
-                        <?= $rating->comment ?>
+                            <?php
+                            $i = 0;
+                            while($i < $rating->value){
+                                echo '<span class="icon fa-star"></span>';
+                                $i++;
+                            }
+                            while($i < 5){
+                                echo '<span class="icon fa-star-o"></span>';
+                                $i++;
+                            }
+                            ?>
+
+                        </div>
+                        <div class="12u$ 12u$(small)">
+                            <?= $rating->comment ?>
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -214,8 +251,6 @@ if(isset($visitedUser->introduction)){
             ?>
            
         </div>
-
-</div>
 </div>
 <?php
 include_once 'Footer.php';

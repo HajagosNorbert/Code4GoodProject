@@ -7,7 +7,7 @@ $schools = $pdo->connect()->query("SELECT * FROM iskolak;");
 <div class="inner">
 <h3>Munkaadó:</h3>
 
-    <form action="Handlers/Registration_Handler.php" method="POST">
+    <form id="DiakRegform" action="Handlers/Registration_Handler.php" method="POST">
         <div class="row uniform">
             <div class="4u 8u$(small)">
                 <input type="text" name="vezeteknev" placeholder="Vezetéknév">
