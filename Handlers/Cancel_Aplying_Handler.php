@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if(!isset($_POST["jobIdToCancel"]) or !isset($_POST["submit"])){
+if(!isset($_POST)){
     Header('Locationa: ../Browse_Jobs.php');
     exit();
 }

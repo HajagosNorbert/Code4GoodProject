@@ -11,10 +11,18 @@ if($user->userType !== '1'){
 <?php
 $postBrowser = new BrowseJobs;
 $postIds = $postBrowser->getAllPostIds('WHERE munkaado_id ="'.$user->id.'"');
+$activeJobs = 0;
 
 
+?>
+<h2 class="align-center">
+    Ajánlataim
+</h2>
+
+<hr class="major">
+<?php
 if(empty($postIds)){
-    echo'<h1>Nincs ajánlatod</h1>';
+    echo'<h2>Nincs ajánlatod</h2>';
 }
 else{
     $posts = array();
@@ -29,64 +37,75 @@ else{
     $user->setJobPostIdsFromDB();
     ?>
 
-<h2 class="align-center">
-    Ajánlataim
-</h2>
-
-<hr class="major">
-
 <ul class="alt 5u 10u$(small) inner">
     <?php
     foreach($posts as $post){
-        
-        if($post->isAccepted){
-            $acceptedStudent = $post->getAcceptedStudent();
-            $acceptedStudent->setAllFromDB();
-            $applicantStatus = 'Elfogadta: '.$acceptedStudent->lastName.' '.$acceptedStudent->firstName;
-        }
-        else if(count($post->applicantIds) === 0){
-            $applicantStatus = 'Nincs jelenkező';
-        }   
-        else{
-            $applicantStatus = 'Jelentkezők: '.count($post->applicantIds); 
-        }
-        
-        ?>
-<li class="box">
-        <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;"><div>
-        <h2>
-            <?= $post->title ?>
-        </h2>
-        <h1>
-            Munkaidő:
-            <?= $post->offeredHours ?> óra
-        </h1>
-        <p>
-            Feltéve: <?= $post->uploadedAt ?>
-        </p>
-        <p>
-            Mikorra: <?= $post->appointment ?>
-        </p>
-        <p>
-            <?= $applicantStatus ?>
-        </p>
-            </div></a>
-    
+        if(!$post->isFinished){
+            $activeJobs += 1;
+            if($post->isAccepted){
+                $acceptedStudent = $post->getAcceptedStudent();
+                $acceptedStudent->setAllFromDB();
+                $applicantStatus = 'Elfogadta: '.$acceptedStudent->lastName.' '.$acceptedStudent->firstName;
+            }
+            else if(count($post->applicantIds) === 0){
+                $applicantStatus = 'Nincs jelenkező';
+            }   
+            else{
+                $applicantStatus = 'Jelentkezők: '.count($post->applicantIds); 
+            }
+
+            ?>
+    <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;">
+        <li class="box">
+            <div>
+                <h2>
+                    <?= $post->title ?>
+                </h2>
+                <h1>
+                    Munkaidő:
+                    <?= $post->offeredHours ?> óra
+                </h1>
+<!--
+                <p>
+                    Feltéve: <?= $post->uploadedAt ?>
+                </p>
+-->
+                <p>
+                    Mikorra: <?= $post->appointment ?>
+                </p>
+                <p>
+                    <?= $applicantStatus ?>
+                </p>
+            </div>
+    <?php
+    if(!$post->isExpired){
+    ?>
     <form method="GET" action="Handlers/Job_Offer_Delete_Handler.php">
-        <input type="submit" name="submit" value="Visszavonása">
+        <input type="submit" name="submit" value="Visszavonás">
         <input type="hidden" name=offerId value="<?= $post->id ?>">
         <input type="hidden" name=hasAcceptedJelentkezo value="<?= $post->isAccepted ?>">
     </form>
-    </li>
+    <?php
+    }
+    else if($post->isAccepted){
+        ?>
+        <b>Az ajánlat kitörléséhez előbb értékeld a diákot! </b>
+        <?php
+    }
+    ?>
+        </li>
+    </a>
 
 <br>
     
         <?php
+        }
+
     }
 ?>
 <?php
 }
-$activeJobs = count($user->jobPostIds);
+
 if($activeJobs <3){
     $offerJobLink = '<a class="button special" href="Job_Offering.php">Ajánlj Munkát ('.$activeJobs.'/3)</a><br>';
 }

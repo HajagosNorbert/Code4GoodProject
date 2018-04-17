@@ -25,6 +25,7 @@ if(!isset($owner->phoneNumber)){
     $phoneNumber = $owner->phoneNumber;
 }
 ?>
+<!--INFÓ A POSZTRÓL-->
 
 <div class="inner 7u 10u(medium) 12u$(small) box" >
     <ul class="alt">
@@ -93,6 +94,8 @@ if(isset($_SESSION['userId'])){
         }
     } 
     
+//    AMIT A MUNKAADÓ LÁT
+    
     if($user->userType === '1' && $owner->id === $user->id){
         
         if(count($job->applicantIds) === 0){
@@ -108,10 +111,26 @@ if(isset($_SESSION['userId'])){
                 ?>
                 <div class="row">
                     <h2>Megbízva: <a href="Profile.php?id=<?= $applicant->id?>"><?= $applicant->lastName?> <?= $applicant->firstName?></a></h2>
+                    <?php
+                    if(!$job->isExpired){
+                    ?>
                     <form action="Handlers/Cancel_Accepted_Applicant_Handler.php" method="POST">
                         <input type="submit" class="special fit" name="submit" value="Megbízás visszavonása">
                         <input type="hidden" name="JobPostId" value="<?= $job->id?>"> 
-                    </form>
+                    </form>  
+                    <?php
+                    }
+                else{
+                
+                    ?>
+                    <form action="Rate.php" method="POST">
+                        <input type="submit" class="special fit" name="submit" value="Diák értékelése"> 
+                        <input type="hidden" name="ratedId" value="<?= $applicant->id ?>">                        
+                        <input type="hidden" name="jobId" value="<?= $job->id ?>">
+                     </form>
+                    <?php 
+                }
+                ?>
                 </div>
         </div>
         </li>
@@ -121,6 +140,9 @@ if(isset($_SESSION['userId'])){
                 unset($applicant);
             }
 
+            if(!$job->isExpired){
+                
+            
         ?>
             <div class="inner 8u 8u$(small) align-center">
             <h3>Jelentkezők:</h3>
@@ -170,15 +192,16 @@ if(isset($_SESSION['userId'])){
                             <input type="hidden" name="jobId" value="<?= $job->id ?>">
                             <input type="hidden" name="applicantId" value="<?= $applicant->id ?>">   
                         </form>
+                    </li>
                 <?php
                     }
                 unset($applicant);
             }
             ?>
-                    </li>
                 </ul>
             </div>
             <?php
+            }
         }
     }
 }

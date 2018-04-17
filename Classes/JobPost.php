@@ -8,6 +8,8 @@ class JobPost extends Dbh{
     public $location;
     public $uploadedAt;
     public $appointment;
+    public $isExpired;
+    public $isFinished;
     public $applicantIds = array();
     public $isAccepted;
     public $acceptedStudentId;
@@ -48,9 +50,18 @@ class JobPost extends Dbh{
         $this->appointment = $appointment;
     }  
     
+    public function setIsExpired($isExpired){
+        $this->isExpired = $isExpired;
+    }      
+    
+    public function setIsFinished($isFinished){
+        $this->isFinished = $isFinished;
+    }  
+    
     public function setIsAccepted($isAccepted){
         $this->isAccepted = $isAccepted;
     }
+    
     
     public function setApplicantIdsFromDB(){
         $sqlApplyings = $this->connect()->query("SELECT * FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = '".$this->id."' ;");
@@ -93,15 +104,22 @@ class JobPost extends Dbh{
     }
     
     public function upload(){
-        $newPost = $this->connect()->prepare(" INSERT INTO ajanlatok (munkaado_id, felajanlott_oraszam, cim, leiras, helyszin, feltoltve, munka_idopont) VALUES (?,?,?,?,?,?,?);");
+        $newPost = $this->connect()->prepare("INSERT INTO ajanlatok (munkaado_id, felajanlott_oraszam, cim, leiras, helyszin, feltoltve, munka_idopont) VALUES (?,?,?,?,?,?,?);");
         
-        try{
         $newPost->execute([$this->ownerId, $this->offeredHours, $this->title, $this->description, $this->location, $this->uploadedAt, $this->appointment]);
-        return TRUE;
-        }
-        catch(PDOException $e){
-            return FALSE;
-        }
+
+        $scheduleAt = strtotime ($this->appointment);
+        $scheduleAt = $scheduleAt + (intval($this->offeredHours) + 2) * 3600;
+        $scheduleAt = date("Y-m-d H:i:s", $scheduleAt);
+        
+        $sqlGetId = $this->connect()->prepare("SELECT id FROM ajanlatok WHERE feltoltve =? ;");
+        $sqlGetId->execute([$this->uploadedAt]);
+        $sqlId = $sqlGetId->fetch();
+        $id = $sqlId['id'];
+        
+        $schedule = $this->connect()->prepare("CREATE EVENT ajanlat_lejar".$id." ON SCHEDULE AT ? DO UPDATE ajanlatok SET lejart = '1' WHERE id = ?;");
+        $schedule->execute([$scheduleAt , $id]);
+
     }
     
     public function setAllFromDB(){
@@ -114,7 +132,10 @@ class JobPost extends Dbh{
             $this->setDescription($post['leiras']);
             $this->setLocation($post['helyszin']);
             $this->setUploadedAt($post['feltoltve']);
-            $this->setAppointment($post['munka_idopont']);    
+            $this->setAppointment($post['munka_idopont']); 
+            $this->setIsExpired($post['lejart']);
+            $this->setIsFinished($post['elvegzett']);
+            
         }
     }
     
@@ -125,6 +146,11 @@ class JobPost extends Dbh{
         $deletePostApplyings = $this->connect()->prepare('DELETE FROM ajanlatokra_jelentkezesek WHERE ajanlat_id = ? ;');
         $deletePostApplyings->execute([$this->id]);
         $deletePost->execute([$this->id]);
+    }
+    public function uploadFinished(){
+        $stmt = $this->connect()->prepare('UPDATE ajanlatok SET elvegzett = ? WHERE id = ?;');
+        
+        $stmt->execute([$this->isFinished, $this->id]);    
     }
     
     public function uploadAcceptedApplying(){

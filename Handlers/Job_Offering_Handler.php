@@ -32,7 +32,7 @@ $title = $_POST['cim'];
 $description = $_POST['leiras'];
 $location = $_POST['helyszin'];
 $uploadedAt = date("Y-m-d H:i:s");
-$appointment = date($_POST['munkaIdopont']);
+$appointment = date("Y-m-d H:i:s", strtotime($_POST['munkaIdopont']));
 $ownerId = $_SESSION['userId'];
 
 $validator = new Validator;
@@ -41,6 +41,7 @@ $uploadedAtInSec = strtotime($uploadedAt);
 $appointmentInSec = strtotime($appointment);
 $diffInDates = $appointmentInSec - $uploadedAtInSec;
 
+echo $appointment;
 if($diffInDates <= 2 * 3600){
     $validator->addError("appointmentTooEarly");
 }
@@ -52,6 +53,7 @@ if($validator->hasError){
 else{
     $job = new JobPost;
     $job->create($offeredHours, $title, $description, $location, $uploadedAt, $appointment, $ownerId);
+    print_r($job);
     $job->upload();
 
     Header('Location: ../Munkaado_My_Jobs.php');

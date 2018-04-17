@@ -9,7 +9,7 @@ $userNotApplied = "";
 if(isset($_SESSION['userId'])){
     $userNotApplied = 'AND jelentkezo_id != "'.$_SESSION['userId'].'"';
 }
-$condition = 'WHERE id NOT IN (SELECT ajanlat_id FROM ajanlatokra_jelentkezesek WHERE (elfogadva = "1" '.$userNotApplied.' ))';
+ $condition = 'WHERE id NOT IN ( SELECT ajanlat_id FROM ajanlatokra_jelentkezesek WHERE ( elfogadva = "1" '.$userNotApplied.') UNION ( SELECT id FROM ajanlatok WHERE( lejart = "1" OR elvegzett = "1" ) ) )';
 
 $jobBrowser = new BrowseJobs;
 $allPostIds = $jobBrowser->getAllPostIds($condition);

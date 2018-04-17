@@ -47,7 +47,7 @@ foreach ($ratings as $rating){
 }
 if(count($ratings ) !== 0){
     $ratingAverage = $ratingSum / count($ratings);
-    $profileRatingAverage = $ratingAverage.' / 5';
+    $profileRatingAverage = number_format($ratingAverage, 2, ',', ' ').' / 5';
 }
 else{
     $profileRatingAverage = 'Még nem értékelték';
@@ -144,7 +144,7 @@ if(isset($visitedUser->introduction)){
                         
                         <div class="10u$ 12u$(small)">
                             <label>
-                                <p class="icon fa-upload">
+                                <spam class="icon fa-upload">
                                     Tölts fel új profilképet!
                                 </spam>
                                 <input type="file" accept="image/*" name="profileImage">
@@ -160,11 +160,62 @@ if(isset($visitedUser->introduction)){
             <?php
             }   
             ?>
-            <div class="fit">
+            <div class="12u 12u$(small)">
                <blockquote> <?= $profileIntroduction ?></blockquote>
             </div>
-    </div>
+        <h2>Vélemények:</h2>
+        <hr class="major">
+        <div class="10u$ 12u$">
+            
+            <?php
+            foreach($ratings as $rating){
 
+                $rater = Person::createPerson($rating->raterUserId);
+                $rater->setAllFromDB();
+                $rater->setProfileImageName();
+                $reterProfileImageSrc = "Uploads/Images/".$rater->profileImageName."?".mt_rand();
+                
+//                $rater->
+                ?>
+                <div class="row">
+                    <div class="1u 8u$(small)">
+                        <span class="image fit">
+                            <img src="<?= $reterProfileImageSrc ?>">
+                        </span>
+                    </div>
+                    <div class="6u 12u$(small)">
+                        <a href="Profile.php?id=<?= $rater->id ?>">
+                            <?= $rater->lastName." ".$rater->firstName ?>
+                        </a>
+                    </div>
+                    
+                    <div class="6u 12u$(small)">
+                        Értékelte: 
+
+                    <?php
+                    $i = 0;
+                    while($i < $rating->value){
+                        echo '<span class="icon fa-star"></span>';
+                        $i++;
+                    }
+                    while($i < 5){
+                        echo '<span class="icon fa-star-o"></span>';
+                        $i++;
+                    }
+                    ?>
+                    </div>
+                    <div class="10u$ 12u$(small)">
+                        <?= $rating->comment ?>
+                    </div>
+                </div>
+                <hr>
+            <?php
+            }
+            ?>
+           
+        </div>
+
+</div>
 </div>
 <?php
 include_once 'Footer.php';
