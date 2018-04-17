@@ -4,7 +4,7 @@ include_once '../Classes/Rating.php';
 include_once '../Classes/JobPost.php';
 
 if(!isset($_POST['submit'])){
-    Header('Location: ../Index.php');
+    Header('Location: ../index.php');
     exit();
 }
 

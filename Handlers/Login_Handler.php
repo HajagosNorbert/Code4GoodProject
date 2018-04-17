@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if(!isset($_POST['submit'])){
-    Header('Location: ../Index.php');
+    Header('Location: ../index.php');
     exit();
 }
 

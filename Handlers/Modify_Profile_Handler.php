@@ -11,7 +11,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if($_SERVER['REQUEST_METHOD'] != 'POST'){
-    Header('Location: ../Index.php');
+    Header('Location: ../index.php');
     exit();
 }
 print_r($_POST);

@@ -10,12 +10,12 @@ include_once '../Classes/JobPost.php';
 include_once '../Classes/Notification.php';
 
 if(!isset($_POST['submit'])){
-    Header('Location: ../Index.php');
+    Header('Location: ../index.php');
     exit();
 }
 
 if(!isset($_SESSION['userId'])){
-    Header('Location: ../Index.php');    
+    Header('Location: ../index.php');    
     exit();
 }
 
@@ -26,7 +26,7 @@ $user->setId($_SESSION['userId']);
 $user->setJobPostIdsFromDB();
 
 if(!in_array($jobPostId , $user->jobPostIds)){
-    Header('Location: ../Index.php');   
+    Header('Location: ../index.php');   
     exit();
 }
 
@@ -36,7 +36,7 @@ $job->setAllFromDB();
 $job->setApplicantIdsFromDB();
 
 if(!$job->isAccepted){
-    Header('Location: ../Index.php');   
+    Header('Location: ../index.php');   
     exit();
 }
 

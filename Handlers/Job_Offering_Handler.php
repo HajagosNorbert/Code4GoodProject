@@ -14,7 +14,7 @@ if(!isset($_POST['submit'])){
         exit();
     }
     else{
-        Header('Location: ../Index.php');
+        Header('Location: ../index.php');
         exit();
     }
 }

@@ -10,12 +10,12 @@ include_once '../Classes/Student.php';
 include_once '../Classes/Notification.php';
 
 if(!isset($_SESSION['userId'])){
-    Header('Location: ../Index.php');
+    Header('Location: ../index.php');
     exit();
 }
 
 if(!isset($_GET)){
-    Header('Location: ../Index.php');
+    Header('Location: ../index.php');
     exit();    
 }
 $notificationId = $_GET['notificationId'];
@@ -24,7 +24,7 @@ $user = Person::createPerson($_SESSION['userId']);
 $user->setNotificationIds();
 
 if(!in_array($notificationId , $user->notificationIds)){
-    Header('Location: ../Index.php');
+    Header('Location: ../index.php');
     exit();    
 }
 
