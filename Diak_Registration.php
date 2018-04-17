@@ -10,19 +10,19 @@ $schools = $pdo->connect()->query("SELECT * FROM iskolak;");
     <form id="DiakRegform" action="Handlers/Registration_Handler.php" method="POST">
         <div class="row uniform">
             <div class="4u 8u$(small)">
-                <input type="text" name="vezeteknev" placeholder="Vezetéknév">
+                <input required type="text" name="vezeteknev" placeholder="Vezetéknév">
             </div>
             <div class="4u 8u$(small)">
-                <input type="text" name="keresztnev" placeholder="Keresztnév">
+                <input required type="text" name="keresztnev" placeholder="Keresztnév">
             </div>
             <div class="8u$">
-                <input type="text" name="email" placeholder="E-mail">
+                <input required type="text" name="email" placeholder="E-mail">
             </div>
             <div class="3u 6u$(small)">
-                <input type="password" name="jelszo" placeholder="Jelszó">
+                <input required type="password" name="jelszo" placeholder="Jelszó">
             </div>
             <div class="3u$ 6u$(small)">
-                <input type="password" name="jelszo_ujra" placeholder="Jelszó">
+                <input required type="password" name="jelszo_ujra" placeholder="Jelszó">
             </div>
             <div class="2u 6u$(small)">
                 <div class="select-wrapper">
@@ -34,10 +34,10 @@ $schools = $pdo->connect()->query("SELECT * FROM iskolak;");
                 </div>
             </div>
             <div class="4u$ 6u$(small)">
-                <input type="text" name="telefonszam" placeholder="Telefonszám *">
+                <input required type="text" name="telefonszam" placeholder="Telefonszám *">
             </div>
             <div class="4u 8u$(small)">
-                <input type="text" name="diakigazolvany_szam" maxlength="11"   placeholder="Diákigazolványszám">
+                <input required type="text" name="diakigazolvany_szam" maxlength="11"   placeholder="Diákigazolványszám">
             </div>
             <div class="4u 6u$(small)">
                 <div class="select-wrapper">
@@ -53,10 +53,10 @@ $schools = $pdo->connect()->query("SELECT * FROM iskolak;");
                 </div>
             </div>
             <div class="8u 10u$(small)">
-                <textarea name="bemutatkozas" placeholder="Írj magadról. Később megváltoztathatod" id="myTextArea" rows="3"></textarea>
+                <textarea required name="bemutatkozas" placeholder="Írj magadról. Később megváltoztathatod" id="myTextArea" rows="3"></textarea>
             </div>
             <div class="8u$">
-                <input type="submit" class="fit" name="diakRegistrationSubmit" value="Regisztálj">
+                <input required type="submit" class="fit" name="diakRegistrationSubmit" value="Regisztálj">
             </div>
         </div>
     </form>

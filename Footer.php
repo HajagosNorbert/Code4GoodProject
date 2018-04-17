@@ -61,9 +61,9 @@
                                 //itt tudod meg adni hogy mit írjon ki ha nem volt valid és ide kell majd neki adnod a css-t meg a html taged ha akarsz!!!!
                                 //Ide azokat írsz amiket szeretnél szerintem érted mik vannak oda írva ha nem akkor írj 
                                 required: 'Ez a mező kötelező',
-                                alphanumeric: '', 
-                                minLenght: '',
-                                nowhitespce: '',   
+                                alphanumeric: 'ALfanumerikus', 
+                                minLenght: 'minimumhossz',
+                                nowhitespce: 'üres?',   
                             },
                             keresztnev:{
                                 required: 'Ez a mező kötelező',

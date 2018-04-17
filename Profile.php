@@ -50,6 +50,7 @@ if(count($ratings ) !== 0){
     $profileRatingAverage = number_format($ratingAverage, 2, ',', ' ');
 }
 else{
+    $ratingAverage = 0;
     $profileRatingAverage = 'Még nem értékelték';
 }
 //RATING CSILLAGOK
