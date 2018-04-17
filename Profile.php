@@ -3,12 +3,12 @@ include_once 'Header.php';
 include_once 'Classes/Rating.php';
 
 if(!isset($_SESSION['userId'])){
-    Header('Location: Index.php');
+    Header('Location: index.php');
     exit();
 }
 
 if(!isset($_GET['id'])){
-    Header('Location: Index.php');
+    Header('Location: index.php');
     exit();
 }
 

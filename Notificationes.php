@@ -2,7 +2,7 @@
 include_once 'Header.php';
 include_once 'Classes/Notification.php';
 if(!isset($user)){
-    Header('Location: Index.php');
+    Header('Location: index.php');
     exit();
 }
 

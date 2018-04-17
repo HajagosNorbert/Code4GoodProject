@@ -1,6 +1,6 @@
 ﻿<?php include_once 'Header.php';
 if(!isset($user)){
-    Header('Location: Index.php');
+    Header('Location: index.php');
     exit();
 }
 ?>

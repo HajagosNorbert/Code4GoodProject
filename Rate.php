@@ -1,7 +1,7 @@
 <?php
 include_once 'Header.php';
 if(!isset($_POST['submit'])){
-    Header('Location: Index.php');
+    Header('Location: index.php');
     exit();
 }
 

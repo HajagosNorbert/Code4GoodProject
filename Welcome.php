@@ -4,7 +4,7 @@ include_once 'Classes/BrowseJobs.php';
 include_once 'Classes/JobPost.php';
 
 if(!isset($user)){
-    Header('Location: Index.php');
+    Header('Location: index.php');
     exit();
 }
 

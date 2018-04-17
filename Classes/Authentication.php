@@ -33,7 +33,7 @@ class Login extends Dbh{
     public function logOut(){
         session_unset();
         session_destroy();
-        Header('Location: ../Index.php');
+        Header('Location: ../index.php');
     }
 }
 

@@ -11,9 +11,9 @@ include_once 'Classes/Student.php';
 $bodyClass = "subpage";
 $homePage = 'Welcome.php';
 if(isset($pageName)){
-    if($pageName === 'Index.php'){
+    if($pageName === 'index.php'){
         $bodyClass = "";
-        $homePage ="Index.php";
+        $homePage ="index.php";
     }
 }
 

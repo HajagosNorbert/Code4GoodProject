@@ -3,7 +3,7 @@ include_once 'Header.php';
 include_once 'Classes/BrowseJobs.php';
 include_once 'Classes/JobPost.php';
 if($user->userType !== '1'){
-    Header('Location: Index.php');
+    Header('Location: index.php');
     exit();
 }
 ?>
