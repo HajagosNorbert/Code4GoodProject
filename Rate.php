@@ -4,11 +4,13 @@ if(!isset($_POST['submit'])){
     Header('Location: index.php');
     exit();
 }
-
 $rated = Person::createPerson($_POST['ratedId']);
 $rated->setAllFromDB();
 if($rated->userType == 0){
     $rateValueText = "Mennyire vagy megelégedve munkájával 1-től (egyáltalán nem) 5-ig (teljes mértékben) ?";
+}
+else{
+    $rateValueText = "Mennyire ajánlanád más diákoknak ezt a munkaadót 1-től (egyáltalán nem) 5-ig (teljes mértékben) ?";
 }
 ?>
 
@@ -54,6 +56,11 @@ if($rated->userType == 0){
             if(isset($_POST['jobId'])){
                 ?>
                 <input type="hidden" name="jobId" value="<?= $_POST['jobId'] ?>">
+                <?php
+            }
+            else if(isset($_POST['notificationId'])){
+                ?>
+                <input type="hidden" name="notificationId" value="<?= $_POST['notificationId'] ?>">
                 <?php
             }
             ?>

@@ -118,7 +118,8 @@ abstract class Person extends Dbh{
     }
           
     public function getRatingAverageFromDB(){
-        $sqlRatings = $this->connect()->query("SELECT ertekeles FROM ertekelesek WHERE ertekelt_id = '".$this->id."';");  
+        $sqlRatings = $this->connect()->query("SELECT ertekeles FROM ertekelesek WHERE ertekelt_id = '".$this->id."';");
+        $ratingValues = array();
         while($rating = $sqlRatings->fetch()){
             $ratingValues[] = intval($rating['ertekeles']);
         }

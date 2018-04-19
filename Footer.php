@@ -10,6 +10,7 @@
             <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/additional-methods.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+<!--
             <script>
                 $(function(){
                     
@@ -174,5 +175,6 @@
                 });
                
             </script>
+-->
 	</body>
 </html>

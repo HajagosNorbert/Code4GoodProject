@@ -77,7 +77,7 @@ class Registration extends Validator{
         $this->facebookId = $facebookId;
     }
     public function setPhoneNumber($phoneNumber){
-        $this->lastName = $phoneNumber;
+        $this->phoneNumber = $phoneNumber;
     }
     public function setIntroduction($introduction){
         $this->introduction = $introduction;
@@ -113,13 +113,13 @@ class Registration extends Validator{
         
         $creating = $this->connect()->prepare("INSERT INTO felhasznalok (".$fields.") VALUES (".$values.");");
 
+        $creating->debugDumpParams();
         $creating->execute($bindData);
-        
         $login = new Login;
         $login->setEmail($this->email);
         $login->setPassword($this->password);
         $login->autherize();
         
-        Header('Location: ../Welcome.php');
+//        Header('Location: ../Welcome.php');
     }
 }

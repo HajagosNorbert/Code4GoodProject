@@ -7,13 +7,13 @@ include_once 'Header.php';
 
     <form action="Handlers/Login_Handler.php" method="POST">
         <div class="row uniform">
-            <div class="5u 8u$(small)">
+            <div class="5u 12u$(small)">
                 <input type="text" name="email" placeholder="E-mail">
             </div>
-            <div class="5u 8u$(small)">
+            <div class="5u 12u$(small)">
                 <input type="password" name="password" placeholder="Jelszó">
             </div>
-            <div class="9u$">
+            <div class="10u$ 12u$(small)">
                 <input type="submit" name="submit" value="Bejelentkezés">
             </div>
         </div>

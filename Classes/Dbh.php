@@ -13,8 +13,16 @@ class Dbh{
         $this->password = "sNVmvh5A3m";
         $this->dbName = "sql7233253";
         $this->charset = "utf8mb4";
-//        sNVmvh5A3m
+        
 //      a freemysqlhosting -hoz a password  7NOhCAikjJjETPwC
+        
+//        $this->dbServername = "localhost";
+//        $this->dbUsername = "root";
+//        $this->password = "";
+//        $this->dbName = "code4good";
+//        $this->charset = "utf8mb4";
+        
+        
         try{
         $dsn = 'mysql:host='.$this->dbServername.';dbname='.$this->dbName.';charset='.$this->charset;
         $pdo = new PDO($dsn , $this->dbUsername , $this->password);

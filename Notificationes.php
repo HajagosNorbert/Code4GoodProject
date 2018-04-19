@@ -13,26 +13,41 @@ if(count($user->notificationIds) === 0){
 }
     else{
 ?>
-    <ol class="6u 9u$(small) inner align-center">
+    <div class="6u 9u$(small) inner align-center">
 <?php
     foreach($user->notificationIds as $notificationId){
         $notification = new Notification;
         $notification->setId($notificationId);
         $notification->setAllFromDB();
         
+        $buttonText = "Értettem";
+        $content = $notification->content;
+        $actionPage = "Handlers/Kill_Notification_Handler.php";
+        $actionMethod = "GET";
+        $ratedId = "";
+        if($notification->title === "Értékeltek!"){
+            $buttonText = "Véleményezd milyen volt vele dolgozni";
+            $actionPage = "Rate.php";
+            $actionMethod = "POST";
+            
+            $contentAndId = explode('_', $content);
+            $content = $contentAndId[0];
+            $ratedId = $contentAndId[1];
+        }
     ?>
-    <li class="inner box">
+    <div class="inner box">
         <h2><?= $notification->title ?></h2>
-        <p><?= $notification->content ?></p>
-        <form action="Handlers/Kill_Notification_Handler.php" metho="GET">
-            <input type="submit" name="submit" value="Értettem">
+        <p><?= $content ?></p>
+        <form action="<?= $actionPage ?>" method="<?= $actionMethod ?>">
+            <input type="submit" name="submit" value="<?= $buttonText ?>">
             <input type="hidden" name="notificationId" value="<?= $notification->id?>">
+            <input type="hidden" name="ratedId" value="<?= $ratedId ?>">
         </form>
-    </li>
+    </div>
     <?php
     }
      ?>
-    </ol>
+    </div>
     <?php
     
 }

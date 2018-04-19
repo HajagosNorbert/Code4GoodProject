@@ -37,72 +37,66 @@ else{
     $user->setJobPostIdsFromDB();
     ?>
 
-<ul class="alt 5u 10u$(small) inner">
-    <?php
-    foreach($posts as $post){
-        if(!$post->isFinished){
-            $activeJobs += 1;
-            if($post->isAccepted){
-                $acceptedStudent = $post->getAcceptedStudent();
-                $acceptedStudent->setAllFromDB();
-                $applicantStatus = 'Elfogadta: '.$acceptedStudent->lastName.' '.$acceptedStudent->firstName;
-            }
-            else if(count($post->applicantIds) === 0){
-                $applicantStatus = 'Nincs jelenkező';
-            }   
-            else{
-                $applicantStatus = 'Jelentkezők: '.count($post->applicantIds); 
-            }
+<div class="row inner">
+<?php
+foreach($posts as $post){
+    if(!$post->isFinished){
+        $activeJobs += 1;
+        if($post->isAccepted){
+            $acceptedStudent = $post->getAcceptedStudent();
+            $acceptedStudent->setAllFromDB();
+            $applicantStatus = 'Elfogadta: '.$acceptedStudent->lastName.' '.$acceptedStudent->firstName;
+        }
+        else if(count($post->applicantIds) === 0){
+            $applicantStatus = 'Nincs jelenkező';
+        }   
+        else{
+            $applicantStatus = 'Jelentkezők: '.count($post->applicantIds); 
+        }
 
-            ?>
-    <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;">
-        <li class="box">
-            <div>
-                <h2>
-                    <?= $post->title ?>
-                </h2>
-                <h1>
-                    Munkaidő:
-                    <?= $post->offeredHours ?> óra
-                </h1>
-<!--
-                <p>
-                    Feltéve: <?= $post->uploadedAt ?>
-                </p>
--->
-                <p>
-                    Mikorra: <?= $post->appointment ?>
-                </p>
-                <p>
-                    <?= $applicantStatus ?>
-                </p>
-            </div>
-    <?php
-    if(!$post->isExpired){
-    ?>
-    <form method="GET" action="Handlers/Job_Offer_Delete_Handler.php">
-        <input type="submit" name="submit" value="Visszavonás">
-        <input type="hidden" name=offerId value="<?= $post->id ?>">
-        <input type="hidden" name=hasAcceptedJelentkezo value="<?= $post->isAccepted ?>">
-    </form>
-    <?php
-    }
-    else if($post->isAccepted){
         ?>
-        <b>Az ajánlat kitörléséhez előbb értékeld a diákot! </b>
-        <?php
-    }
-    ?>
-        </li>
-    </a>
+        <div class="4u 6u(medium) 12u$(small)">
+            <div class="box">
+                <ul class="alt">
+                    <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;">
 
-<br>
+                        <li>
+                            <h3><?= $post->title ?></h3>
+                        </li>
+                        <li>
+                            <p>Munkaidő: <?= $post->offeredHours ?> óra</p>
+                            <p>Mikorra: <?= $post->appointment ?></p>
+                            <p><?= $applicantStatus ?></p>
+                        </li>
+                        
+
+                        <?php
+                        if(!$post->isExpired){
+                        ?>
+                        <form method="GET" action="Handlers/Job_Offer_Delete_Handler.php">
+                            <input type="submit" name="submit" value="Visszavonás">
+                            <input type="hidden" name=offerId value="<?= $post->id ?>">
+                            <input type="hidden" name=hasAcceptedJelentkezo value="<?= $post->isAccepted ?>">
+                        </form>
+                        <?php
+                        }
+                        else if($post->isAccepted){
+                            ?>
+                            <b>Az ajánlat kitörléséhez előbb értékeld a diákot! </b>
+                            <?php
+                        }
+                        ?>
+                    </a>
+                </ul>
+            </div>
+        </div>
     
         <?php
         }
 
     }
 ?>
+</div>
 <?php
 }
 
@@ -112,10 +106,9 @@ if($activeJobs <3){
 else{
     $offerJobLink = '<h3>Maximum 3 ajánlatod lehet</h3>';
 }
-echo $offerJobLink;
+echo '<div class="align-center">'.$offerJobLink.'</div>';
 
 ?>
-</ul>
 
 <?php 
 include 'Footer.php';

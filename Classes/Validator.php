@@ -30,7 +30,21 @@ class Validator extends Dbh{
             return TRUE;
         }
     }
-      
+    
+    public function containsNumber($text){
+        if(1 === preg_match('~[0-9]~', $text)){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
+    
+    public function containsWhiteSpaces($text){
+        return preg_match('/\s/',$text);
+              
+    }  
+    
     public function isFieldNotExists($table, $field, $value){
         $match = $this->connect()->query('SELECT id FROM '.$table.' WHERE '.$field.' = "'.$value.'" ;');
         

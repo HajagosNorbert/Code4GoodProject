@@ -36,7 +36,8 @@ foreach ($allPostIds as $postId){
 <div class="inner 6u 8u$(small) align-center">
     <h3>Munkák, amikre jelentkeztél</h3>
 </div>
-<ul class="alt inner 5u 10u$(small)">
+
+<div class="inner row">
 <?php
 foreach($allPosts as $post){
     if($post->isAccepted){
@@ -45,20 +46,25 @@ foreach($allPosts as $post){
         $owner->setAllFromDB();
 
         ?>
-
-        <div class="box" >
-            <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;">
-            <li>
-                <h3><?= $post->title ?> </h3>
-                <p><b>Te feladatod elvégezni</b></p>
-            </li>
-            <li>
-                <h1>Munkaidő: <?= $post->offeredHours ?> óra</h1>
-                <p>Mikorra: <?= $post->appointment ?></p>  
-                <p>Itt: <?= $post->location ?></p>
-                <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
-            </li>
-            </a>
+        <div class="4u 6u(medium) 12u$(small)">
+            <div class="box" >
+                <ul class="alt">
+                    <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;">
+                    <li>
+                        <h3><?= $post->title ?> </h3>
+                    </li>
+                    <li>
+                        <p>Munkaidő: <?= $post->offeredHours ?> óra</p>
+                        <p>Mikorra: <?= $post->appointment ?></p>  
+                        <p>Itt: <?= $post->location ?></p>
+                        <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
+                        <div style="background-color : #4bae77">
+                            <b>Te feladatod</b>
+                        </div>
+                    </li>
+                    </a>
+                </ul>
+            </div>
         </div>
         <?php
     }
@@ -71,26 +77,31 @@ foreach($allPosts as $post){
         $owner->setAllFromDB();
 
         ?>
-
-        <div class="box" >
-            <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;">
-            <li>
-                <h3><?= $post->title ?> </h3>
-                <p>Várakozás alatt</p>
-            </li>
-            <li>
-                <h1>Munkaidő: <?= $post->offeredHours ?> óra</h1>
-                <p>Mikorra: <?= $post->appointment ?></p>  
-                <p>Itt: <?= $post->location ?></p>
-                <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
-            </li>
-            </a>
+        <div class="4u 6u(medium) 12u$(small)">
+            <div class="box" >
+                <ul class="alt">
+                    <a href="Job.php?id=<?= $post->id ?>" style="text-decoration: none; color: BLACK;">
+                    <li>
+                        <h3><?= $post->title ?> </h3>
+                    </li>
+                    <li>
+                        <p>Munkaidő: <?= $post->offeredHours ?> óra</p>
+                        <p>Mikorra: <?= $post->appointment ?></p>  
+                        <p>Itt: <?= $post->location ?></p>
+                        <p>Feltette: <a href="Profile.php?id=<?= $owner->id?>"><?= $owner->lastName ?> <?= $owner->firstName ?></a></p>
+                        <div style="background-color : #ead18c">
+                            <b>Várakozás alatt</b>
+                        </div>
+                    </li>
+                    </a>
+                </ul>
+            </div>
         </div>
         <?php
     }
 }
     ?>
-</ul>
+</div>
     <?php
 }
 

@@ -31,12 +31,10 @@ $password = $_POST['jelszo'];
 $emailConfirm = 'Később megoldani';
 $facebookId = 'Később megoldani';
 
-if($_POST['telefonszam'] !=''){
-    $phoneNumber = $_POST['szolgaltato'].$_POST['telefonszam']; 
-}
-else{
-    $phoneNumber = 'NULL';
-}
+
+$phonePersonalNumber = preg_replace('/\s+/', '', $_POST['telefonszam']);
+$phoneNumber = $_POST['szolgaltato'].$phonePersonalNumber;
+
 if($_POST['bemutatkozas'] != ''){
    $introduction = $_POST['bemutatkozas']; 
 }
@@ -71,17 +69,50 @@ $regist->setSchoolId($schoolId);
 $regist->setOfferHours($offerHours);
 
 
+if($regist->containsNumber($regist->lastName) || $regist->containsWhiteSpaces($regist->lastName) || $regist->lastName === ""){
+    $regist->addError("lastNameNotValid");
+}
+   
+if($regist->containsNumber($regist->firstName) || $regist->containsWhiteSpaces($regist->lastName) || $regist->lastName === ""){
+    $regist->addError("firstNameNotValid");
+}
+
+//EMAIL
+
 if(!$regist->isEmailValid($regist->email)){
-    $regist->errors[] = "EmailNotValid";
-    $regist->hasError = TRUE;
+    $regist->addError("emailNotValid");
 }
 
 if(!$regist->isFieldNotExists('felhasznalok', 'email', $regist->email)){
-    $regist->errors[] = "EmailAllreadyExists";
-    $regist->hasError = TRUE;
+    $regist->addError("emailAllreadyExists");
 }
 
-        
+//PASSWORD
+if(strlen($regist->password) < 5){
+    $regist->addError("passwordTooShort");   
+}
+
+if($regist->phoneNumber !== "NULL"){
+    if(filter_var($phonePersonalNumber, FILTER_VALIDATE_INT) && strlen($phonePersonalNumber) === 7){
+
+        if(!$regist->isFieldNotExists("felhasznalok", 'telefonszam', $regist->phoneNumber)){
+            $regist->addError('phoneNumberAlreadyExists');
+        }
+    }
+    else{
+        $regist->addError('phoneNumberNotValid');
+    }
+    
+}
+if($regist->studentCard !== "NULL"){
+    if(strlen ($regist->studentCard) !== 11 || !filter_var($regist->studentCard, FILTER_VALIDATE_INT)){
+        $regist->addError('studentCardNotValid');
+    }
+    else if(!$regist->isFieldNotExists("felhasznalok", 'diakigazolvany_szam', $regist->studentCard)){
+        $regist->addError('studentCardAlreadyExists');
+    }
+}
+
 if($regist->hasError){
     $errorUrlParams = $regist->getErrorUrlParams();
     if($regist->userType === '0'){
@@ -92,4 +123,6 @@ if($regist->hasError){
     }
     exit();
 }
+
+
 $regist->upload();

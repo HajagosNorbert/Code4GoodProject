@@ -79,7 +79,8 @@ else{
         }
         $remainingStars--;
         while($remainingStars > 0){
-            $profileStars .= '<span class="icon fa-star-o"></span>';               $remainingStars--;                                      
+            $profileStars .= '<span class="icon fa-star-o"></span>';               
+            $remainingStars--;                                      
         }
     }
 

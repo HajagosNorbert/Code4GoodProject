@@ -39,7 +39,7 @@ if(isset($_SESSION['userId'])){
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
-					<a href="<?= $homePage ?>" class="logo"><strong>Easy 50 hours</strong> by Skipped Question</a>
+					<a href="<?= $homePage ?>" class="logo"><strong>Easy 50 hours</strong> | Skipped Question</a>
                     <!-- Navigációs felület-->
                         <nav id="nav">
                             <?php
@@ -47,7 +47,7 @@ if(isset($_SESSION['userId'])){
                             ?>
                             
                             <!-- Nem bejelentkezett felhasználóknak-->
-                                <a href="Login.php">Bejelnetkezés</a>
+                                <a href="Login.php">Bejelentkezés</a>
                                 <a href="Diak_Registration.php">Diák vagyok</a>
                                 <a href="Munkaado_Registration.php">Munkaadó vagyok</a>
                             
@@ -56,7 +56,6 @@ if(isset($_SESSION['userId'])){
                                 else if(isset($user)){
                             ?>
                                 <!-- Bejelentkezett felhasználóknak -->
-                                    <a href="Notificationes.php">Értesítések: <?= $numberOfNotificationes?></a>
                                     <a href="Profile.php?id=<?= $user->id ?>"><?= $user->lastName ?> <?= $user->firstName ?></a>
 
 
@@ -70,6 +69,7 @@ if(isset($_SESSION['userId'])){
                                         }
                                         else if($user->userType === '0'){
                                     ?>
+                                    <a href="Notificationes.php">Értesítések: <?= $numberOfNotificationes?></a>
                                     <a href="Browse_Jobs.php">Munkák</a>
                                     <a href="Welcome.php">Munkák, amikre jelentkeztél</a>
                                     <?php

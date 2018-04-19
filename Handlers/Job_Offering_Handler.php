@@ -45,6 +45,13 @@ echo $appointment;
 if($diffInDates <= 2 * 3600){
     $validator->addError("appointmentTooEarly");
 }
+if($title === ""){
+    $validator->addError("titleNotValid");    
+}
+
+if($location === ""){
+    $validator->addError("locationNotValid");    
+}
 
 if($validator->hasError){
     Header('Location: ../Job_Offering.php?'.$validator->getErrorUrlParams());
