@@ -1,7 +1,7 @@
 <?php 
 class BrowseJobs extends Dbh{
     
-    public function getALlPostIds($condition){
+    public function getAllPostIds($condition){
         $allPostIds = array();
         
         $sqlAllPostIds = $this->connect()->query('SELECT id FROM ajanlatok '.$condition.';');
