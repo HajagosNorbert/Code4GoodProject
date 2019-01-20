@@ -8,19 +8,18 @@ class Dbh{
     private $charset;
     
     public function connect(){
-        // $this->dbServername = "sql7.freemysqlhosting.net";
-        // $this->dbUsername = "sql7233253";
-        // $this->password = "sNVmvh5A3m";
-        // $this->dbName = "sql7233253";
-        // $this->charset = "utf8mb4";
+
+        $this->dbServername = "db4free.net";
+        $this->dbUsername = "code4good";
+        $this->password = "q1w2e3r4";
+        $this->dbName = "code4good";
+        $this->charset = "utf8mb4";
         
-//      a freemysqlhosting -hoz a password  k)0ZFxL3sEHf9Tr$
-        
-       $this->dbServername = "localhost";
-       $this->dbUsername = "root";
-       $this->password = "";
-       $this->dbName = "code4good";
-       $this->charset = "utf8mb4";
+    //    $this->dbServername = "localhost";
+    //    $this->dbUsername = "root";
+    //    $this->password = "";
+    //    $this->dbName = "code4good";
+    //    $this->charset = "utf8mb4";
         
         
         try{
