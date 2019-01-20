@@ -149,12 +149,19 @@ if(isset($visitedUser->introduction)){
         }   
 
         if ($isProfileOfUser){
+            $emailChangeError = '';
+            if (array_key_exists('err', $_GET)){
+                if (strpos($_GET['err'], 'demoUser') !== false){
+                    $emailChangeError = 'Demó felhasználó ne változtasson emailt';
+                }
+            }
             ?>
             <div class="6u 10u$(small)">
                 <form method="POST" action="Handlers/Modify_Profile_Handler.php" enctype="multipart/form-data">
                     <div class="row uniform">
                         <div class="8u$ 10u$(small)">
-                             <input type="text" name="email" placeholder="Új email cím">
+                            <?= $emailChangeError ?>
+                            <input type="text" name="email" placeholder="Új email cím">
                         </div>
 
                         <div class="4u 5u(medium) 6u(small)">

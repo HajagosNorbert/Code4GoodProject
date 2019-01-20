@@ -30,7 +30,7 @@
                                 <div>
                                     <span class="icon fa-bug"></span>
                                     <h3>Alfa stádium</h3>
-                                    <p>A weboldal még kezdeti fázisban van. Az oldalon fejlesztések folynak, bugok előfordulhatnak, ezek javításán dolgozunk!</p>
+                                    <p>A weboldal fejlesztése leált.</p>
                                 </div>
                             </li>
                         </ul>

@@ -105,7 +105,7 @@ if($regist->phoneNumber !== "NULL"){
     
 }
 if($regist->studentCard !== "NULL"){
-    if(strlen ($regist->studentCard) !== 11 || !filter_var($regist->studentCard, FILTER_VALIDATE_INT)){
+    if(strlen ($regist->studentCard) !== 11){
         $regist->addError('studentCardNotValid');
     }
     else if(!$regist->isFieldNotExists("felhasznalok", 'diakigazolvany_szam', $regist->studentCard)){
@@ -126,3 +126,6 @@ if($regist->hasError){
 
 
 $regist->upload();
+
+Header('Location: ../index.php');   
+exit();

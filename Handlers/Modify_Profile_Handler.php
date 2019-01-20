@@ -31,7 +31,10 @@ $validator = new Validator;
 $table = 'felhasznalok';
 if(!empty($newEmail)){
     
-    if($validator->isEmailValid($newEmail)){
+    if($user->email == 'diakdemo@diakdemo.com' || $user->email == 'munkaadodemo@munkaadodemo.com'){
+        $validator->addError('demoUser');
+    }
+    elseif($validator->isEmailValid($newEmail)){
         
         if($validator->isFieldNotExists($table, 'email', $newEmail)){
             
@@ -88,7 +91,7 @@ if(file_exists($profileImage['tmp_name']) || is_uploaded_file($profileImage['tmp
     
     if(in_array($fileActualExt, $allowedFormats)){
         if($fileError === 0){
-            if($fileSize < 500000){
+            if($fileSize < 5000000){
                 
                 $fileNameNew = $user->id.".".$fileActualExt;  
                 $fileDestination = "../Uploads/Images/profile".$fileNameNew;
