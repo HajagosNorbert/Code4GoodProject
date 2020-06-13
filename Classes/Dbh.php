@@ -9,10 +9,10 @@ class Dbh{
     
     public function connect(){
 
-        $this->dbServername = "db4free.net";
-        $this->dbUsername = "code4good";
-        $this->password = "q1w2e3r4";
-        $this->dbName = "code4good";
+        $this->dbServername = $_ENV["DB_HOST"];
+        $this->dbUsername = $_ENV["DB_USERNAME"];
+        $this->password = $_ENV["DB_PASSWORD"];
+        $this->dbName = $_ENV["DB_DATABASE"];
         $this->charset = "utf8mb4";
         
     //    $this->dbServername = "localhost";
